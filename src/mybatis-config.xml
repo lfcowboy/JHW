@@ -7,6 +7,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias alias="User" type="cn.com.lfcowboy.driver.domain.User" />
 	</typeAliases>
 	<mappers>
-		<mapper resource="cn/com/lfcowboy/driver/dao/SqlMap_User.xml" />
+		<mapper resource="SqlMap_User.xml" />
 	</mappers>
 </configuration>

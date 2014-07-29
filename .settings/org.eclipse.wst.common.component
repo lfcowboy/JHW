@@ -2,7 +2,7 @@
     <wb-module deploy-name="ChipDriverManager">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="ChipDriverManager"/>
         <property name="java-output-path" value="/ChipDriverManager/WebRoot/WEB-INF/classes"/>
+        <property name="context-root" value="ChipDriverManager"/>
     </wb-module>
 </project-modules>

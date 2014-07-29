@@ -20,8 +20,8 @@ public class UserServerImpl implements UserServer {
 
 	@Override
 	public User getUser(String userName) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userDao.getUser(userName);
+		return user;
 	}
 
 }

@@ -3,6 +3,8 @@ package cn.com.lfcowboy.driver.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,9 @@ import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.server.UserServer;
 @Controller
 public class UserController {
-	UserServer userServer;
+	private UserServer userServer;
+	
+	private static Logger logger = LogManager.getLogger(UserController.class.getName());
 
 	public UserServer getUserServer() {
 		return userServer;
@@ -24,11 +28,21 @@ public class UserController {
 		this.userServer = userServer;
 	}
 	
+	@RequestMapping(value="login")  
+    public String index(Model model) {  
+        String name = "tester1";  
+        model.addAttribute("name", name);  
+        return "login";
+    }
+	
 	@RequestMapping("index")
 	public ModelAndView handleRequest(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView mode = new ModelAndView("index");
+		ModelAndView mode = new ModelAndView("login");
 		User user = userServer.getUser("zhouyunli");
+		logger.debug("名字：" + user.getName());
+		logger.info(user.getName());
+		mode.addObject("Account", user.getAccount());
 		mode.addObject("user", user);
 		return mode;
 	}	

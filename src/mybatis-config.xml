@@ -5,8 +5,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias alias="User" type="cn.com.lfcowboy.driver.domain.User" />
+		<typeAlias alias="UserType" type="cn.com.lfcowboy.driver.domain.UserType" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="SqlMap_User.xml" />
+		<mapper resource="SqlMap_UserType.xml" />
 	</mappers>
 </configuration>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css">	
+	<script>dojoConfig = {parseOnLoad: true}</script>
+	<script src='js/dojo/dojo/dojo.js'></script>	
+	<script>
+		dojo.require("dijit.dijit");
+		require(["dojo/parser", "dijit/form/Form", "dijit/form/Button", "dijit/form/ValidationTextBox", "dijit/form/ComboBox", "dojo/store/Memory"]);
+		require(["dojo/store/JsonRest"]); 
+        dojo.addOnLoad(function() {		
+          var store = new dojo.store.JsonRest({
+                    target: "getUserTypes.do"
+                  });  
+				  store.query();
+    	  var userTypes = dijit.byId("userTypes");
+    	  userTypes.set("store",store);
+        });
+	</script>
+</head>
+<body class="claro">
+    <div data-dojo-type="dijit/form/Form" id="myForm" data-dojo-id="myForm" encType="multipart/form-data" action="" method="">
+    <script type="dojo/on" data-dojo-event="reset">
+        return confirm('Press OK to reset widget values');
+    </script>
+
+    <script type="dojo/on" data-dojo-event="submit">
+        if(this.validate()){
+            return confirm('Form is valid, press OK to submit');
+        }else{
+            alert('Form contains invalid data.  Please correct first');
+            return false;
+        }
+        return true;
+    </script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<tr>
+            <td>
+                <label for="name">请选择登录类型:</label>
+            </td>
+            <td>
+				<input data-dojo-type="dijit/form/ComboBox" value="" name="userTypes" id="userTypes" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="accountName">用户名:</label>
+            </td>
+            <td>
+                <input type="text" id="accountName" name="accountName" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="dob">密码:</label>
+            </td>
+            <td>
+                <input type="password" id="password" name="password" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+    </table>
+
+    <button data-dojo-type="dijit/form/Button" type="button" onClick="console.log(myForm.getValues())">Get Values from form!</button>
+    <button data-dojo-type="dijit/form/Button" type="submit" name="submitButton" value="Submit">Submit</button>
+    <button data-dojo-type="dijit/form/Button" type="reset">Reset</button>
+</div>
+</body>
+</html>

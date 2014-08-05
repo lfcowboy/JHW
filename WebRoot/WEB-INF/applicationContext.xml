@@ -34,8 +34,13 @@
 		<property name="mapperInterface" value="cn.com.lfcowboy.driver.dao.UserDao" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
+		<bean id="userTypeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.com.lfcowboy.driver.dao.UserTypeDao" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 	<bean id="userServer" class="cn.com.lfcowboy.driver.server.UserServerImpl">
 		<property name="userDao" ref="userMapper"></property>
+		<property name="userTypeDao" ref="userTypeMapper"></property>
 	</bean>
 	<bean id="index" class="cn.com.lfcowboy.driver.controller.UserController">
 		<property name="userServer" ref="userServer"></property>
@@ -77,7 +82,7 @@
 		<property name="order" value="10" />
 		<property name="suffix" value=".vm" />
 		<property name="prefix" value="/" />
-		<property name="layoutUrl" value="layout.vm" />
+		<property name="layoutUrl" value="WEB-INF/vm/layout.vm" />
 		<property name="exposeSpringMacroHelpers" value="true" />
 		<property name="dateToolAttribute" value="dateTool" />
 		<property name="numberToolAttribute" value="numberTool" />

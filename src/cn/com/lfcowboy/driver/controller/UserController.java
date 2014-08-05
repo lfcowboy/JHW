@@ -1,5 +1,7 @@
 package cn.com.lfcowboy.driver.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.lfcowboy.driver.domain.User;
+import cn.com.lfcowboy.driver.domain.UserType;
 import cn.com.lfcowboy.driver.server.UserServer;
 @Controller
 public class UserController {
@@ -34,6 +39,12 @@ public class UserController {
         model.addAttribute("name", name);  
         return "login";
     }
+    
+	@RequestMapping(value="getUserTypes" ,method=RequestMethod.GET)  	
+	public @ResponseBody List<UserType> getUserTypes()  {
+		List<UserType> userTypes= userServer.getUserTypes();
+		return userTypes;
+	}
 	
 	@RequestMapping("index")
 	public ModelAndView handleRequest(HttpServletRequest request,

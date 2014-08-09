@@ -35,7 +35,7 @@
 
     /*set up layout*/
     var layout = [[
-      {'name': 'Column 1', 'field': 'id', 'width': '100px'},
+      {'name': 'ÖÐÎÄ', 'field': 'id', 'width': '100px'},
       {'name': 'Column 2', 'field': 'col2', 'width': '100px'},
       {'name': 'Column 3', 'field': 'col3', 'width': '200px'},
       {'name': 'Column 4', 'field': 'col4', 'width': '150px'}

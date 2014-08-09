@@ -7,5 +7,9 @@ import cn.com.lfcowboy.driver.domain.UserType;
 
 public interface UserServer {
 	public User getUser(String userName);
+	public List<User> getUsers();
 	public List<UserType> getUserTypes();
+	public boolean updateUser(User user);
+	public boolean addUser(User user);
+	public boolean deleteUser(int id);
 }

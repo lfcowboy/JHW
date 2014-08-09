@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css">
+	<style type="text/css">
+        @import "js/dojo/dojox/grid/resources/claroGrid.css";
+        /*Grid needs an explicit height by default*/
+        #gridDiv {
+            height: 20em;
+        }
+	</style>
+	<script>dojoConfig = {parseOnLoad: true}</script>
+	<script src='js/dojo/dojo/dojo.js'></script>
+    <script>
+        dojo.require("dojo.store.JsonRest");
+        dojo.require("dojo.store.Memory");  
+        dojo.require("dojo.store.Cache");  
+        myStore = dojo.store.Cache(  
+            dojo.store.JsonRest({target:"dojo/getUsers", headers: {"Content-Type": "application/json"}, idProperty: "id"}),   
+            dojo.store.Memory({ idProperty: "id" })); 
+
+		dojo.require("dojox.grid.DataGrid");
+        dojo.require("dojo.data.ObjectStore");
+        dojo.ready(function(){
+            grid = new dojox.grid.DataGrid({
+                store: dataStore = dojo.data.ObjectStore({objectStore: myStore}),
+                structure: [
+    				{name:"用户名", field:"account", editable: true, width: "200px"},
+                    {name:"名字", field:"name", editable: true, width: "200px"},
+                    {name:"类型", field:"type", editable: true, width: "200px"}
+                ],
+				rowSelector: '20px'
+            }, "gridDiv");
+            grid.startup();
+        });	
+    </script>
+</head>
+<body class="claro">
+    <div id="gridDiv">
+	</div>
+    <div id="editMode">
+        <script>
+            require(["dijit/form/Button", "dojo/dom", 
+            "dojo/domReady!"], function (Button, dom) {
+                var addButton = new Button({
+                    label: "添加",
+                    onClick: function () {
+                        addBlog();
+                    }
+                }, "addButton");
+            });
+    		function addBlog() {
+                var newBlog = { account: "2", name: "2",
+                type: 2 };
+                dataStore.newItem(newBlog);
+            }
+        </script>
+        <button id="addButton">
+        </button>
+        <script>
+            require(["dijit/form/Button", "dojo/dom", 
+            "dojo/domReady!"], function (Button, dom) {
+                var removeButton = new Button({
+                    label: " Remove ",
+                    onClick: function () {
+                        removeBlog();
+                    }
+                }, "removeButton");
+            });
+        function removeBlog() {
+            var items = grid.selection.getSelected();
+            if (items.length) {
+                dojo.forEach(items, function (selectedItem) {
+                    if (selectedItem !== null) {
+                        dataStore.deleteItem(selectedItem);
+                    }
+                });
+            }
+        }
+        </script>
+        <button id="removeButton">
+        </button>
+        <script>
+            require(["dijit/form/Button", "dojo/dom", 
+            "dojo/domReady!"], function (Button, dom) {
+                var saveButton = new Button({
+                    label: "Save",
+                    onClick: function () {
+                        saveTable();
+                    }
+                }, "saveButton");
+
+            });
+            var onSave = function(){
+            	dojo.byId("message").innerHTML = ("Save done.");
+            }
+            var onSaveError = function(error){
+            	alert("Error occurred.")
+            }
+            function saveTable() {
+                if (grid.edit.isEditing()) {
+                	grid.edit.apply();
+                }
+                if (dataStore.isDirty()) {
+                	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
+                }
+            }
+        </script>
+        <button id="saveButton">
+        </button>
+        <script>
+            require(["dijit/form/Button", "dojo/dom", 
+            "dojo/domReady!"], function (Button, dom) {
+                var cancelEditButton = new Button({
+                    label: "Cancel",
+                    onClick: function () {
+                        cancelTable();
+                    }
+                }, "cancelEditButton");
+            });
+			        function cancelTable() {
+
+            if (grid.edit.isEditing()) {
+                grid.edit.apply();
+            }
+
+            dataStore.revert();
+        }
+        </script>
+        <button id="cancelEditButton">
+        </button>
+    </div>
+	<div id="message">
+</body>
+</html>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.com.lfcowboy.driver.dao.UserDao;
 import cn.com.lfcowboy.driver.dao.UserTypeDao;
+import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.UserType;
 
@@ -29,8 +30,8 @@ public class UserServerImpl implements UserServer {
 	}
 
 	@Override
-	public List<User> getUsers() {
-		return userDao.getUsers();
+	public List<User> getUsers(Page page) {
+		return userDao.getUsers(page);
 	}
 
 	@Override
@@ -61,5 +62,10 @@ public class UserServerImpl implements UserServer {
 	@Override
 	public boolean deleteUser(int id) {
 		return userDao.deleteUser( id);
+	}
+
+	@Override
+	public int getTotal() {
+		return userDao.getTotal();
 	}
 }

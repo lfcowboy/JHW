@@ -7,8 +7,14 @@
 		select *
 		from user where ACCOUNT=#{name}
 	</select>
-	<select id="getUsers" resultType="User">
-		select * from user
+	<select id="getUsers" parameterType="Page" resultType="User">
+		select
+		user.id,user.name,user.type,user.password,user.account,user_type.name
+		as typeName from user,user_type where user.type = user_type.id limit
+		#{limit} offset #{offset}
+	</select>
+	<select id="getTotal" resultType="int">
+		select count(*) from user
 	</select>
 	<update id="updateUser" parameterType="User">
 		update user set name =
@@ -16,15 +22,15 @@
 	</update>
 	<insert id="addUser" parameterType="User">
 		INSERT INTO
-		user (id, name,
-		type, password,
-		account) VALUES (#{id},
+		user ( name,
+		type,
+		password,
+		account) VALUES (
 		#{name},
 		#{type}, '1',
 		#{account})
-		<selectKey resultType="int" keyProperty="id">
-			SELECT @@IDENTITY AS ID
-		</selectKey>
 	</insert>
-	<delete id="deleteUser" parameterType="int">DELETE FROM user WHERE id=#{id}</delete>
+	<delete id="deleteUser" parameterType="int">DELETE FROM user WHERE
+		id=#{id}
+	</delete>
 </mapper> 

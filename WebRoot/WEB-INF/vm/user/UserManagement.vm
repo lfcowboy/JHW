@@ -4,10 +4,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css">
 	<style type="text/css">
-        @import "js/dojo/dojox/grid/resources/claroGrid.css";
-        /*Grid needs an explicit height by default*/
-        #gridDiv {
-            height: 20em;
+        @import "js/dojo/dojox/grid/resources/Grid.css";
+        @import "js/dojo/dojox/grid/resources/nihiloGrid.css";
+		.dojoxGrid table {
+            margin: 0;
         }
 	</style>
 	<script>dojoConfig = {parseOnLoad: true}</script>
@@ -15,22 +15,25 @@
     <script>
         dojo.require("dojo.store.JsonRest");
         dojo.require("dojo.store.Memory");  
-        dojo.require("dojo.store.Cache");  
+        dojo.require("dojo.store.Cache");
         myStore = dojo.store.Cache(  
-            dojo.store.JsonRest({target:"dojo/getUsers", headers: {"Content-Type": "application/json"}, idProperty: "id"}),   
+            dojo.store.JsonRest({target:"dojo/getUsers", headers: {"Content-Type": "application/json"}, idProperty: "items"}),   
             dojo.store.Memory({ idProperty: "id" })); 
-
 		dojo.require("dojox.grid.DataGrid");
         dojo.require("dojo.data.ObjectStore");
         dojo.ready(function(){
             grid = new dojox.grid.DataGrid({
+				query: { id: "*" },
                 store: dataStore = dojo.data.ObjectStore({objectStore: myStore}),
                 structure: [
-    				{name:"用户名", field:"account", editable: true, width: "200px"},
+    				{name:"用户名", field:"account", width: "200px"},
                     {name:"名字", field:"name", editable: true, width: "200px"},
-                    {name:"类型", field:"type", editable: true, width: "200px"}
+                    {name:"类型", field:"typeName", width: "200px"}
                 ],
-				rowSelector: '20px'
+				rowSelector: '20px',
+				selectionMode: 'multiple',
+				autoHeight: "10",
+				autoWidth: "true"
             }, "gridDiv");
             grid.startup();
         });	
@@ -131,6 +134,6 @@
         <button id="cancelEditButton">
         </button>
     </div>
-	<div id="message">
+	<div id="message"/>
 </body>
 </html>

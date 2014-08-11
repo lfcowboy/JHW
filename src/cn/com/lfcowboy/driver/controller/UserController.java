@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.UserType;
 import cn.com.lfcowboy.driver.server.UserServer;
@@ -59,8 +59,17 @@ public class UserController {
 
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	List<User> getUsers() {
-		List<User> users = userServer.getUsers();
+	List<User> getUsers(HttpServletRequest request,HttpServletResponse response) {
+		Page page = new Page();
+		String rangeHeader = request.getHeader("Range");
+		if(rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")){
+			String[] resultRange = rangeHeader.substring(rangeHeader.lastIndexOf("=")+1).split("-");
+			page.setOffset(Integer.valueOf(resultRange[0]));
+			page.setLimit(Integer.valueOf(resultRange[1]));			
+		}
+		List<User> users = userServer.getUsers( page);
+		int total  =  userServer.getTotal();
+		response.setHeader("Content-Range", rangeHeader + "/" + total);
 		return users;
 	}
 

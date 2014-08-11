@@ -4,6 +4,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="Page" type="cn.com.lfcowboy.driver.domain.Page" />
 		<typeAlias alias="User" type="cn.com.lfcowboy.driver.domain.User" />
 		<typeAlias alias="UserType" type="cn.com.lfcowboy.driver.domain.UserType" />
 	</typeAliases>

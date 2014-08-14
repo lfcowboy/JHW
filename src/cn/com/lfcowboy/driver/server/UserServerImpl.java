@@ -30,8 +30,8 @@ public class UserServerImpl implements UserServer {
 	}
 
 	@Override
-	public List<User> getUsers(Page page) {
-		return userDao.getUsers(page);
+	public List<User> getUsers(User user, Page page) {
+		return userDao.getUsers(user, page);
 	}
 
 	@Override
@@ -61,11 +61,11 @@ public class UserServerImpl implements UserServer {
 
 	@Override
 	public boolean deleteUser(int id) {
-		return userDao.deleteUser( id);
+		return userDao.deleteUser(id);
 	}
 
 	@Override
-	public int getTotal() {
-		return userDao.getTotal();
+	public int getTotal(User user) {
+		return userDao.getTotal(user);
 	}
 }

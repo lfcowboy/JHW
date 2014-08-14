@@ -57,37 +57,57 @@ public class UserController {
 		return mode;
 	}
 
+	@RequestMapping(value = "addUser", method = RequestMethod.GET)
+	public ModelAndView loadAddUser(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("user/AddUser");
+		return mode;
+	}
+	
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	List<User> getUsers(HttpServletRequest request,HttpServletResponse response) {
+	List<User> getUsers(HttpServletRequest request,
+			HttpServletResponse response, User user) {
 		Page page = new Page();
 		String rangeHeader = request.getHeader("Range");
-		if(rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")){
-			String[] resultRange = rangeHeader.substring(rangeHeader.lastIndexOf("=")+1).split("-");
+		if (rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")) {
+			String[] resultRange = rangeHeader.substring(
+					rangeHeader.lastIndexOf("=") + 1).split("-");
 			page.setOffset(Integer.valueOf(resultRange[0]));
-			page.setLimit(Integer.valueOf(resultRange[1]));			
+			page.setLimit(Integer.valueOf(resultRange[1]) - page.getOffset()
+					+ 1);
 		}
-		List<User> users = userServer.getUsers( page);
-		int total  =  userServer.getTotal();
+		user.setType(1);
+		List<User> users = userServer.getUsers(user, page);
+		int total = userServer.getTotal(user);
 		response.setHeader("Content-Range", rangeHeader + "/" + total);
 		return users;
 	}
 
-	@RequestMapping(value = "getUsers", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody boolean addUser( @RequestBody User user) {
-		return userServer.addUser(user);
+	@RequestMapping(value = "addUsersAction", method = RequestMethod.POST)
+	public ModelAndView addUserAction(User user) {
+		userServer.addUser(user);
+		return new ModelAndView("user/userManagement");
 	}
 	
+	@RequestMapping(value = "getUsers", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	boolean addUser(@RequestBody User user) {
+		return userServer.addUser(user);
+	}
+
 	@RequestMapping(value = "getUsers/{id}", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody boolean updateUser(@PathVariable int id, @RequestBody User user) {
+	public @ResponseBody
+	boolean updateUser(@PathVariable int id, @RequestBody User user) {
 		return userServer.updateUser(user);
 	}
 
 	@RequestMapping(value = "getUsers/{id}", method = RequestMethod.DELETE, produces = "application/json")
-	public @ResponseBody boolean deleteUser(@PathVariable int id) {
+	public @ResponseBody
+	boolean deleteUser(@PathVariable int id) {
 		return userServer.deleteUser(id);
 	}
-	
+
 	@RequestMapping(value = "getUserTypes", method = RequestMethod.GET)
 	public @ResponseBody
 	List<UserType> getUserTypes() {

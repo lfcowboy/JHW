@@ -7,14 +7,31 @@
 		select *
 		from user where ACCOUNT=#{name}
 	</select>
-	<select id="getUsers" parameterType="Page" resultType="User">
+	<select id="getUsers" resultType="User">
 		select
 		user.id,user.name,user.type,user.password,user.account,user_type.name
-		as typeName from user,user_type where user.type = user_type.id limit
-		#{limit} offset #{offset}
+		as typeName from user,user_type 
+		<where>
+			<if test="#{user.type}!=null">
+				user.type = #{user.type}
+			</if>
+			<if test="#{user.name}!=null">
+				and user.name like '%${user.name}%'
+			</if>
+			and user.type = user_type.id
+		</where>
+		limit #{page.limit} offset #{page.offset}
 	</select>
 	<select id="getTotal" resultType="int">
 		select count(*) from user
+		<where>
+			<if test="#{user.type}!=null">
+				user.type = #{user.type}
+			</if>
+			<if test="#{user.name}!=null">
+				and user.name like '%${user.name}%'
+			</if>
+		</where>
 	</select>
 	<update id="updateUser" parameterType="User">
 		update user set name =

@@ -1,3 +1,77 @@
+<html lang="en" dir="ltr">
+    <head>
+        <title>Dijit Template</title>
+        <link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css" />
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+    </head>
+    <body class="claro">
+        <div style="width: auto; height: auto">
+            <div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 100%;text-align:center;">
+                <div dojoType="dijit.layout.ContentPane" region="top" splitter="true" >
+                    金华微电子芯片程序管理系统
+                </div>
+                <div dojoType="dijit.layout.ContentPane" region="left" style="width: 20%;" splitter="true">
+		            <div dojoType="dijit.layout.AccordionContainer" style="width: 100%; height: 100%;">
+		                 <div dojoType="dijit.layout.ContentPane" title="用户">
+		                 	<button data-dojo-type="dijit/form/Button" id="loginBtn" type="button">用户登录</button>
+					        <div dojoType="dijit.layout.StackContainer" id="stackContainer">
+					        	<div dojoType="dijit.layout.ContentPane" title="用户管理">
+					                This is the content in stack 1.
+					            </div>
+					            <div dojoType="dijit.layout.ContentPane" title="用户管理">
+					                This is the content in stack 1.
+					            </div>
+					            <div dojoType="dijit.layout.ContentPane" title="新增用户">
+					                This is the content in stack 2.
+					            </div>
+					        </div>
+					        <div dojoType="dijit.layout.StackController" containerId="stackContainer"></div>
+		                 </div>
+		                 <div dojoType="dijit.layout.ContentPane" title="产品">
+		                     This is the content in blade 2.
+		                 </div>
+		                <div dojoType="dijit.layout.ContentPane" title="程序">
+		                    This is the content in blade 3.
+		                </div>
+			        </div>
+                </div>
+                <div dojoType="dijit.layout.ContentPane" region="center" splitter="true">
+		            <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;">
+		                <div dojoType="dijit.layout.ContentPane" title="Tab 1">
+		                    This is the content in tab 1.
+		                </div>
+		                <div dojoType="dijit.layout.ContentPane" title="Tab 2">
+		                    This is the content in tab 2.
+		                </div>
+		            </div>
+                </div>
+                <div dojoType="dijit.layout.ContentPane" region="right" style="width: 100px;" splitter="true">
+                    This is the content in the right section.
+                </div>
+                <div dojoType="dijit.layout.ContentPane" region="bottom" splitter="true">
+                     This is the content in the bottom section.
+                 </div>
+             </div>
+        </div>
+		<script src="js/dojo/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+        <script>
+			dojo.require("dijit.dijit");
+            dojo.require("dijit.layout.StackContainer");
+            dojo.require("dijit.layout.StackController");
+            dojo.require("dijit.layout.ContentPane");
+			dojo.require("dijit.layout.TabContainer");
+			dojo.require("dijit.layout.ContentPane");
+			dojo.require("dijit.layout.AccordionContainer");
+			dojo.require("dijit.layout.ContentPane");
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.addOnLoad(function() {
+            });
+        </script>
+	</body>
+</html>
 <!DOCTYPE html>
 <html >
 <head>

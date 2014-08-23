@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.codehaus.jackson.map.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.com.lfcowboy.driver.domain.JSONResult;
 import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.UserType;
@@ -38,16 +38,25 @@ public class UserController {
 		this.userServer = userServer;
 	}
 
+	@RequestMapping(value = "index", method = RequestMethod.GET)
+	public ModelAndView index() throws Exception {
+		ModelAndView mode = new ModelAndView("index");
+		return mode;
+	}
+	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public @ResponseBody
-	JSONPObject login(User user) {
+	JSONResult login(User user) {
+		JSONResult result = new JSONResult();
 		User loginUser = userServer.getUser(user.getAccount());
 		if (loginUser != null
 				&& loginUser.getPassword().equals(user.getPassword())) {
-			return new JSONPObject("myFunction", "userManagement.do");
+			result.setSuccess(true);
 		} else {
-			return new JSONPObject("alert", "登录信息不正确，请确认后重新输入！");
+			result.setSuccess(false);
+			result.setMsg("登录信息不正确，请确认后重新输入！");
 		}
+		return result;
 	}
 
 	@RequestMapping(value = "userManagement", method = RequestMethod.GET)
@@ -57,13 +66,27 @@ public class UserController {
 		return mode;
 	}
 
+	@RequestMapping(value = "productManagement", method = RequestMethod.GET)
+	public ModelAndView loadProductManagement(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("product/productManagement");
+		return mode;
+	}
+	
+	@RequestMapping(value = "driverManagement", method = RequestMethod.GET)
+	public ModelAndView loadDriverManagement(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("driver/driverManagement");
+		return mode;
+	}
+	
 	@RequestMapping(value = "addUser", method = RequestMethod.GET)
 	public ModelAndView loadAddUser(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mode = new ModelAndView("user/AddUser");
 		return mode;
 	}
-	
+
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<User> getUsers(HttpServletRequest request,
@@ -77,7 +100,6 @@ public class UserController {
 			page.setLimit(Integer.valueOf(resultRange[1]) - page.getOffset()
 					+ 1);
 		}
-		user.setType(1);
 		List<User> users = userServer.getUsers(user, page);
 		int total = userServer.getTotal(user);
 		response.setHeader("Content-Range", rangeHeader + "/" + total);
@@ -85,9 +107,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "addUsersAction", method = RequestMethod.POST)
-	public ModelAndView addUserAction(User user) {
-		userServer.addUser(user);
-		return new ModelAndView("user/userManagement");
+	public @ResponseBody JSONResult addUserAction(User user) {
+		JSONResult result = new JSONResult();
+		User loginUser = userServer.getUser(user.getAccount());
+		if (loginUser != null) {
+			result.setSuccess(false);
+			result.setMsg("用户名已存在，请使用其他用户名！");			
+		} else {
+			userServer.addUser(user);
+			result.setSuccess(true);
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "getUsers", method = RequestMethod.POST, produces = "application/json")

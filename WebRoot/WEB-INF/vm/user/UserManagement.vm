@@ -21,21 +21,32 @@
             dojo.store.Memory({ idProperty: "id" })); 
 		dojo.require("dojox.grid.DataGrid");
         dojo.require("dojo.data.ObjectStore");
+        dojo.require("dojox/grid/cells");
+        dojo.require("dojox/grid/_CheckBoxSelector");
         dojo.ready(function(){
+      		var cells = [[
+                new dojox.grid.cells.RowIndex({
+                    width : "4%"
+                }),
+				{name:"用户名", field:"account", width: "30%"},
+                {name:"名字", field:"name", editable: true, width: "30%"},
+                {name:"类型", field:"typeName", width: "30%"}	
+			]];
+			gridLayout = [{
+					type: "dojox.grid._CheckBoxSelector", width: "4%"
+				}, 
+				cells
+			];
             grid = new dojox.grid.DataGrid({
             	store: dataStore = dojo.data.ObjectStore({objectStore: myStore}),
-                structure: [
-    				{name:"用户名", field:"account", width: "200px"},
-                    {name:"名字", field:"name", editable: true, width: "200px"},
-                    {name:"类型", field:"typeName", width: "200px"}
-                ],
-				rowSelector: '20px',
+            	query: "",
+                structure: gridLayout,
+				rowSelector: '2%',
 				selectionMode: 'multiple',
 				rowsPerPage: 100,
-				autoHeight: "10",
-				autoWidth: "true"
+				autoHeight: "10"
             }, "gridDiv");
-            grid.startup();
+			grid.startup();
         });
         dojo.addOnLoad(function() {        	
     		var userTypesStore = new dojo.store.JsonRest({
@@ -47,125 +58,139 @@
     </script>
 </head>
 <body class="claro">
-	<div id="searchDiv">
-		<div data-dojo-type="dijit/form/Form" id="searchForm" data-dojo-id="searchForm" encType="multipart/form-data">
-			<table style="border: 1px solid #9f9f9f;" cellspacing="10">
-				<tr>
-		            <td>
-		                <label for="type">用户类型:</label>
-		            </td>
-		            <td>
-						<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="type" id="type" />
-		            </td>
-		        </tr>
-		        <tr>
-		            <td>
-		                <label for="name">名字:</label>
-		            </td>
-		            <td>
-		                <input type="text" id="name" name="name" data-dojo-type="dijit/form/ValidationTextBox"/>
-		            </td>
-		        </tr>
-		    </table>
-		    <button data-dojo-type="dijit/form/Button" id="searchBtn" type="button" onClick="queryUsers();">查询</button>
-		    <script>
-		   		function queryUsers() {
-					grid.setQuery(searchForm.get("value"));
-				}
-		    </script>
-	    </div>
-    </div>
-    <div id="gridDiv">
-	</div>
-    <div id="editMode">
-        <script>
-            require(["dijit/form/Button", "dojo/dom", 
-            "dojo/domReady!"], function (Button, dom) {
-                var addButton = new Button({
-                    label: "添加",
-                    onClick: function () {
-                        addBlog();
-                    }
-                }, "addButton");
-            });
-    		function addBlog() {
-    			window.location.href="addUser.do";
-            }
-        </script>
-        <button id="addButton">
-        </button>
-        <script>
-            require(["dijit/form/Button", "dojo/dom", 
-            "dojo/domReady!"], function (Button, dom) {
-                var removeButton = new Button({
-                    label: " Remove ",
-                    onClick: function () {
-                        removeBlog();
-                    }
-                }, "removeButton");
-            });
-        function removeBlog() {
-            var items = grid.selection.getSelected();
-            if (items.length) {
-                dojo.forEach(items, function (selectedItem) {
-                    if (selectedItem !== null) {
-                        dataStore.deleteItem(selectedItem);
-                    }
+	<div style="width: auto; height: auto">
+    	<div id="searchDiv" style="width: 100%; height: 30%;">
+    		<div data-dojo-type="dijit/form/Form" id="searchForm" data-dojo-id="searchForm" encType="multipart/form-data" style="width: 100%; height: 100%;">
+    			<table style="width: 100%; height: 100%;">
+    				<tr>
+    		            <td>
+    		                <label for="type">用户类型:</label>
+    		            </td>
+    		            <td>
+    						<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="type" id="type" />
+    		            </td>
+    		            <td>
+    		                <label for="name">名字:</label>
+    		            </td>
+    		            <td>
+    		                <input type="text" id="name" name="name" data-dojo-type="dijit/form/ValidationTextBox"/>
+    		            </td>
+    		        </tr>
+    		        <tr>
+    		        	<td>
+    					    <button data-dojo-type="dijit/form/Button" id="searchBtn" type="button" onClick="queryUsers();">查询</button>
+    					    <script>
+    					   		function queryUsers() {
+    								grid.setQuery(searchForm.get("value"));								
+    							}
+    					    </script>
+    		        	</td>
+    		        	<td></td>
+    		        	<td></td>
+    		        	<td></td>
+    		        </tr>
+    		    </table>
+    	    </div>
+        </div>
+        <div id="gridDiv" style="width: 100%; height: 50%;">
+    	</div>
+        <div id="editMode">
+            <script>
+                require(["dijit/form/Button", "dojo/dom", 
+                "dojo/domReady!"], function (Button, dom) {
+                    var addButton = new Button({
+                        label: "添加",
+                        onClick: function () {
+                            addBlog();
+                        }
+                    }, "addButton");
                 });
+        		function addBlog() {
+        			window.location.href="addUser.do";
+                }
+            </script>
+            <button id="addButton">
+            </button>
+            <script>
+                require(["dijit/form/Button", "dojo/dom", 
+                "dojo/domReady!"], function (Button, dom) {
+                    var removeButton = new Button({
+                        label: " Remove ",
+                        onClick: function () {
+                            removeBlog();
+    						if (grid.edit.isEditing()) {
+    		                	grid.edit.apply();
+    		                }
+    		                if (dataStore.isDirty()) {
+    		                	var result = dataStore.save();
+    		                }
+                        }
+                    }, "removeButton");
+                });
+            function removeBlog() {
+                var items = grid.selection.getSelected();
+                if (items.length) {
+                    dojo.forEach(items, function (selectedItem) {
+                        if (selectedItem !== null) {
+                            dataStore.deleteItem(selectedItem);
+                        }
+                    });
+                }
             }
-        }
-        </script>
-        <button id="removeButton">
-        </button>
-        <script>
-            require(["dijit/form/Button", "dojo/dom", 
-            "dojo/domReady!"], function (Button, dom) {
-                var saveButton = new Button({
-                    label: "Save",
-                    onClick: function () {
-                        saveTable();
+            </script>
+            <button id="removeButton">
+            </button>
+            <script>
+                require(["dijit/form/Button", "dojo/dom", 
+                "dojo/domReady!"], function (Button, dom) {
+                    var saveButton = new Button({
+                        label: "Save",
+                        onClick: function () {
+                            saveTable();
+                        }
+                    }, "saveButton");
+                });
+                var onSave = function(){
+                	dojo.byId("message").innerHTML = ("Save done.");
+                }
+                var onSaveError = function(error){
+                	alert("Error occurred.")
+                }
+                function saveTable() {
+                    if (grid.edit.isEditing()) {
+                    	grid.edit.apply();
                     }
-                }, "saveButton");
-            });
-            var onSave = function(){
-            	dojo.byId("message").innerHTML = ("Save done.");
-            }
-            var onSaveError = function(error){
-            	alert("Error occurred.")
-            }
-            function saveTable() {
+                    if (dataStore.isDirty()) {
+                    	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
+                    }
+                }
+            </script>
+            <button id="saveButton">
+            </button>
+            <script>
+                require(["dijit/form/Button", "dojo/dom", 
+                "dojo/domReady!"], function (Button, dom) {
+                    var cancelEditButton = new Button({
+                        label: "Cancel",
+                        onClick: function () {
+                            cancelTable();
+                        }
+                    }, "cancelEditButton");
+                });
+    			        function cancelTable() {
+    
                 if (grid.edit.isEditing()) {
-                	grid.edit.apply();
+                    grid.edit.apply();
                 }
-                if (dataStore.isDirty()) {
-                	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
-                }
+    
+                dataStore.revert();
             }
-        </script>
-        <button id="saveButton">
-        </button>
-        <script>
-            require(["dijit/form/Button", "dojo/dom", 
-            "dojo/domReady!"], function (Button, dom) {
-                var cancelEditButton = new Button({
-                    label: "Cancel",
-                    onClick: function () {
-                        cancelTable();
-                    }
-                }, "cancelEditButton");
-            });
-			        function cancelTable() {
-
-            if (grid.edit.isEditing()) {
-                grid.edit.apply();
-            }
-
-            dataStore.revert();
-        }
-        </script>
-        <button id="cancelEditButton">
-        </button>
+            </script>
+            <button id="cancelEditButton">
+            </button>
+        </div>
+    	<div id="message">
+    	</div>
     </div>
-	<div id="message"/>
 </body>
 </html>

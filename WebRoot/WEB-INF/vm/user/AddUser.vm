@@ -21,8 +21,15 @@
                     url: "addUsersAction.do",
         			handleAs : "json",
         			form : "myForm",
-                    load: function(data) {
-                    }
+		           	load: function(data){
+	            		if(data["success"]){
+							window.location.href = "userManagement.do";
+	            		}else{
+	            			alert(data["msg"]);
+	            		}							            		
+	            	},
+	            	error: function(data){					            		
+					}
                 });
     		});
         });

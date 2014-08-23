@@ -1,21 +1,19 @@
 package cn.com.lfcowboy.driver.domain;
 
-import java.util.List;
 
 public class JSONResult {
-	private List<?> items;
-	private String total;
-	public String getTotal() {
-		return total;
+	private boolean success;
+	private String msg;
+	public boolean isSuccess() {
+		return success;
 	}
-	public void setTotal(String total) {
-		this.total = total;
+	public void setSuccess(boolean success) {
+		this.success = success;
 	}
-	public List<?> getItems() {
-		return items;
+	public String getMsg() {
+		return msg;
 	}
-	public void setItems(List<?> items) {
-		this.items = items;
-	}
-
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}	
 }

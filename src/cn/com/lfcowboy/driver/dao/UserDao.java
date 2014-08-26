@@ -8,7 +8,7 @@ import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 
 public interface UserDao {
-	User getUser(String name);
+	User getUser(String account);
 	List<User> getUsers(@Param("user")User user,@Param("page")Page page);
 	boolean updateUser(User user);
 	boolean addUser(User user);

@@ -5,7 +5,7 @@
 <mapper namespace="cn.com.lfcowboy.driver.dao.UserDao">
 	<select id="getUser" parameterType="string" resultType="User">
 		select *
-		from user where ACCOUNT=#{name}
+		from user where ACCOUNT=#{account}
 	</select>
 	<select id="getUsers" resultType="User">
 		select
@@ -34,8 +34,7 @@
 		</where>
 	</select>
 	<update id="updateUser" parameterType="User">
-		update user set name =
-		#{name}, account=#{account},type=#{type} where id=#{id};
+		update user set name = #{name} where id=#{id};
 	</update>
 	<insert id="addUser" parameterType="User">
 		INSERT INTO

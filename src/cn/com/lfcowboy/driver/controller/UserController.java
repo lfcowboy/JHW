@@ -87,6 +87,14 @@ public class UserController {
 		return mode;
 	}
 
+	@RequestMapping(value = "editUser", method = RequestMethod.GET)
+	public ModelAndView loadEditUser( String account) throws Exception {
+		ModelAndView mode = new ModelAndView("user/EditUser");
+		User user = userServer.getUser(account);
+		mode.addObject("user", user);
+		return mode;
+	}
+	
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<User> getUsers(HttpServletRequest request,
@@ -115,6 +123,20 @@ public class UserController {
 			result.setMsg("用户名已存在，请使用其他用户名！");			
 		} else {
 			userServer.addUser(user);
+			result.setSuccess(true);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "editUsersAction", method = RequestMethod.POST)
+	public @ResponseBody JSONResult editUserAction(User user) {
+		JSONResult result = new JSONResult();
+		User loginUser = userServer.getUser(user.getAccount());
+		if (loginUser == null) {
+			result.setSuccess(false);
+			result.setMsg("该用户不存在，请重试查找！");			
+		} else {
+			userServer.updateUser(user);
 			result.setSuccess(true);
 		}
 		return result;

@@ -17,7 +17,11 @@
         dojo.require("dojo.store.Memory");  
         dojo.require("dojo.store.Cache");
         myStore = dojo.store.Cache(  
-            dojo.store.JsonRest({target:"dojo/getUsers", headers: {"Content-Type": "application/json"}, idProperty: "items"}),   
+            dojo.store.JsonRest({
+				target:"dojo/getUsers", 
+				headers: {"Content-Type": "application/json"}, 
+				idProperty: "id",
+				}),   
             dojo.store.Memory({ idProperty: "id" })); 
 		dojo.require("dojox.grid.DataGrid");
         dojo.require("dojo.data.ObjectStore");
@@ -44,16 +48,19 @@
 				rowSelector: '2%',
 				selectionMode: 'multiple',
 				rowsPerPage: 100,
-				autoHeight: "10"
+				autoHeight: "5"
             }, "gridDiv");
 			grid.startup();
         });
         dojo.addOnLoad(function() {        	
     		var userTypesStore = new dojo.store.JsonRest({
-    			target: "getUserTypes.do"
+    			target: "getUserTypes.do",
+				headers: {"Content-Type": "application/json"}, 
+				idProperty: "id"
     		});
     		var userTypes = dijit.byId("type");
-    		userTypes.set("store",userTypesStore);
+    		userTypes.set("store",dojo.data.ObjectStore({objectStore: userTypesStore}));
+			userTypes.set("value", "UserType_1");
         });
     </script>
 </head>
@@ -67,7 +74,7 @@
     		                <label for="type">用户类型:</label>
     		            </td>
     		            <td>
-    						<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="type" id="type" />
+    						<input data-dojo-type="dijit/form/Select" labelAttr="name" name="type" id="type"/>
     		            </td>
     		            <td>
     		                <label for="name">名字:</label>
@@ -99,7 +106,7 @@
                 require(["dijit/form/Button", "dojo/dom", 
                 "dojo/domReady!"], function (Button, dom) {
                     var addButton = new Button({
-                        label: "添加",
+                        label: " 添加 ",
                         onClick: function () {
                             addBlog();
                         }
@@ -114,42 +121,49 @@
             <script>
                 require(["dijit/form/Button", "dojo/dom", 
                 "dojo/domReady!"], function (Button, dom) {
-                    var removeButton = new Button({
-                        label: " Remove ",
+                    var editButton = new Button({
+                        label: " 编辑 ",
                         onClick: function () {
-                            removeBlog();
-    						if (grid.edit.isEditing()) {
-    		                	grid.edit.apply();
-    		                }
-    		                if (dataStore.isDirty()) {
-    		                	var result = dataStore.save();
-    		                }
+                            editTable();
                         }
-                    }, "removeButton");
+                    }, "editButton");
                 });
-            function removeBlog() {
-                var items = grid.selection.getSelected();
-                if (items.length) {
-                    dojo.forEach(items, function (selectedItem) {
-                        if (selectedItem !== null) {
-                            dataStore.deleteItem(selectedItem);
-                        }
-                    });
+        		function editTable() {
+					var items = grid.selection.getSelected();
+                    if (items.length == 0) {
+                        alert("请选择需要删除的用户。");
+                    }else if (items.length > 1) {
+						alert("只能选择一个用户。");
+					}else{
+						window.location.href="editUser.do?account=" + items[0].account;
+					}			
                 }
-            }
             </script>
-            <button id="removeButton">
+            <button id="editButton">
             </button>
             <script>
                 require(["dijit/form/Button", "dojo/dom", 
                 "dojo/domReady!"], function (Button, dom) {
-                    var saveButton = new Button({
-                        label: "Save",
-                        onClick: function () {
-                            saveTable();
+                    var removeButton = new Button({
+                        label: " 删除 ",
+                        onClick: function (e) {
+                            removeBlog(e);
                         }
-                    }, "saveButton");
+                    }, "removeButton");
                 });
+                function removeBlog(e) {
+                    var items = grid.selection.getSelected();
+                    if (items.length) {
+                        dojo.forEach(items, function (selectedItem) {
+                            if (selectedItem !== null) {
+                                dataStore.deleteItem(selectedItem);
+                            }
+                        });
+    					saveTable();
+                    }else{
+						alert("请选择需要删除的用户。");
+					}
+                }
                 var onSave = function(){
                 	dojo.byId("message").innerHTML = ("Save done.");
                 }
@@ -165,28 +179,7 @@
                     }
                 }
             </script>
-            <button id="saveButton">
-            </button>
-            <script>
-                require(["dijit/form/Button", "dojo/dom", 
-                "dojo/domReady!"], function (Button, dom) {
-                    var cancelEditButton = new Button({
-                        label: "Cancel",
-                        onClick: function () {
-                            cancelTable();
-                        }
-                    }, "cancelEditButton");
-                });
-    			        function cancelTable() {
-    
-                if (grid.edit.isEditing()) {
-                    grid.edit.apply();
-                }
-    
-                dataStore.revert();
-            }
-            </script>
-            <button id="cancelEditButton">
+            <button id="removeButton">
             </button>
         </div>
     	<div id="message">

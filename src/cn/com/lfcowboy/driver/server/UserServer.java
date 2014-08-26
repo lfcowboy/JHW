@@ -7,7 +7,7 @@ import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.UserType;
 
 public interface UserServer {
-	public User getUser(String userName);
+	public User getUser(String account);
 
 	public List<User> getUsers(User user, Page page);
 

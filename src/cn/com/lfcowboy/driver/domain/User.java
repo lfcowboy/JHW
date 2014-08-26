@@ -5,7 +5,7 @@ public class User {
 	private String account;
 	private String name;
 	private String password;
-	private int type;
+	private String type;
 	private String typeName;
 	
 	public String getTypeName() {
@@ -48,11 +48,11 @@ public class User {
 		this.password = password;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 }

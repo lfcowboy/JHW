@@ -17,10 +17,11 @@
     		});
     		var userTypes = dijit.byId("type");
     		userTypes.set("store",dojo.data.ObjectStore({objectStore: userTypesStore}));
+			userTypes.set("value", "$!user.type");
     		var saveUserBtn = dijit.byId("saveUserBtn");
     		dojo.connect(saveUserBtn, "onClick", null, function(evt) {
         		dojo.xhrPost({
-                    url: "addUsersAction.do",
+                    url: "editUsersAction.do",
         			handleAs : "json",
         			form : "myForm",
 		           	load: function(data){
@@ -47,13 +48,13 @@
 </head>
 <body class="claro">
     <div data-dojo-type="dijit/form/Form" id="myForm" data-dojo-id="myForm" encType="multipart/form-data" action="addUsersAction.do" method="post">
-    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+	<table style="border: 1px solid #9f9f9f;" cellspacing="10">
 		<tr>
             <td>
                 <label for="type">用户类型:</label>
             </td>
             <td>
-				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="type" id="type" />
+				<input data-dojo-type="dijit/form/Select" labelAttr="name" name="type" id="type" disabled/>
             </td>
         </tr>
         <tr>
@@ -61,7 +62,7 @@
                 <label for="account">用户名:</label>
             </td>
             <td>
-                <input type="text" id="account" name="account" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+                <input type="text" value="$!user.account" id="account" name="account" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
         <tr>
@@ -69,7 +70,7 @@
                 <label for="name">名字:</label>
             </td>
             <td>
-                <input type="text" id="name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+                <input type="text" value="$!user.name" id="name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
             </td>
         </tr>
         <tr>
@@ -77,12 +78,11 @@
                 <label for="password">密码:</label>
             </td>
             <td>
-                <input type="password" id="password" name="password" data-dojo-type="dijit/form/ValidationTextBox"/>
+                <input type="password" value="$!user.password" id="password" name="password" data-dojo-type="dijit/form/ValidationTextBox" disabled/>
             </td>
         </tr>
-
     </table>
-    <button data-dojo-type="dijit/form/Button" type="button" id="saveUserBtn">注册</button>
+    <button data-dojo-type="dijit/form/Button" type="button" id="saveUserBtn">保存</button>
 	<button data-dojo-type="dijit/form/Button" type="button" id="cancelBtn">返回</button>
 </div>
 </body>

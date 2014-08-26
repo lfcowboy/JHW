@@ -25,8 +25,8 @@ public class UserServerImpl implements UserServer {
 	}
 
 	@Override
-	public User getUser(String userName) {
-		return userDao.getUser(userName);
+	public User getUser(String account) {
+		return userDao.getUser(account);
 	}
 
 	@Override

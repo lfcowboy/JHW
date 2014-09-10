@@ -1,0 +1,28 @@
+<div data-dojo-type="dijit/Dialog" id="loginDialog" title="用户登录" href="LoadLoginDialog.do">
+</div>
+<button data-dojo-type="dijit/form/Button" id="loginBtn">
+	<span>用户登录</span>
+	<script type="dojo/on" data-dojo-event="click">
+        dijit.byId("loginDialog").show();
+	</script>
+</button>
+<br/>
+<button data-dojo-type="dijit/form/Button" id="accountManagementBtn" type="button">
+	<span>用户管理</span>
+	<script type="dojo/on" data-dojo-event="click">
+		jhw.addTab("myTabContainer", "userManagement.do", "用户管理", true);
+	</script>
+</button>
+<div dojoType="dijit/layout/StackContainer" id="stackContainer">
+	<div dojoType="dijit.layout.ContentPane" title="用户管理">
+        This is the content in stack 1.
+    </div>					            
+    <div dojoType="dijit/layout/ContentPane" title="用户管理">
+        This is the content in stack 2.
+    </div>
+    <div dojoType="dijit/layout/ContentPane" title="新增用户">
+        This is the content in stack 3.
+    </div>
+</div>
+<div dojoType="dijit/layout/StackController" containerId="stackContainer">
+</div>

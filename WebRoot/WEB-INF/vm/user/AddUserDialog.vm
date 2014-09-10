@@ -1,0 +1,70 @@
+<form data-dojo-type="dijit/form/Form" id="addUserForm">
+    <script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
+        dojo.stopEvent(e); // prevent the default submit
+        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+		dojo.xhrPost({
+            url: "addUsersAction.do",
+			handleAs : "json",
+			form : "addUserForm",
+           	load: function(data){
+        		if(data["success"]){
+					dijit.byId('addUserDialog').hide();
+					grid.setQuery(userMgSearchForm.get("value"));
+        		}else{
+        			alert(data["msg"]);
+        		}							            		
+        	},
+        	error: function(data){					            		
+			}
+        });
+    </script>
+	<script type="dojo/on" data-dojo-event="show">
+        require([
+         	"dojo/data/ObjectStore"
+        ], function(ObjectStore){
+    		var userTypes = dijit.byId("addUserForm.type");
+    		userTypes.set("store",ObjectStore({objectStore: userTypesStore}));
+			userTypes.set("value", "UserType_1");
+        });
+	</script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<tr>
+            <td>
+                <label for="type">用户类型:</label>
+            </td>
+            <td>
+				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="type" id="addUserForm.type" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="account">用户名:</label>
+            </td>
+            <td>
+                <input type="text" id="addUserForm.account" name="account" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="name">名字:</label>
+            </td>
+            <td>
+                <input type="text" id="addUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">密码:</label>
+            </td>
+            <td>
+                <input type="password" id="addUserForm.password" name="password" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+    </table>
+    <button data-dojo-type="dijit/form/Button" type="submit" id="addUserForm.saveUserBtn">注册</button>
+	<button data-dojo-type="dijit/form/Button" type="button" id="addUserForm.cancelBtn">返回
+        <script type="dojo/on" data-dojo-event="click">
+            dijit.byId('addUserDialog').hide();
+    	</script>
+	</button>
+</form>

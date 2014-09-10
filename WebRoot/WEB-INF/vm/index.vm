@@ -11,99 +11,40 @@
             }
             body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
         </style>
-		<script src="js/dojo/dojo/dojo.js" data-dojo-config="parseOnLoad: true"></script>
+		<script type="text/javascript" src="js/dojo/dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
+		<script type="text/javascript" src="js/page/index.js" charset="utf-8"></script>
+		</script>
     </head>
     <body class="claro">
+		<div id="preloader">Loading Application...</div>
+    	<script type="dojo/require">
+    	  "demo.dom": "dojo/dom",
+    	  "demo.registry": "dijit/registry"
+    	</script>
         <div style="width: auto; height: auto">
-            <div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 100%;text-align:center;">
-                <div dojoType="dijit.layout.ContentPane" region="top" splitter="true" >
-					金华微电子芯片程序管理系统
+            <div dojoType="dijit/layout/BorderContainer" style="width: 100%; height: 100%;text-align:center;">
+                <div dojoType="dijit.layout.ContentPane" region="top" splitter="true" href="loadHeaderContentPane.do">					
                 </div>
                 <div dojoType="dijit.layout.ContentPane" region="left" style="width: 20%;" splitter="true">
-		            <div dojoType="dijit.layout.AccordionContainer" style="width: 100%; height: 100%;">
-		                 <div dojoType="dijit.layout.ContentPane" title="用户">		                 	
-							#parse("/WEB-INF/vm/login/login.vm")
-							<br/>
-							<button data-dojo-type="dijit.form.Button" id="accountManagementBtn" type="button">用户管理
-                                <script type="dojo/method" data-dojo-event="onClick" data-dojo-args="evt">
-                                        var tabs = dijit.byId("myTabContainer");
-                                        var pane = new dijit.layout.ContentPane({ 
-    										title:"用户管理",
-    										closable: true
-										});
-										require(["dojo/dom-construct"], function(domConstruct){
-                                            // create a div node
-											var mynode=domConstruct.create("iframe", {
-												"id": "iframe1",
-                                                "src": "userManagement.do",
-                                                "style": "border: 0; width: 100%; height: 100%"
-                                        	});
-                                            pane.set("content", mynode);
-											dojo.attr(mynode,"frameborder","0");
-                                        });
-                                        tabs.addChild(pane);
-                                        tabs.selectChild(pane);
-								</script>
-							</button>
-					        <div dojoType="dijit.layout.StackContainer" id="stackContainer">
-					        	<div dojoType="dijit.layout.ContentPane" title="用户管理">
-					                This is the content in stack 1.
-					            </div>					            
-					            <div dojoType="dijit.layout.ContentPane" title="用户管理">
-					                This is the content in stack 2.
-					            </div>
-					            <div dojoType="dijit.layout.ContentPane" title="新增用户">
-					                This is the content in stack 3.
-					            </div>
-					        </div>
-					        <div dojoType="dijit.layout.StackController" containerId="stackContainer">
-					        </div>
+		            <div dojoType="dijit/layout/AccordionContainer" style="width: 100%; height: 100%;">
+		                 <div dojoType="dijit/layout/ContentPane" title="用户" href="loadUserContentPane.do">		                 	
 		                 </div>
-		                 <div dojoType="dijit.layout.ContentPane" title="产品">
-		                     This is the content in blade 2.
+		                 <div dojoType="dijit/layout/ContentPane" title="产品" href="loadProductContentPane.do">
 		                 </div>
-		                <div dojoType="dijit.layout.ContentPane" title="程序">
-		                    This is the content in blade 3.
+		                <div dojoType="dijit/layout/ContentPane" title="程序" href="loadDriverContentPane.do">
 		                </div>
 			        </div>
                 </div>
-                <div dojoType="dijit.layout.ContentPane" region="center" splitter="true">
-		            <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;" id="myTabContainer">
-		                <div dojoType="dijit.layout.ContentPane" title="Tab 2" closable="true">
-		                    <iframe src='productManagement.do' style="width: 100%; height: 100%;background-color: transparent"  allowtransparency="true" frameborder="0" scrolling="no"></iframe>
-		                </div>
-						<div dojoType="dijit.layout.ContentPane" title="Tab 2" closable="true">
-		                    <form><input id="32"/></form>
-		                </div>
+                <div dojoType="dijit/layout/ContentPane" region="center" splitter="true">
+		            <div dojoType="dijit/layout/TabContainer" style="width: 100%; height: 100%;" id="myTabContainer">
 		            </div>					
                 </div>
-                <div dojoType="dijit.layout.ContentPane" region="right" style="width: 100px;" splitter="true">                    
+                <div dojoType="dijit/layout/ContentPane" region="right" style="width: 100px;" splitter="true">                    
                 </div>
-                <div dojoType="dijit.layout.ContentPane" region="bottom" splitter="true">
+                <div dojoType="dijit/layout/ContentPane" region="bottom" splitter="true">
                      This is the content in the bottom section.
                 </div>
              </div>
         </div>		
-        <script>
-			dojo.require("dijit.dijit");
-            dojo.require("dijit.layout.StackContainer");
-            dojo.require("dijit.layout.StackController");
-			dojo.require("dijit.layout.TabContainer");
-			dojo.require("dijit.layout.AccordionContainer");
-            dojo.require("dijit.layout.BorderContainer");
-            dojo.require("dijit.layout.ContentPane");
-            dojo.require("dijit.Dialog");
-            dojo.require("dijit.form.Form");
-            dojo.require("dojo.store.JsonRest");
-            dojo.require("dojo.store.Memory");  
-            dojo.require("dojo.store.Cache");
-			dojo.require("dojox.grid.DataGrid");
-        	dojo.require("dojo.data.ObjectStore");
-            dojo.addOnLoad(function() {
-        		userTypesStore = new dojo.store.JsonRest({
-        			target: "getUserTypes.do"
-        		});
-            });
-        </script>
 	</body>
 </html>

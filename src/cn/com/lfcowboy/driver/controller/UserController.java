@@ -43,21 +43,6 @@ public class UserController {
 		ModelAndView mode = new ModelAndView("index");
 		return mode;
 	}
-	
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public @ResponseBody
-	JSONResult login(User user) {
-		JSONResult result = new JSONResult();
-		User loginUser = userServer.getUser(user.getAccount());
-		if (loginUser != null
-				&& loginUser.getPassword().equals(user.getPassword())) {
-			result.setSuccess(true);
-		} else {
-			result.setSuccess(false);
-			result.setMsg("登录信息不正确，请确认后重新输入！");
-		}
-		return result;
-	}
 
 	@RequestMapping(value = "userManagement", method = RequestMethod.GET)
 	public ModelAndView loadUserManagement(HttpServletRequest request,
@@ -80,25 +65,77 @@ public class UserController {
 		return mode;
 	}
 	
-	@RequestMapping(value = "addUser", method = RequestMethod.GET)
-	public ModelAndView loadAddUser(HttpServletRequest request,
+	@RequestMapping(value = "loadHeaderContentPane", method = RequestMethod.GET)
+	public ModelAndView loadHeaderContentPane(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView mode = new ModelAndView("user/AddUser");
+		ModelAndView mode = new ModelAndView("header/HeaderContentPane");
 		return mode;
 	}
-
-	@RequestMapping(value = "editUser", method = RequestMethod.GET)
-	public ModelAndView loadEditUser( String account) throws Exception {
-		ModelAndView mode = new ModelAndView("user/EditUser");
-		User user = userServer.getUser(account);
+	
+	@RequestMapping(value = "loadUserContentPane", method = RequestMethod.GET)
+	public ModelAndView loadUserContentPane(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("user/UserContentPane");
+		return mode;
+	}
+	
+	@RequestMapping(value = "loadProductContentPane", method = RequestMethod.GET)
+	public ModelAndView loadProductContentPane(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("product/ProductContentPane");
+		return mode;
+	}
+	
+	@RequestMapping(value = "loadDriverContentPane", method = RequestMethod.GET)
+	public ModelAndView loadDriverContentPane(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("driver/DriverContentPane");
+		return mode;
+	}
+	
+	@RequestMapping(value = "LoadLoginDialog", method = RequestMethod.GET)
+	public ModelAndView LoadLoginDialog(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("user/LoginDialog");
+		return mode;
+	}
+	
+	@RequestMapping(value = "LoadAddUserDialog", method = RequestMethod.GET)
+	public ModelAndView LoadAddUserDialog(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mode = new ModelAndView("user/AddUserDialog");
+		return mode;
+	}
+	
+	@RequestMapping(value = "LoadEditUserDialog", method = RequestMethod.GET)
+	public ModelAndView LoadEditUserDialog(HttpServletRequest request,
+			HttpServletResponse response,String account) throws Exception {
+		ModelAndView mode = new ModelAndView("user/EditUserDialog");
+		account = new String(account.getBytes("ISO-8859-1"), "UTF-8");
+		User user = userServer.getUser(account);  
 		mode.addObject("user", user);
 		return mode;
+	}
+	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONResult login(User user) {
+		JSONResult result = new JSONResult();
+		User loginUser = userServer.getUser(user.getAccount());
+		if (loginUser != null
+				&& loginUser.getPassword().equals(user.getPassword())) {
+			result.setSuccess(true);
+		} else {
+			result.setSuccess(false);
+			result.setMsg("登录信息不正确，请确认后重新输入！");
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<User> getUsers(HttpServletRequest request,
-			HttpServletResponse response, User user) {
+			HttpServletResponse response, User user) throws Exception{
 		Page page = new Page();
 		String rangeHeader = request.getHeader("Range");
 		if (rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")) {

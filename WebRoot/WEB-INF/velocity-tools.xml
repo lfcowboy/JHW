@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <tools>
     <data type="boolean" key="xhtml" value="true"/>
     <data type="boolean" key="isSimple" value="true"/>
@@ -11,4 +10,7 @@
     <toolbox scope="session">
         <tool key="map" class="java.util.HashMap"/>
     </toolbox>
+   <toolbox scope="request">
+     <tool class="org.apache.velocity.tools.view.LinkTool" forceRelative="true" includeRequestParams="true"/>
+   </toolbox>
 </tools>

@@ -34,13 +34,20 @@
 		<property name="mapperInterface" value="cn.com.lfcowboy.driver.dao.UserDao" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
-		<bean id="userTypeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="userTypeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="cn.com.lfcowboy.driver.dao.UserTypeDao" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	<bean id="productMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="cn.com.lfcowboy.driver.dao.ProductDao" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	<bean id="userServer" class="cn.com.lfcowboy.driver.server.UserServerImpl">
 		<property name="userDao" ref="userMapper"></property>
 		<property name="userTypeDao" ref="userTypeMapper"></property>
+	</bean>
+	<bean id="productServer" class="cn.com.lfcowboy.driver.server.ProductServerImpl">
+		<property name="productDao" ref="productMapper"></property>
 	</bean>
 		<!--
 	<bean id="velocityConfigurer"

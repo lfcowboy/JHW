@@ -8,10 +8,10 @@ import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 
 public interface UserDao {
-	User getUser(String account);
-	List<User> getUsers(@Param("user")User user,@Param("page")Page page);
-	boolean updateUser(User user);
-	boolean addUser(User user);
-	boolean deleteUser(int id);
-	int getTotal(@Param("user")User user);
+	public User getUser(String account);
+	public List<User> getUsers(@Param("user")User user,@Param("page")Page page);
+	public boolean updateUser(User user);
+	public boolean addUser(User user);
+	public boolean deleteUser(int id);
+	public int getTotal(@Param("user")User user);
 }

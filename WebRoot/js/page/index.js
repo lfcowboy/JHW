@@ -5,7 +5,7 @@ require([
 	"dojo/parser",
 	"dojo/ready",
 	"dijit/registry",
-	"dijit/layout/ContentPane",
+	"dojox/layout/ContentPane",
 	"dojo/store/JsonRest"
 ], function(baseFx, lang, domStyle, parser, ready, registry, ContentPane, JsonRest){
 	ready(function(){

@@ -50,20 +50,6 @@ public class UserController {
 		ModelAndView mode = new ModelAndView("user/userManagement");
 		return mode;
 	}
-
-	@RequestMapping(value = "productManagement", method = RequestMethod.GET)
-	public ModelAndView loadProductManagement(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mode = new ModelAndView("product/productManagement");
-		return mode;
-	}
-	
-	@RequestMapping(value = "driverManagement", method = RequestMethod.GET)
-	public ModelAndView loadDriverManagement(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mode = new ModelAndView("driver/driverManagement");
-		return mode;
-	}
 	
 	@RequestMapping(value = "loadHeaderContentPane", method = RequestMethod.GET)
 	public ModelAndView loadHeaderContentPane(HttpServletRequest request,

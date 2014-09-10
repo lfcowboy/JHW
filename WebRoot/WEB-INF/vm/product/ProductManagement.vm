@@ -1,0 +1,60 @@
+<div style="width: auto; height: auto">
+	<script type="text/javascript">
+        require([
+         	"dojo/store/JsonRest",
+			"dojo/store/Memory",
+			"dojo/store/Cache",
+			"dojox/grid/DataGrid",
+			"dojo/data/ObjectStore",
+			"dojox/grid/cells",
+			"dojox/grid/_CheckBoxSelector"
+        ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
+            myStore = Cache(  
+                JsonRest({
+    				target:"dojo/getProductsAction", 
+    				headers: {"Content-Type": "application/json"}, 
+    				idProperty: "id",
+    				}),   
+                Memory({ idProperty: "id" })
+			);
+            dojo.ready(function(){
+          		var cells = [[
+                    new Cells.RowIndex({
+                        width : "4%"
+                    }),
+    				{name:"产品型号", field:"code", width: "7%"},
+					{name:"所属客户", field:"customerName", width: "7%"}
+    			]];
+    			gridLayout = [{
+    					type: "dojox.grid._CheckBoxSelector", width: "4%"
+    				}, 
+    				cells
+    			];
+                grid = new DataGrid({
+                	store: dataStore = ObjectStore({objectStore: myStore}),
+                	query: "",
+                    structure: gridLayout,
+    				selectionMode: 'multiple',
+    				rowsPerPage: 100,
+    				autoHeight: "5"
+                }, "productMgSearchForm.gridDiv");
+    			grid.startup();
+            });
+        });
+	</script>
+    <div id="productMgSearchForm.gridDiv" style="width: 100%; height: 80%;">
+	</div>
+    <div id="productMgSearchForm.editMode" style="width: 100%; height: 20%;">
+        <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.addButton">
+        	<span>添加</span>
+        </button>
+	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.editButton">
+			<span>编辑</span>
+		</button>
+	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.removeButton">
+			<span>删除</span>
+		</button>
+    </div>
+	<div id="message">
+	</div>
+</div>

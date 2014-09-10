@@ -13,7 +13,6 @@
         </style>
 		<script type="text/javascript" src="js/dojo/dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
 		<script type="text/javascript" src="js/page/index.js" charset="utf-8"></script>
-		</script>
     </head>
     <body class="claro">
 		<div id="preloader">Loading Application...</div>

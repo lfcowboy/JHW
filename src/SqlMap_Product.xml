@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.lfcowboy.driver.dao.ProductDao">
+	<select id="getProduct" parameterType="string" resultType="Product">
+		select *
+		from product where CODE=#{productCode}
+	</select>
+	<select id="getProducts" resultType="Product">
+		select
+		product.id,product.code,product.customer_id as customerId,user.name as customerName 
+		from product,user 
+		where product.customer_id = user.id
+		limit #{page.limit} offset #{page.offset}
+	</select>
+	<select id="getTotal" resultType="int">
+		select count(*) from product
+	</select>
+	<update id="updateProduct" parameterType="Product">
+		update product set code = #{code} where id=#{id};
+	</update>
+	<insert id="addProduct" parameterType="Product">
+		INSERT INTO
+		product ( code,
+		customer_id) VALUES (
+		#{code},
+		#{customer_id})
+	</insert>
+	<delete id="deleteProduct" parameterType="int">DELETE FROM product WHERE
+		id=#{id}
+	</delete>
+</mapper> 

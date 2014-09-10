@@ -1,1 +1,6 @@
-<span>产品</span>
+<button data-dojo-type="dijit/form/Button" id="productManagementBtn" type="button">
+	<span>产品管理</span>
+	<script type="dojo/on" data-dojo-event="click">
+		jhw.addTab("myTabContainer", "loadProductManagement.do", "产品管理", true);
+	</script>
+</button>

@@ -1,0 +1,116 @@
+<div style="width: auto; height: auto">
+	<div data-dojo-type="dijit/form/Form" data-dojo-id="productMgSearchForm" encType="multipart/form-data" style="width: 100%; height: 30%;">
+		<script type="dojo/on" data-dojo-event="show">
+            require([
+             	"dojo/store/JsonRest",
+				"dojo/store/Memory",
+				"dojo/store/Cache",
+				"dojox/grid/DataGrid",
+				"dojo/data/ObjectStore",
+				"dojox/grid/cells",
+				"dojox/grid/_CheckBoxSelector"
+            ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
+                myStore = Cache(  
+                    JsonRest({
+        				target:"dojo/getUsers", 
+        				headers: {"Content-Type": "application/json"}, 
+        				idProperty: "id",
+        				}),   
+                    Memory({ idProperty: "id" })
+				);
+                dojo.ready(function(){
+              		var cells = [[
+                        new Cells.RowIndex({
+                            width : "4%"
+                        }),
+        				{name:"产品型号", field:"account", width: "7%"},
+						{name:"芯片型号", field:"account", width: "7%"},
+						{name:"负责工程师", field:"account", width: "9%"},
+						{name:"程序名", field:"account", width: "7%"},
+						{name:"程序版本", field:"account", width: "7%"},
+						{name:"程序日期", field:"account", width: "7%"},
+						{name:"校验码", field:"account", width: "6%"},
+						{name:"所属客户", field:"account", width: "7%"},
+						{name:"客户确认", field:"account", width: "7%"},
+						{name:"可烧录次数", field:"account", width: "9%"},
+                        {name:"生产人员可下载", field:"name", width: "13%"},
+                        {name:"备注", field:"typeName", width: "4%"}	
+        			]];
+        			gridLayout = [{
+        					type: "dojox.grid._CheckBoxSelector", width: "4%"
+        				}, 
+        				cells
+        			];
+                    grid = new DataGrid({
+                    	store: dataStore = ObjectStore({objectStore: myStore}),
+                    	query: "",
+                        structure: gridLayout,
+        				selectionMode: 'multiple',
+        				rowsPerPage: 100,
+        				autoHeight: "5"
+                    }, "productMgSearchForm.gridDiv");
+        			grid.startup();
+                });
+            });
+    	</script>
+		<table style="width: 100%; height: 100%;">
+			<tr>
+	            <td>
+	                <label for="type">产品型号:</label>
+	            </td>
+	            <td>
+					<input type="text" id="productMgSearchForm.productCode" name="productCode"/>
+	            </td>
+	            <td>
+	                <label for="name">芯片型号:</label>
+	            </td>
+	            <td>
+	                <input type="text" id="productMgSearchForm.chipCode" name="chipCode"/>
+	            </td>
+	        </tr>
+			<tr>
+	            <td>
+	                <label for="type">负责工程师:</label>
+	            </td>
+	            <td>
+					<input type="text" id="productMgSearchForm.engineer" name="engineer" />
+	            </td>
+	            <td>
+	                <label for="name">所属客户:</label>
+	            </td>
+	            <td>
+	                <input type="text" id="productMgSearchForm.customer" name="customer"/>
+	            </td>
+	        </tr>
+	        <tr>
+	        	<td>
+				    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.searchBtn" name="searchBtn" type="button">查询
+						<script type="dojo/on" data-dojo-event="click">
+							grid.setQuery(userMgSearchForm.get("value"));
+                    	</script>
+					</button>
+	        	</td>
+	        	<td></td>
+	        	<td></td>
+	        	<td></td>
+	        </tr>
+	    </table>
+    </div>
+    <div id="productMgSearchForm.gridDiv" style="width: 100%; height: 50%;">
+	</div>
+    <div id="productMgSearchForm.editMode">
+        <div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">
+        </div>
+        <button data-dojo-type="dijit/form/Button" id="addButton">
+        	<span>添加</span>
+        </button>
+	    <button data-dojo-type="dijit/form/Button" id="editButton" type="button">
+			<span>添加</span>
+		</button>
+	    <button data-dojo-type="dijit/form/Button" id="removeButton" type="button">
+			<span>添加</span>
+		</button>
+    </div>
+	<div id="message">
+	</div>
+</div>

@@ -8,8 +8,10 @@ import cn.com.lfcowboy.driver.domain.Product;
 public interface ProductServer {
 	public Product getProduct(String productCode);
 
-	public List<Product> getProducts(Product product, Page page);
+	public List<Product> getProductsPaged(Product product, Page page);
 
+	public List<Product> getProducts(Product product);
+	
 	public boolean updateProduct(Product product);
 
 	public boolean addProduct(Product product);

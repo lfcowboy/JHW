@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.com.lfcowboy.driver.dao.VersionDao">
+	<select id="getVersions" parameterType="int" resultType="Version">select
+		version.id,version.version,version.sequence,version.file_path as filePath, version.remark, version.add_time as addTime, version.driver_id as driverId
+		from version where version.driver_id=#{driverId}</select>
+	<select id="getVersionsPaged" parameterType="int" resultType="Version">select
+		version.id,version.version,version.sequence,version.file_path as filePath, version.remark, version.add_time as addTime, version.driver_id as driverId
+		from version
+		where version.driver_id=#{driverId}
+		limit #{page.limit} offset #{page.offset}</select>
+	<select id="getTotal" parameterType="int" resultType="int">select count(*) from version where version.driver_id=#{driverId}</select>
+	<update id="updateVersion" parameterType="Version">update driver set product_code = #{productCode},chip_code = #{chipCode},engineer_id = #{engineerId} where name=#{name};</update>
+	<insert id="addVersion" parameterType="Version">INSERT INTO
+		version ( version,sequence,file_path,remark,add_time,driver_id) VALUES (
+		#{version},#{sequence},#{filePath},#{remark},#{addTime},#{driverId})</insert>
+	<delete id="deleteVersion" parameterType="int">DELETE FROM driver WHERE
+		id=#{id}</delete>
+</mapper> 

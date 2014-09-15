@@ -26,10 +26,15 @@ public class ProductServerImpl implements ProductServer{
 		}
 
 		@Override
-		public List<Product> getProducts(Product product, Page page) {
-			return productDao.getProducts(product, page);
+		public List<Product> getProductsPaged(Product product, Page page) {
+			return productDao.getProductsPaged(product, page);
 		}
 
+		@Override
+		public List<Product> getProducts(Product product) {
+			return productDao.getProducts(product);
+		}
+		
 		@Override
 		public boolean updateProduct(Product product) {
 			return productDao.updateProduct(product);

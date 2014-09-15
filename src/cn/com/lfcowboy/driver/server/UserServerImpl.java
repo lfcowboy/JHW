@@ -30,10 +30,15 @@ public class UserServerImpl implements UserServer {
 	}
 
 	@Override
-	public List<User> getUsers(User user, Page page) {
-		return userDao.getUsers(user, page);
+	public List<User> getUsersPaged(User user, Page page) {
+		return userDao.getUsersPaged(user, page);
 	}
 
+	@Override
+	public List<User> getUsers(User user) {
+		return userDao.getUsers(user);
+	}
+	
 	@Override
 	public List<UserType> getUserTypes() {
 		List<UserType> userTypes = userTypeDao.getUserTypes();

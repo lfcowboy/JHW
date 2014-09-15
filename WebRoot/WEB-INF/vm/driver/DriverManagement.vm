@@ -11,7 +11,7 @@
         ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
             myStore = Cache(  
                 JsonRest({
-    				target:"dojo/getProductsPagedAction", 
+    				target:"dojo/getDriversAction", 
     				headers: {"Content-Type": "application/json"}, 
     				idProperty: "id",
     				}),   
@@ -22,8 +22,12 @@
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
                     }),
-    				{name:"产品型号", field:"code", width: "41%"},
-					{name:"所属客户", field:"customerName", width: "41%"}
+    				{name:"程序名", field:"name", width: "16%"},
+					{name:"产品型号", field:"productCode", width: "15%"},
+					{name:"芯片型号", field:"chipCode", width: "15%"},
+					{name:"负责工程师", field:"engineerName", width: "16%"},
+					{name:"所属客户", field:"customerName", width: "15%"},
+					{name:"最新版本", field:"lastVersion", width: "15%"}
     			]];
     			gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"
@@ -37,50 +41,56 @@
     				selectionMode: 'multiple',
     				rowsPerPage: 100,
     				autoHeight: "5"
-                }, "productMgSearchForm.gridDiv");
+                }, "driverMgSearchForm.gridDiv");
     			grid.startup();
             });
         });
 	</script>
-    <div id="productMgSearchForm.gridDiv" style="width: 100%; height: 80%;">
+    <div id="driverMgSearchForm.gridDiv" style="width: 100%; height: 80%;">
 	</div>
-    <div id="productMgSearchForm.editMode" style="width: 100%; height: 20%;">
-        <div data-dojo-type="dijit/Dialog" id="addProductDialog" title="添加产品" href="LoadAddProductDialog.do">
+    <div id="driverMgSearchForm.editMode" style="width: 100%; height: 20%;">
+        <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.versionButton">
+        	<span>版本管理</span>
+        	<script type="dojo/on" data-dojo-event="click">
+				jhw.addTab("myTabContainer", "loadVersionManagement.do", "版本管理", true);
+        	</script>
+        </button>
+        <div data-dojo-type="dijit/Dialog" id="addDriverDialog" title="添加产品" href="LoadAddDriverDialog.do">
         </div>
-        <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.addButton">
+        <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.addButton">
         	<span>添加</span>
         	<script type="dojo/on" data-dojo-event="click">
-				if(dijit.byId("addProductDialog").isLoaded){
-					dijit.byId("addProductDialog").show();
-					dijit.byId("addProductDialog").refresh();
+				if(dijit.byId("addDriverDialog").isLoaded){
+					dijit.byId("addDriverDialog").show();
+					dijit.byId("addDriverDialog").refresh();
 				}else{
-					dijit.byId("addProductDialog").show();
+					dijit.byId("addDriverDialog").show();
 				}
         	</script>
         </button>
-        <div data-dojo-type="dijit/Dialog" id="editProductDialog" title="编辑产品" href="">
+        <div data-dojo-type="dijit/Dialog" id="editDriverDialog" title="编辑产品" href="">
         </div>
-	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.editButton">
+	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.editButton">
 			<span>编辑</span>
 			<script type="dojo/on" data-dojo-event="click">
 				var items = grid.selection.getSelected();
                 if (items.length == 0) {
-                    alert("请选择需要编辑的产品。");
+                    alert("请选择需要编辑的程序。");
                 }else if (items.length > 1) {
-					alert("只能选择一个产品。");
+					alert("只能选择一个程序。");
 				}else{
-					var code = items[0].code;
-					dijit.byId("editProductDialog").href="LoadEditProductDialog.do?code=" + code;
-    				if(dijit.byId("editProductDialog").isLoaded){
-    					dijit.byId("editProductDialog").show();
-    					dijit.byId("editProductDialog").refresh();
+					var name = items[0].name;
+					dijit.byId("editDriverDialog").href="LoadEditDriverDialog.do?name=" + name;
+    				if(dijit.byId("editDriverDialog").isLoaded){
+    					dijit.byId("editDriverDialog").show();
+    					dijit.byId("editDriverDialog").refresh();
     				}else{
-    					dijit.byId("editProductDialog").show();
+    					dijit.byId("editDriverDialog").show();
     				}
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.removeButton">
+	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton">
 			<span>删除</span>
 			<script type="dojo/on" data-dojo-event="click">
                 var items = grid.selection.getSelected();
@@ -92,7 +102,7 @@
                     });
 					saveTable();
                 }else{
-					alert("请选择需要删除的产品。");
+					alert("请选择需要删除的程序。");
 				}
                 var onSave = function(){
                 	dojo.byId("message").innerHTML = ("Save done.");

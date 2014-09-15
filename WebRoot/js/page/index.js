@@ -22,6 +22,24 @@ require([
 				headers: {"Content-Type": "application/json"}, 
 				idProperty: "id"
     		});
+    		
+ 	    	coustomerStore = new JsonRest({
+     			target: "getUsersAction.do?type=UserType_6",
+     			headers: {"Content-Type": "application/json"}, 
+     			idProperty: "id"
+     		});
+ 	    	
+ 	    	engineerStore = new JsonRest({
+     			target: "getUsersAction.do?type=UserType_4",
+     			headers: {"Content-Type": "application/json"}, 
+     			idProperty: "id"
+     		});
+ 	    	
+ 	    	productStore = new JsonRest({
+     			target: "getProductsAction.do",
+     			headers: {"Content-Type": "application/json"}, 
+     			idProperty: "code"
+     		});
 		});
 	});
 	

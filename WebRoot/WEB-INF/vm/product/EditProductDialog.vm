@@ -1,0 +1,54 @@
+<form data-dojo-type="dijit/form/Form" id="editProductForm">
+	<script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
+        dojo.stopEvent(e); // prevent the default submit
+        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+		dojo.xhrPost({
+            url: "editProductAction.do",
+			handleAs : "json",
+			form : "editProductForm",
+           	load: function(data){
+        		if(data["success"]){
+					dijit.byId('editProductDialog').hide();
+					grid.setQuery();
+        		}else{
+        			alert(data["msg"]);
+        		}							            		
+        	},
+        	error: function(data){					            		
+			}
+        });
+    </script>
+	<script type="dojo/on" data-dojo-event="show">
+        require([
+         	"dojo/data/ObjectStore"
+        ], function(ObjectStore){
+    		var customers = dijit.byId("editProductForm.customerId");
+    		customers.set("store",ObjectStore({objectStore: coustomerStore}));
+			customers.set("value", "$!product.customerId");
+        });
+	</script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<tr>
+            <td>
+                <label for="type">产品型号:</label>
+            </td>
+            <td>
+				<input type="text" id="editProductForm.code" value="$!product.code" name="code" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="account">所属客户:</label>
+            </td>
+            <td>
+				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="customerId" id="editProductForm.customerId" required="true"/>
+            </td>
+        </tr>
+    </table>
+    <button data-dojo-type="dijit/form/Button" type="submit" id="editProductForm.saveProductBtn">保存</button>
+	<button data-dojo-type="dijit/form/Button" type="button" id="editProductForm.cancelBtn">返回
+        <script type="dojo/on" data-dojo-event="click">
+            dijit.byId('editProductDialog').hide();
+    	</script>
+	</button>
+</form>

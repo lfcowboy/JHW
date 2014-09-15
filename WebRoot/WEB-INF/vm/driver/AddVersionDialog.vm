@@ -1,0 +1,61 @@
+<form data-dojo-type="dijit/form/Form" id="addVersionForm" enctype="multipart/form-data">
+	<script type="dojo/on" data-dojo-event="show">
+        dojo.connect(dijit.byId("myfile"), "onComplete", function(dataArray){			
+            dojo.forEach(dojo.isArray(dataArray) ? dataArray : [dataArray], function(resp){
+				dijit.byId('addVersionDialog').hide();
+            });
+        });
+	</script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<tr>
+            <td>
+                <label for="type">程序版本:</label>
+            </td>
+            <td>
+				<input type="text" id="addVersionForm.version" value="" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <label for="type">校验码:</label>
+            </td>
+            <td>
+				<input type="text" id="addVersionForm.sequence" value="" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="account">程序文件:</label>
+            </td>
+            <td>
+				<input name="myfile" multiple="false" type="file" dojoType="dojox/form/Uploader" label="选择" id="myfile" uploadOnSelect="false" url="addVersionAction.do"/>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <label for="type">备注:</label>
+            </td>
+			<td>
+				<textarea id="addVersionForm.remark" name="remark" cols="50" data-dojo-type="dijit/form/Textarea"></textarea>
+			</td>
+        </tr>
+    </table>
+	<div id="files" dojoType="dojox/form/uploader/FileList" uploaderId="myfile">
+	</div>
+    <button data-dojo-type="dijit/form/Button" type="submit" id="addVersionForm.saveUserBtn">保存
+        <script type="dojo/on" data-dojo-event="click">
+			var form = dijit.byId("addVersionForm");
+			if(!form.isValid()){ 
+				window.alert('Please fix fields'); 
+				return false; 
+			}
+    	</script>
+	</button>
+	<button data-dojo-type="dijit/form/Button" type="button" id="addVersionForm.cancelBtn">返回
+        <script type="dojo/on" data-dojo-event="click">
+			var form = dijit.byId("addVersionForm");
+			alert(form.isValid());
+            dijit.byId('addVersionDialog').hide();
+    	</script>
+	</button>
+</form>

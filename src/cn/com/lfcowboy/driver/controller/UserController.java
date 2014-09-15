@@ -118,9 +118,9 @@ public class UserController {
 		return result;
 	}
 	
-	@RequestMapping(value = "getUsers", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "getUsersPagedAction", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	List<User> getUsers(HttpServletRequest request,
+	List<User> getUsersPagedAction(HttpServletRequest request,
 			HttpServletResponse response, User user) throws Exception{
 		Page page = new Page();
 		String rangeHeader = request.getHeader("Range");
@@ -131,12 +131,19 @@ public class UserController {
 			page.setLimit(Integer.valueOf(resultRange[1]) - page.getOffset()
 					+ 1);
 		}
-		List<User> users = userServer.getUsers(user, page);
+		List<User> users = userServer.getUsersPaged(user, page);
 		int total = userServer.getTotal(user);
 		response.setHeader("Content-Range", rangeHeader + "/" + total);
 		return users;
 	}
-
+	
+	@RequestMapping(value = "getUsersAction", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	List<User> getUsersAction( User user) throws Exception{
+		List<User> users = userServer.getUsers(user);
+		return users;
+	}
+	
 	@RequestMapping(value = "addUsersAction", method = RequestMethod.POST)
 	public @ResponseBody JSONResult addUserAction(User user) {
 		JSONResult result = new JSONResult();
@@ -165,11 +172,11 @@ public class UserController {
 		return result;
 	}
 	
-	@RequestMapping(value = "getUsers", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody
-	boolean addUser(@RequestBody User user) {
-		return userServer.addUser(user);
-	}
+//	@RequestMapping(value = "getUsers", method = RequestMethod.POST, produces = "application/json")
+//	public @ResponseBody
+//	boolean addUser(@RequestBody User user) {
+//		return userServer.addUser(user);
+//	}
 
 	@RequestMapping(value = "getUsers/{id}", method = RequestMethod.PUT, produces = "application/json")
 	public @ResponseBody

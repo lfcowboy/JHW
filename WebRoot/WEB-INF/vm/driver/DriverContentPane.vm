@@ -1,1 +1,6 @@
-<span>驱动</span>
+<button data-dojo-type="dijit/form/Button" id="driverManagementBtn" type="button">
+	<span>程序管理</span>
+	<script type="dojo/on" data-dojo-event="click">
+		jhw.addTab("myTabContainer", "loadDriverManagement.do", "程序管理", true);
+	</script>
+</button>

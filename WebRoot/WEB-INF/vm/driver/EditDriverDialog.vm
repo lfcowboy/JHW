@@ -1,0 +1,73 @@
+<form data-dojo-type="dijit/form/Form" id="editDriverForm">
+	<script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
+        dojo.stopEvent(e); // prevent the default submit
+        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+		dojo.xhrPost({
+            url: "editDriverAction.do",
+			handleAs : "json",
+			form : "editDriverForm",
+           	load: function(data){
+        		if(data["success"]){
+					dijit.byId('editDriverDialog').hide();
+					grid.setQuery();
+        		}else{
+        			alert(data["msg"]);
+        		}							            		
+        	},
+        	error: function(data){					            		
+			}
+        });
+    </script>
+	<script type="dojo/on" data-dojo-event="show">
+        require([
+         	"dojo/data/ObjectStore"
+        ], function(ObjectStore){
+    		var products = dijit.byId("editDriverForm.productCode");
+    		products.set("store",ObjectStore({objectStore: productStore}));
+			products.set("value", "$!driver.productCode");
+    		var engineers = dijit.byId("editDriverForm.engineerId");
+    		engineers.set("store",ObjectStore({objectStore: engineerStore}));
+			engineers.set("value", "$!driver.engineerId");
+        });
+	</script>
+    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<tr>
+            <td>
+                <label for="type">程序名:</label>
+            </td>
+            <td>
+				<input type="text" id="editDriverForm.name" value="$!driver.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/ readOnly>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <label for="type">产品型号:</label>
+            </td>
+            <td>
+				<input data-dojo-type="dijit/form/Select" value="$!driver.productCode" data-dojo-props="labelAttr:'code',valueAttr:'code'" name="productCode" id="editDriverForm.productCode" required="true"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="account">负责工程师:</label>
+            </td>
+            <td>
+				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'name',valueAttr:'name'" name="engineerId" id="editDriverForm.engineerId" required="true"/>
+            </td>
+        </tr>
+		<tr>
+            <td>
+                <label for="type">芯片型号:</label>
+            </td>
+            <td>
+				<input type="text" id="editDriverForm.chipCode" value="$!driver.chipCode" name="chipCode" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+            </td>
+        </tr>
+    </table>
+    <button data-dojo-type="dijit/form/Button" type="submit" id="editDriverForm.saveDriverBtn">保存</button>
+	<button data-dojo-type="dijit/form/Button" type="button" id="editDriverForm.cancelBtn">返回
+        <script type="dojo/on" data-dojo-event="click">
+            dijit.byId('editDriverDialog').hide();
+    	</script>
+	</button>
+</form>

@@ -20,7 +20,7 @@
             ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
                 myStore = Cache(  
                     JsonRest({
-        				target:"dojo/getUsers", 
+        				target:"dojo/getUsersPagedAction", 
         				headers: {"Content-Type": "application/json"}, 
         				idProperty: "id",
         				}),   
@@ -98,7 +98,7 @@
 				}
         	</script>
         </button>
-        <div data-dojo-type="dijit/Dialog" id="editUserDialog" title="添加用户" href="">
+        <div data-dojo-type="dijit/Dialog" id="editUserDialog" title="编辑用户" href="">
         </div>
 	    <button data-dojo-type="dijit/form/Button" id="editButton" type="button">编辑
 			<script type="dojo/on" data-dojo-event="click">

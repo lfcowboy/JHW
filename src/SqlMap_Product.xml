@@ -35,4 +35,14 @@
 	<delete id="deleteProduct" parameterType="int">DELETE FROM product WHERE
 		id=#{id}
 	</delete>
+	<select id="getProductDriverPaged" resultType="Product">
+		select
+		product.id,product.code,product.customer_id as customerId,customer.name as customerName,newDriver.driverName,newDriver.CHIP_CODE as chipCode,newDriver.engineerName
+		from product left join (select driver.PRODUCT_CODE, driver.NAME as driverName,driver.CHIP_CODE ,engineer.NAME as engineerName from driver,user as engineer where driver.ENGINEER_ID = engineer.id) as newDriver on product.code = newDriver.PRODUCT_CODE,user as customer
+		where product.customer_id = customer.id
+		limit #{page.limit} offset #{page.offset}
+	</select>
+	<select id="getProductDriverPagedTotal" resultType="int">
+		select count(*) from product left join driver on product.code = driver.PRODUCT_CODE
+	</select>
 </mapper> 

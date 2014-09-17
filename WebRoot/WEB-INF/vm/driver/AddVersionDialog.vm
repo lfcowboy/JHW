@@ -1,8 +1,9 @@
 <form data-dojo-type="dijit/form/Form" id="addVersionForm" enctype="multipart/form-data">
 	<script type="dojo/on" data-dojo-event="show">
-        dojo.connect(dijit.byId("myfile"), "onComplete", function(dataArray){			
+        dojo.connect(dijit.byId("addVersionForm.driverFile"), "onComplete", function(dataArray){			
             dojo.forEach(dojo.isArray(dataArray) ? dataArray : [dataArray], function(resp){
 				dijit.byId('addVersionDialog').hide();
+				grid.setQuery({driverId:"$!driverId"});
             });
         });
 	</script>
@@ -28,7 +29,7 @@
                 <label for="account">程序文件:</label>
             </td>
             <td>
-				<input name="myfile" multiple="false" type="file" dojoType="dojox/form/Uploader" label="选择" id="myfile" uploadOnSelect="false" url="addVersionAction.do"/>
+				<input name="driverFile" multiple="false" type="file" dojoType="dojox/form/Uploader" label="选择" id="addVersionForm.driverFile" uploadOnSelect="false" url="addVersionAction.do?driverId=$!driverId"/>
             </td>
         </tr>
 		<tr>
@@ -40,7 +41,7 @@
 			</td>
         </tr>
     </table>
-	<div id="files" dojoType="dojox/form/uploader/FileList" uploaderId="myfile">
+	<div id="files" dojoType="dojox/form/uploader/FileList" uploaderId="addVersionForm.driverFile">
 	</div>
     <button data-dojo-type="dijit/form/Button" type="submit" id="addVersionForm.saveUserBtn">保存
         <script type="dojo/on" data-dojo-event="click">

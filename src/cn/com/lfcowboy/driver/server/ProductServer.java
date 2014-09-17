@@ -19,4 +19,8 @@ public interface ProductServer {
 	public boolean deleteProduct(int id);
 
 	public int getTotal(Product product);
+
+	public List<Product> getProductDriverPaged(Product product, Page page);
+
+	public int getProductDriverPagedTotal(Product product);
 }

@@ -7,8 +7,9 @@
 		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, user.name as engineerName
 		from driver,user where driver.name=#{name} and driver.engineer_id = user.id</select>
 	<select id="getDrivers" resultType="Driver">select
-		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, engineer.name as engineerName, product.customer_id as customerId, customer.name as customerName
-		from driver,user as engineer,product,user as customer
+		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, 
+		engineer.name as engineerName, product.customer_id as customerId, customer.name as customerName,newVersion.lastVersion
+		from driver left join (select DRIVER_ID,max(version) as lastVersion from version group by DRIVER_ID) as newVersion on driver.ID = newVersion.DRIVER_ID,user as engineer,product,user as customer
 		where driver.product_code=product.code and driver.engineer_id = engineer.id and product.customer_id = customer.id
 		limit #{page.limit} offset #{page.offset}</select>
 	<select id="getTotal" resultType="int">select count(*) from driver</select>

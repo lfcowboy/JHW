@@ -35,7 +35,7 @@
     			];
                 grid = new DataGrid({
                 	store: dataStore = ObjectStore({objectStore: myStore}),
-                	query: {driverId:3},
+                	query: {driverId:$!driverId},
                     structure: gridLayout,
     				selectionMode: 'multiple',
     				rowsPerPage: 100,
@@ -48,7 +48,7 @@
     <div id="versionMgSearchForm.gridDiv" style="width: 100%; height: 80%;">
 	</div>
     <div id="versionMgSearchForm.editMode" style="width: 100%; height: 20%;">
-        <div data-dojo-type="dijit/Dialog" id="addVersionDialog" title="添加产品" href="LoadAddVersionDialog.do">
+        <div data-dojo-type="dijit/Dialog" id="addVersionDialog" title="添加版本" href="LoadAddVersionDialog.do?driverId=$!driverId">
         </div>
         <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.addButton">
         	<span>添加</span>
@@ -68,12 +68,12 @@
 			<script type="dojo/on" data-dojo-event="click">
 				var items = grid.selection.getSelected();
                 if (items.length == 0) {
-                    alert("请选择需要编辑的程序。");
+                    alert("请选择需要编辑的版本。");
                 }else if (items.length > 1) {
-					alert("只能选择一个程序。");
+					alert("只能选择一个版本。");
 				}else{
-					var name = items[0].name;
-					dijit.byId("editVersionDialog").href="LoadEditVersionDialog.do?name=" + name;
+					var versionId = items[0].id;
+					dijit.byId("editVersionDialog").href="LoadEditVersionDialog.do?versionId=" + versionId;
     				if(dijit.byId("editVersionDialog").isLoaded){
     					dijit.byId("editVersionDialog").show();
     					dijit.byId("editVersionDialog").refresh();

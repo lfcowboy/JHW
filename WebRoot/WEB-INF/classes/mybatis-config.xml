@@ -17,5 +17,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="SqlMap_Product.xml" />
 		<mapper resource="SqlMap_Driver.xml" />
 		<mapper resource="SqlMap_Version.xml" />
+		<mapper resource="SqlMap_Product_Driver.xml" />
 	</mappers>
 </configuration>

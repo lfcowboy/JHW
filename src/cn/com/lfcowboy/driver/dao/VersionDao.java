@@ -8,7 +8,9 @@ import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.Version;
 
 public interface VersionDao {
-	public Version getVersions(int driverId);
+	public Version getVersion(int id);
+
+	public List<Version> getVersions(int driverId);
 
 	public List<Version> getVersionsPaged(@Param("driverId") int driverId,
 			@Param("page") Page page);

@@ -1,5 +1,5 @@
 <div style="width: auto; height: auto">
-	<div data-dojo-type="dijit/form/Form" data-dojo-id="productMgSearchForm" encType="multipart/form-data" style="width: 100%; height: 30%;">
+	<div data-dojo-type="dijit/form/Form" data-dojo-id="productMgSearchForm" style="width: 100%; height: 30%;">
 		<script type="dojo/on" data-dojo-event="show">
             require([
              	"dojo/store/JsonRest",
@@ -12,7 +12,7 @@
             ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
                 myStore = Cache(  
                     JsonRest({
-        				target:"dojo/getUsers", 
+        				target:"dojo/getProductDriverPagedAction", 
         				headers: {"Content-Type": "application/json"}, 
         				idProperty: "id",
         				}),   
@@ -23,18 +23,18 @@
                         new Cells.RowIndex({
                             width : "4%"
                         }),
-        				{name:"产品型号", field:"account", width: "7%"},
-						{name:"芯片型号", field:"account", width: "7%"},
-						{name:"负责工程师", field:"account", width: "9%"},
-						{name:"程序名", field:"account", width: "7%"},
+        				{name:"产品型号", field:"code", width: "7%"},
+						{name:"所属客户", field:"customerName", width: "7%"},
+						{name:"程序名", field:"driverName", width: "7%"},
+						{name:"芯片型号", field:"chipCode", width: "7%"},
+						{name:"负责工程师", field:"engineerName", width: "9%"},				
 						{name:"程序版本", field:"account", width: "7%"},
 						{name:"程序日期", field:"account", width: "7%"},
-						{name:"校验码", field:"account", width: "6%"},
-						{name:"所属客户", field:"account", width: "7%"},
+						{name:"校验码", field:"account", width: "6%"},						
 						{name:"客户确认", field:"account", width: "7%"},
 						{name:"可烧录次数", field:"account", width: "9%"},
                         {name:"生产人员可下载", field:"name", width: "13%"},
-                        {name:"备注", field:"typeName", width: "4%"}	
+                        {name:"备注", field:"typeName", width: "4%"}
         			]];
         			gridLayout = [{
         					type: "dojox.grid._CheckBoxSelector", width: "4%"

@@ -14,7 +14,7 @@ public interface ProductDao {
 			@Param("page") Page page);
 
 	public List<Product> getProducts(@Param("product") Product product);
-	
+
 	public boolean updateProduct(Product product);
 
 	public boolean addProduct(Product product);
@@ -22,4 +22,9 @@ public interface ProductDao {
 	public boolean deleteProduct(int id);
 
 	int getTotal(@Param("product") Product product);
+
+	public List<Product> getProductDriverPaged(
+			@Param("product") Product product, @Param("page") Page page);
+
+	int getProductDriverPagedTotal(@Param("product") Product product);
 }

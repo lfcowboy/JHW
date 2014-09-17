@@ -2,15 +2,25 @@ package cn.com.lfcowboy.driver.domain;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Version {
 	int id;
 	int driverId;
 	float version;
 	String sequence;
+	MultipartFile driverFile;
 	String filePath;
 	String remark;
 	Date addTime;
 	
+	public MultipartFile getDriverFile() {
+		return driverFile;
+	}
+
+	public void setDriverFile(MultipartFile driverFile) {
+		this.driverFile = driverFile;
+	}
 	public int getId() {
 		return id;
 	}

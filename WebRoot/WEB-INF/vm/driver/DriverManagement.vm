@@ -22,12 +22,13 @@
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
                     }),
-    				{name:"程序名", field:"name", width: "16%"},
-					{name:"产品型号", field:"productCode", width: "15%"},
-					{name:"芯片型号", field:"chipCode", width: "15%"},
-					{name:"负责工程师", field:"engineerName", width: "16%"},
-					{name:"所属客户", field:"customerName", width: "15%"},
-					{name:"最新版本", field:"lastVersion", width: "15%"}
+					{name:"程序名ID", field:"id", width: "13%"},
+    				{name:"程序名", field:"name", width: "13%"},
+					{name:"产品型号", field:"productCode", width: "13%"},
+					{name:"芯片型号", field:"chipCode", width: "13%"},
+					{name:"负责工程师", field:"engineerName", width: "14%"},
+					{name:"所属客户", field:"customerName", width: "13%"},
+					{name:"最新版本", field:"lastVersion", width: "13%"}
     			]];
     			gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"
@@ -52,7 +53,14 @@
         <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.versionButton">
         	<span>版本管理</span>
         	<script type="dojo/on" data-dojo-event="click">
-				jhw.addTab("myTabContainer", "loadVersionManagement.do", "版本管理", true);
+				var items = grid.selection.getSelected();
+                if (items.length == 0) {
+                    alert("请选择程序。");
+                }else if (items.length > 1) {
+					alert("只能选择一个程序。");
+				}else{
+					jhw.addTab("myTabContainer", "loadVersionManagement.do?driverId=" + items[0].id, "版本管理", true);
+				}				
         	</script>
         </button>
         <div data-dojo-type="dijit/Dialog" id="addDriverDialog" title="添加产品" href="LoadAddDriverDialog.do">

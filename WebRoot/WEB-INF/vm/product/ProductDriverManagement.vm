@@ -28,13 +28,13 @@
 						{name:"程序名", field:"driverName", width: "7%"},
 						{name:"芯片型号", field:"chipCode", width: "7%"},
 						{name:"负责工程师", field:"engineerName", width: "9%"},				
-						{name:"程序版本", field:"account", width: "7%"},
-						{name:"程序日期", field:"account", width: "7%"},
-						{name:"校验码", field:"account", width: "6%"},						
+						{name:"程序版本", field:"version", width: "7%"},
+						{name:"程序日期", field:"addTime", width: "7%"},
+						{name:"校验码", field:"sequence", width: "6%"},						
 						{name:"客户确认", field:"account", width: "7%"},
 						{name:"可烧录次数", field:"account", width: "9%"},
                         {name:"生产人员可下载", field:"name", width: "13%"},
-                        {name:"备注", field:"typeName", width: "4%"}
+                        {name:"备注", field:"remark", width: "4%"}
         			]];
         			gridLayout = [{
         					type: "dojox.grid._CheckBoxSelector", width: "4%"
@@ -102,13 +102,13 @@
         <div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">
         </div>
         <button data-dojo-type="dijit/form/Button" id="addButton">
-        	<span>添加</span>
+        	<span>客户确认</span>
         </button>
 	    <button data-dojo-type="dijit/form/Button" id="editButton" type="button">
-			<span>添加</span>
+			<span>设置烧录次数</span>
 		</button>
 	    <button data-dojo-type="dijit/form/Button" id="removeButton" type="button">
-			<span>添加</span>
+			<span>设置生产人员可下载</span>
 		</button>
     </div>
 	<div id="message">

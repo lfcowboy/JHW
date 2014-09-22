@@ -1,5 +1,7 @@
 package cn.com.lfcowboy.driver.domain;
 
+import java.util.Date;
+
 public class Product {
 	private int id;
 	private String code;
@@ -8,6 +10,42 @@ public class Product {
 	private String driverName;
 	private String chipCode;
 	private String engineerName;
+	private float version;
+	private Date addTime;
+	private String sequence;
+	String remark;
+
+	public float getVersion() {
+		return version;
+	}
+
+	public void setVersion(float version) {
+		this.version = version;
+	}
+
+	public Date getAddTime() {
+		return addTime;
+	}
+
+	public void setAddTime(Date addTime) {
+		this.addTime = addTime;
+	}
+
+	public String getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public String getDriverName() {
 		return driverName;

@@ -1,5 +1,6 @@
 package cn.com.lfcowboy.driver.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -57,8 +58,10 @@ public class Version {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Date getAddTime() {
-		return addTime;
+
+	public String getAddTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(addTime);
 	}
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;

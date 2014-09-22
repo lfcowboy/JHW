@@ -30,12 +30,12 @@
 					{name:"所属客户", field:"customerName", width: "13%"},
 					{name:"最新版本", field:"lastVersion", width: "13%"}
     			]];
-    			gridLayout = [{
+    			var gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"
     				}, 
     				cells
     			];
-                grid = new DataGrid({
+                driverGrid = new DataGrid({
                 	store: dataStore = ObjectStore({objectStore: myStore}),
                 	query: "",
                     structure: gridLayout,
@@ -43,7 +43,7 @@
     				rowsPerPage: 100,
     				autoHeight: "5"
                 }, "driverMgSearchForm.gridDiv");
-    			grid.startup();
+    			driverGrid.startup();
             });
         });
 	</script>
@@ -53,7 +53,7 @@
         <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.versionButton">
         	<span>版本管理</span>
         	<script type="dojo/on" data-dojo-event="click">
-				var items = grid.selection.getSelected();
+				var items = driverGrid.selection.getSelected();
                 if (items.length == 0) {
                     alert("请选择程序。");
                 }else if (items.length > 1) {
@@ -81,7 +81,7 @@
 	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.editButton">
 			<span>编辑</span>
 			<script type="dojo/on" data-dojo-event="click">
-				var items = grid.selection.getSelected();
+				var items = driverGrid.selection.getSelected();
                 if (items.length == 0) {
                     alert("请选择需要编辑的程序。");
                 }else if (items.length > 1) {
@@ -101,7 +101,7 @@
 	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton">
 			<span>删除</span>
 			<script type="dojo/on" data-dojo-event="click">
-                var items = grid.selection.getSelected();
+                var items = driverGrid.selection.getSelected();
                 if (items.length) {
                     dojo.forEach(items, function (selectedItem) {
                         if (selectedItem !== null) {
@@ -119,8 +119,8 @@
                 	alert("Error occurred.");
                 }
                 function saveTable() {
-                    if (grid.edit.isEditing()) {
-                    	grid.edit.apply();
+                    if (driverGrid.edit.isEditing()) {
+                    	driverGrid.edit.apply();
                     }
                     if (dataStore.isDirty()) {
                     	var result = dataStore.save({onComplete: onSave, onError: onSaveError});

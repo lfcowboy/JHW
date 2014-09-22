@@ -3,46 +3,45 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.ProductDao">
-	<select id="getProduct" parameterType="string" resultType="Product">
-		select *
-		from product where CODE=#{productCode}
-	</select>
-	<select id="getProducts" resultType="Product">
-		select
-		product.id,product.code 
-		from product
-	</select>
-	<select id="getProductsPaged" resultType="Product">
-		select
-		product.id,product.code,product.customer_id as customerId,user.name as customerName 
-		from product,user 
+	<select id="getProduct" parameterType="string" resultType="Product">select *
+		from product where CODE=#{productCode}</select>
+	<select id="getProducts" resultType="Product">select
+		product.id,product.code
+		from product</select>
+	<select id="getProductsPaged" resultType="Product">select
+		product.id,product.code,product.customer_id as customerId,user.name as customerName
+		from product,user
 		where product.customer_id = user.id
-		limit #{page.limit} offset #{page.offset}
-	</select>
-	<select id="getTotal" resultType="int">
-		select count(*) from product
-	</select>
-	<update id="updateProduct" parameterType="Product">
-		update product set customer_id = #{customerId} where code=#{code};
-	</update>
-	<insert id="addProduct" parameterType="Product">
-		INSERT INTO
+		limit #{page.limit} offset #{page.offset}</select>
+	<select id="getTotal" resultType="int">select count(*) from product</select>
+	<update id="updateProduct" parameterType="Product">update product set customer_id = #{customerId} where code=#{code};</update>
+	<insert id="addProduct" parameterType="Product">INSERT INTO
 		product ( code,
 		customer_id) VALUES (
 		#{code},
-		#{customerId})
-	</insert>
+		#{customerId})</insert>
 	<delete id="deleteProduct" parameterType="int">DELETE FROM product WHERE
-		id=#{id}
-	</delete>
-	<select id="getProductDriverPaged" resultType="Product">
-		select
-		product.id,product.code,product.customer_id as customerId,customer.name as customerName,newDriver.driverName,newDriver.CHIP_CODE as chipCode,newDriver.engineerName
-		from product left join (select driver.PRODUCT_CODE, driver.NAME as driverName,driver.CHIP_CODE ,engineer.NAME as engineerName from driver,user as engineer where driver.ENGINEER_ID = engineer.id) as newDriver on product.code = newDriver.PRODUCT_CODE,user as customer
-		where product.customer_id = customer.id
-		limit #{page.limit} offset #{page.offset}
-	</select>
-	<select id="getProductDriverPagedTotal" resultType="int">
-		select count(*) from product left join driver on product.code = driver.PRODUCT_CODE
-	</select>
+		id=#{id}</delete>
+	<select id="getProductDriverPaged" resultType="Product">select
+		product.id,
+		product.code,
+		product.customer_id as customerId,
+		customer.name as customerName,
+		driver.NAME as driverName,
+		driver.CHIP_CODE as chipCode,
+		engineer.NAME as engineerName,
+		version.VERSION,
+		version.ADD_TIME as addTime,
+		version.SEQUENCE,
+		version.REMARK
+		from
+		product,driver,version,user as customer, user as engineer
+		where
+		product.CODE=driver.PRODUCT_CODE and driver.ID = version.DRIVER_ID and product.CUSTOMER_ID = customer.ID and driver.ENGINEER_ID = engineer.ID
+		limit #{page.limit} offset #{page.offset}</select>
+	<select id="getProductDriverPagedTotal" resultType="int">select count(*)
+		from
+		product,driver,version,user as customer, user as engineer
+		where
+		product.CODE=driver.PRODUCT_CODE and driver.ID = version.DRIVER_ID and product.CUSTOMER_ID = customer.ID and driver.ENGINEER_ID = engineer.ID</select>
 </mapper> 

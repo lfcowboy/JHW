@@ -9,8 +9,12 @@
 			"dojox/grid/cells",
 			"dojox/grid/_CheckBoxSelector",
 			"dojo/date/locale",
-			"dojo/date/stamp"
-        ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector){
+			"dojo/date/stamp",
+			"dojo/request/iframe"
+        ], function(JsonRest,Memory,Cache,DataGrid,ObjectStore,Cells,CheckBoxSelector,locale,stamp,iframe){
+    		download = function(versionId) {
+				iframe.post("downloadFile.do?versionId=" + versionId,{timeout: 1000});
+            };
             myStore = Cache(  
                 JsonRest({
     				target:"dojo/getVersionsAction", 
@@ -20,6 +24,11 @@
                 Memory({ idProperty: "id" })
 			);
             dojo.ready(function(){
+                var myFormatters = {
+                   formatLink : function(value, index) {				   
+                        return "<a>" + value + "</a>";
+                   }
+                };
           		var cells = [[
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
@@ -27,7 +36,7 @@
     				{name:"程序版本", field:"version", width: "18%"},
 					{name:"上传时间", field:"addTime", width: "18%"},
 					{name:"校验码", field:"sequence", width: "18%"},
-					{name:"文件路径", field:"filePath", width: "20%"},
+					{name:"文件路径", field:"fileName", width: "20%", formatter:"formatLink"},
 					{name:"备注", field:"remark", width: "18%"}
     			]];
     			gridLayout = [{
@@ -35,15 +44,17 @@
     				}, 
     				cells
     			];
-                grid = new DataGrid({
+                versionGrid = new DataGrid({
                 	store: dataStore = ObjectStore({objectStore: myStore}),
                 	query: {driverId:$!driverId},
                     structure: gridLayout,
     				selectionMode: 'multiple',
     				rowsPerPage: 100,
-    				autoHeight: "5"
+    				autoHeight: "5", 
+					escapeHTMLInData:"false",
+					formatterScope:myFormatters
                 }, "versionMgSearchForm.gridDiv");
-    			grid.startup();
+    			versionGrid.startup();				
             });
         });
 	</script>
@@ -63,12 +74,13 @@
 				}
         	</script>
         </button>
+		<!--
         <div data-dojo-type="dijit/Dialog" id="editVersionDialog" title="编辑产品" href="">
         </div>
 	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.editButton">
 			<span>编辑</span>
 			<script type="dojo/on" data-dojo-event="click">
-				var items = grid.selection.getSelected();
+				var items = versionGrid.selection.getSelected();
                 if (items.length == 0) {
                     alert("请选择需要编辑的版本。");
                 }else if (items.length > 1) {
@@ -85,34 +97,18 @@
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.removeButton">
-			<span>删除</span>
+		-->
+	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.downloadButton">
+			<span>下载</span>
 			<script type="dojo/on" data-dojo-event="click">
-                var items = grid.selection.getSelected();
-                if (items.length) {
-                    dojo.forEach(items, function (selectedItem) {
-                        if (selectedItem !== null) {
-                            dataStore.deleteItem(selectedItem);
-                        }
-                    });
-					saveTable();
-                }else{
-					alert("请选择需要删除的程序。");
+				var items = versionGrid.selection.getSelected();
+                if (items.length == 0) {
+                    alert("请选择需要下载的版本。");
+                }else if (items.length > 1) {
+					alert("只能选择一个版本。");
+				}else{
+					download(items[0].id);
 				}
-                var onSave = function(){
-                	dojo.byId("message").innerHTML = ("Save done.");
-                }
-                var onSaveError = function(error){
-                	alert("Error occurred.");
-                }
-                function saveTable() {
-                    if (grid.edit.isEditing()) {
-                    	grid.edit.apply();
-                    }
-                    if (dataStore.isDirty()) {
-                    	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
-                    }
-                }
         	</script>
 		</button>
     </div>

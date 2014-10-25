@@ -3,7 +3,7 @@
         dojo.connect(dijit.byId("addVersionForm.driverFile"), "onComplete", function(dataArray){			
             dojo.forEach(dojo.isArray(dataArray) ? dataArray : [dataArray], function(resp){
 				dijit.byId('addVersionDialog').hide();
-				grid.setQuery({driverId:"$!driverId"});
+				versionGrid.setQuery({driverId:"$!driverId"});
             });
         });
 	</script>
@@ -13,7 +13,7 @@
                 <label for="type">程序版本:</label>
             </td>
             <td>
-				<input type="text" id="addVersionForm.version" value="" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="addVersionForm.version" value="$!lastVersion" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
             </td>
         </tr>
 		<tr>

@@ -55,4 +55,8 @@ public class VersionServerImpl implements VersionServer {
 		return versionDao.getTotal(driverId);
 	}
 
+	@Override
+	public String getMaxVersion(int driverId) {
+		return versionDao.getMaxVersion(driverId);
+	}
 }

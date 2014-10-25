@@ -9,7 +9,7 @@
            	load: function(data){
         		if(data["success"]){
 					dijit.byId('addDriverDialog').hide();
-					grid.setQuery();
+					driverGrid.setQuery();
         		}else{
         			alert(data["msg"]);
         		}							            		

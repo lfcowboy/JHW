@@ -1,6 +1,9 @@
 package cn.com.lfcowboy.driver.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -81,6 +84,19 @@ public class DriverController {
 	public ModelAndView LoadAddVersionDialog(HttpServletRequest request,
 			HttpServletResponse response, String driverId) throws Exception {
 		ModelAndView mode = new ModelAndView("driver/AddVersionDialog");
+		String lastVersion = versionServer.getMaxVersion(Integer
+				.valueOf(driverId));
+		float tmp = 0f;
+		if (lastVersion != null) {
+			tmp = Float.parseFloat(lastVersion);
+			if (lastVersion.length() == 5) {
+				tmp = 0.001f + tmp;
+			} else {
+				tmp = 0.1f + tmp;
+			}
+		}
+		lastVersion = String.format("%.3f", tmp);
+		mode.addObject("lastVersion", lastVersion);
 		mode.addObject("driverId", driverId);
 		return mode;
 	}
@@ -174,9 +190,6 @@ public class DriverController {
 			throws IOException {
 		JSONResult result = new JSONResult();
 		// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
-		String realPath = request.getSession().getServletContext()
-				.getRealPath("/WEB-INF/upload");
-		String filePath = "/" + version.getVersion();
 		if (version.getDriverFile() == null) {
 			System.out.println("文件未上传");
 		} else {
@@ -188,11 +201,14 @@ public class DriverController {
 					+ version.getDriverFile().getOriginalFilename());
 			System.out.println("========================================");
 			// 这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
+			String realPath = request.getSession().getServletContext()
+					.getRealPath("/upload");
+			String filePath = "/" + version.getDriverId();
+			String fileName = "D" + version.getDriverId() + "V"
+					+ version.getVersion() + ".txt";
 			FileUtils.copyInputStreamToFile(version.getDriverFile()
-					.getInputStream(), new File(realPath + filePath, version
-					.getDriverFile().getOriginalFilename()));
-			version.setFilePath(filePath + "/"
-					+ version.getDriverFile().getName());
+					.getInputStream(), new File(realPath + filePath, fileName));
+			version.setFilePath(fileName);
 		}
 		// Version versionExist =
 		// versionServer.getVersions(version.getDriverId());
@@ -204,5 +220,43 @@ public class DriverController {
 		// result.setSuccess(true);
 		// }
 		return result;
+	}
+
+	@RequestMapping(value = "downloadFile", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView downloadFile(int versionId, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		Version version = versionServer.getVersion(versionId);
+		String fileName = version.getFileName();
+		String contentType = "text/html;charset=UTF-8";
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = request
+				.getSession()
+				.getServletContext()
+				.getRealPath(
+						"/upload" + "/" + version.getDriverId() + "/"
+								+ fileName);
+
+		long fileLength = new File(downLoadPath).length();
+
+		response.setContentType(contentType);
+		response.setHeader("Content-disposition", "attachment; filename="
+				+ new String(fileName.getBytes("UTF-8"), "UTF-8"));
+		response.setHeader("Content-Length", String.valueOf(fileLength));
+
+		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+		bos = new BufferedOutputStream(response.getOutputStream());
+		byte[] buff = new byte[2048];
+		int bytesRead;
+		while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+			bos.write(buff, 0, bytesRead);
+		}
+		bis.close();
+		bos.close();
+		return null;
 	}
 }

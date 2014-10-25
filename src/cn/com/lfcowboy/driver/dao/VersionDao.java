@@ -22,4 +22,6 @@ public interface VersionDao {
 	public boolean deleteVersion(int id);
 
 	int getTotal(@Param("driverId") int driverId);
+
+	String getMaxVersion(@Param("driverId") int driverId);
 }

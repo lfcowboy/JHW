@@ -8,10 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class Version {
 	int id;
 	int driverId;
-	float version;
+	String version;
 	String sequence;
 	MultipartFile driverFile;
-	String filePath;
+	String fileName;
 	String remark;
 	Date addTime;
 	
@@ -34,10 +34,12 @@ public class Version {
 	public void setDriverId(int driverId) {
 		this.driverId = driverId;
 	}
-	public float getVersion() {
+
+	public String getVersion() {
 		return version;
 	}
-	public void setVersion(float version) {
+
+	public void setVersion(String version) {
 		this.version = version;
 	}
 	public String getSequence() {
@@ -46,11 +48,12 @@ public class Version {
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
 	}
-	public String getFilePath() {
-		return filePath;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
+
+	public void setFilePath(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getRemark() {
 		return remark;

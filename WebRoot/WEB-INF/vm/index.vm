@@ -11,7 +11,7 @@
             }
             body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
         </style>
-		<script type="text/javascript" src="js/dojo/dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false"></script>
+		<script type="text/javascript" src="js/dojo/dojo/dojo.js" data-dojo-config="async: true, parseOnLoad: false, isDebug: true"></script>
 		<script type="text/javascript" src="js/page/index.js" charset="utf-8"></script>
     </head>
     <body class="claro">

@@ -13,6 +13,7 @@
 		jhw.addTab("myTabContainer", "userManagement.do", "用户管理", true);
 	</script>
 </button>
+<!--
 <div dojoType="dijit/layout/StackContainer" id="stackContainer">
 	<div dojoType="dijit.layout.ContentPane" title="用户管理">
         This is the content in stack 1.
@@ -24,5 +25,6 @@
         This is the content in stack 3.
     </div>
 </div>
+-->
 <div dojoType="dijit/layout/StackController" containerId="stackContainer">
 </div>

@@ -2,6 +2,7 @@
     <head>
         <title>金华微电子芯片程序管理系统</title>
         <link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css" />
+		<link rel="stylesheet" href="js/dojo/dojox/form/resources/UploaderFileList.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style type="text/css">
 			@import "js/dojo/dojox/grid/resources/Grid.css";

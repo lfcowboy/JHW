@@ -41,7 +41,7 @@
                     structure: gridLayout,
     				selectionMode: 'multiple',
     				rowsPerPage: 100,
-    				autoHeight: "5"
+    				autoHeight: "15"
                 }, "driverMgSearchForm.gridDiv");
     			driverGrid.startup();
             });

@@ -9,12 +9,13 @@ public class Driver {
 	String chipCode;
 	int customerId;	
 	String customerName;
-	float lastVersion;
+	String lastVersion;
 	
-	public float getLastVersion() {
+	public String getLastVersion() {
 		return lastVersion;
 	}
-	public void setLastVersion(float lastVersion) {
+
+	public void setLastVersion(String lastVersion) {
 		this.lastVersion = lastVersion;
 	}
 	public int getCustomerId() {

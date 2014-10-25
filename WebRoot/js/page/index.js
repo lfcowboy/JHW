@@ -46,19 +46,14 @@ require([
 	lang.setObject("jhw.basename", function(path, suffix) {
 	    // Returns the filename component of the path  
 	    var b = path.replace(/^.*[\/\\]/g, '');
-	 
-	    if (typeof(suffix) == 'string' && b.substr(b.length - suffix.length) == suffix) {
-	        b = b.substr(0, b.length - suffix.length);
-	    }
-	 
-	    return b;
+	    return b.split(suffix)[0];
 	});
 	
 	lang.setObject("jhw.addTab", function(tabContainer, href, title, closable){
 		if (typeof tabContainer === "string"){
 			tabContainer = registry.byId(tabContainer);
 		}
-		var tabName = "tab" + jhw.basename(href,".vm"),
+		var tabName = "tab" + jhw.basename(href,".do"),
 			tab = registry.byId(tabName);
 		if (typeof tab === "undefined"){
 			tab = new ContentPane({
@@ -69,6 +64,9 @@ require([
 				style: "padding: 0;"
 			});
 			tabContainer.addChild(tab);
+		}else{
+			tab.href=href;
+			tab.refresh();
 		}
 		tabContainer.selectChild(tab);
 	});

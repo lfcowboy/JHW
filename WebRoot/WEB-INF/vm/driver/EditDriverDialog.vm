@@ -36,7 +36,7 @@
                 <label for="type">程序名:</label>
             </td>
             <td>
-				<input type="text" id="editDriverForm.name" value="$!driver.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/ readOnly>
+				<input type="text" id="editDriverForm.name" value="$!driver.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
 		<tr>
@@ -60,7 +60,7 @@
                 <label for="type">芯片型号:</label>
             </td>
             <td>
-				<input type="text" id="editDriverForm.chipCode" value="$!driver.chipCode" name="chipCode" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="editDriverForm.chipCode" value="$!driver.chipCode" name="chipCode" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
             </td>
         </tr>
     </table>

@@ -105,11 +105,12 @@ public class UserController {
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public @ResponseBody
-	JSONResult login(User user) {
+	JSONResult login(User user, HttpServletRequest req, HttpServletResponse resp) {
 		JSONResult result = new JSONResult();
 		User loginUser = userServer.getUser(user.getAccount());
 		if (loginUser != null
 				&& loginUser.getPassword().equals(user.getPassword())) {
+			req.getSession().setAttribute("loginUser", loginUser);
 			result.setSuccess(true);
 		} else {
 			result.setSuccess(false);
@@ -122,6 +123,7 @@ public class UserController {
 	public @ResponseBody
 	List<User> getUsersPagedAction(HttpServletRequest request,
 			HttpServletResponse response, User user) throws Exception{
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		Page page = new Page();
 		String rangeHeader = request.getHeader("Range");
 		if (rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")) {

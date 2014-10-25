@@ -1,5 +1,5 @@
 <div style="width: auto; height: auto">
-	<div data-dojo-type="dijit/form/Form" data-dojo-id="productMgSearchForm" style="width: 100%; height: 30%;">
+	<div data-dojo-type="dijit/form/Form" data-dojo-id="productDriverMgSearchForm" style="width: 100%; height: 30%;">
 		<script type="dojo/on" data-dojo-event="show">
             require([
              	"dojo/store/JsonRest",
@@ -48,7 +48,7 @@
         				selectionMode: 'multiple',
         				rowsPerPage: 100,
         				autoHeight: "5"
-                    }, "productMgSearchForm.gridDiv");
+                    }, "productDriverMgSearchForm.gridDiv");
         			grid.startup();
                 });
             });
@@ -59,13 +59,13 @@
 	                <label for="type">产品型号:</label>
 	            </td>
 	            <td>
-					<input type="text" id="productMgSearchForm.productCode" name="productCode"/>
+					<input type="text" id="productDriverMgSearchForm.productCode" name="productCode"/>
 	            </td>
 	            <td>
 	                <label for="name">芯片型号:</label>
 	            </td>
 	            <td>
-	                <input type="text" id="productMgSearchForm.chipCode" name="chipCode"/>
+	                <input type="text" id="productDriverMgSearchForm.chipCode" name="chipCode"/>
 	            </td>
 	        </tr>
 			<tr>
@@ -73,18 +73,18 @@
 	                <label for="type">负责工程师:</label>
 	            </td>
 	            <td>
-					<input type="text" id="productMgSearchForm.engineer" name="engineer" />
+					<input type="text" id="productDriverMgSearchForm.engineer" name="engineer" />
 	            </td>
 	            <td>
 	                <label for="name">所属客户:</label>
 	            </td>
 	            <td>
-	                <input type="text" id="productMgSearchForm.customer" name="customer"/>
+	                <input type="text" id="productDriverMgSearchForm.customer" name="customer"/>
 	            </td>
 	        </tr>
 	        <tr>
 	        	<td>
-				    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.searchBtn" name="searchBtn" type="button">查询
+				    <button data-dojo-type="dijit/form/Button" id="productDriverMgSearchForm.searchBtn" name="searchBtn" type="button">查询
 						<script type="dojo/on" data-dojo-event="click">
 							grid.setQuery(userMgSearchForm.get("value"));
                     	</script>
@@ -96,9 +96,9 @@
 	        </tr>
 	    </table>
     </div>
-    <div id="productMgSearchForm.gridDiv" style="width: 100%; height: 50%;">
+    <div id="productDriverMgSearchForm.gridDiv" style="width: 100%; height: 50%;">
 	</div>
-    <div id="productMgSearchForm.editMode">
+    <div id="productDriverMgSearchForm.editMode">
         <div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">
         </div>
         <button data-dojo-type="dijit/form/Button" id="addButton">

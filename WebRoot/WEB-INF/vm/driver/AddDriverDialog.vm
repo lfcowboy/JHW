@@ -1,7 +1,7 @@
 <form data-dojo-type="dijit/form/Form" id="addDriverForm">
     <script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
         dojo.stopEvent(e); // prevent the default submit
-        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+        if(!this.isValid()){ window.alert('输入不正确,请确认.'); return; }								
 		dojo.xhrPost({
             url: "addDriverAction.do",
 			handleAs : "json",
@@ -34,7 +34,7 @@
                 <label for="type">程序名:</label>
             </td>
             <td>
-				<input type="text" id="addDriverForm.name" value="" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="addDriverForm.name" value="" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, regExp:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'"/>
             </td>
         </tr>
 		<tr>
@@ -58,7 +58,7 @@
                 <label for="type">芯片型号:</label>
             </td>
             <td>
-				<input type="text" id="addDriverForm.chipCode" value="" name="chipCode" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="addDriverForm.chipCode" value="" name="chipCode" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
             </td>
         </tr>
     </table>

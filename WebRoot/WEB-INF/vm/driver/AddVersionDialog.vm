@@ -13,7 +13,7 @@
                 <label for="type">程序版本:</label>
             </td>
             <td>
-				<input type="text" id="addVersionForm.version" value="$!lastVersion" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="addVersionForm.version" value="$!lastVersion" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
 		<tr>
@@ -21,7 +21,7 @@
                 <label for="type">校验码:</label>
             </td>
             <td>
-				<input type="text" id="addVersionForm.sequence" value="" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="addVersionForm.sequence" value="" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:5, regExp:'[A-Za-z0-9]*', invalidMessage:'支持:英文,数字'"/>
             </td>
         </tr>
         <tr>
@@ -45,11 +45,20 @@
 	</div>
     <button data-dojo-type="dijit/form/Button" type="submit" id="addVersionForm.saveUserBtn">保存
         <script type="dojo/on" data-dojo-event="click">
+			var file = dijit.byId("addVersionForm.driverFile").getFileList();
+			if(file.length<1){
+				window.alert('请选择程序文件.'); 
+				return false; 
+			}
+			if(file[0].type != "text/plain"){
+				window.alert('请选择txt文件.'); 
+				return false; 
+			}
 			var form = dijit.byId("addVersionForm");
 			if(!form.isValid()){ 
 				window.alert('Please fix fields'); 
 				return false; 
-			}
+			}			
     	</script>
 	</button>
 	<button data-dojo-type="dijit/form/Button" type="button" id="addVersionForm.cancelBtn">返回

@@ -8,46 +8,46 @@ import cn.com.lfcowboy.driver.dao.DriverDao;
 import cn.com.lfcowboy.driver.domain.Driver;
 import cn.com.lfcowboy.driver.domain.Page;
 
-public class DriverServerImpl implements DriverServer{
-		private DriverDao driverDao;
+public class DriverServerImpl implements DriverServer {
+	private DriverDao driverDao;
 
-		public DriverDao getDriverDao() {
-			return driverDao;
-		}
+	public DriverDao getDriverDao() {
+		return driverDao;
+	}
 
-		@Autowired
-		public void setDriverDao(DriverDao driverDao) {
-			this.driverDao = driverDao;
-		}
+	@Autowired
+	public void setDriverDao(DriverDao driverDao) {
+		this.driverDao = driverDao;
+	}
 
-		@Override
-		public Driver getDriver(String driverCode) {
-			return driverDao.getDriver(driverCode);
-		}
+	@Override
+	public Driver getDriver(int driverId) {
+		return driverDao.getDriver(driverId);
+	}
 
-		@Override
-		public List<Driver> getDrivers(Driver driver, Page page) {
-			return driverDao.getDrivers(driver, page);
-		}
+	@Override
+	public List<Driver> getDrivers(Driver driver, Page page) {
+		return driverDao.getDrivers(driver, page);
+	}
 
-		@Override
-		public boolean updateDriver(Driver driver) {
-			return driverDao.updateDriver(driver);
-		}
+	@Override
+	public boolean updateDriver(Driver driver) {
+		return driverDao.updateDriver(driver);
+	}
 
-		@Override
-		public boolean addDriver(Driver driver) {
-			return driverDao.addDriver(driver);
-		}
+	@Override
+	public boolean addDriver(Driver driver) {
+		return driverDao.addDriver(driver);
+	}
 
-		@Override
-		public boolean deleteDriver(int id) {
-			return driverDao.deleteDriver(id);
-		}
+	@Override
+	public boolean deleteDriver(int id) {
+		return driverDao.deleteDriver(id);
+	}
 
-		@Override
-		public int getTotal(Driver driver) {
-			return driverDao.getTotal(driver);
-		}
+	@Override
+	public int getTotal(Driver driver) {
+		return driverDao.getTotal(driver);
+	}
 
 }

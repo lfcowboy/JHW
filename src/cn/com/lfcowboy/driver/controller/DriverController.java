@@ -65,9 +65,9 @@ public class DriverController {
 
 	@RequestMapping(value = "LoadEditDriverDialog", method = RequestMethod.GET)
 	public ModelAndView LoadEditDriverDialog(HttpServletRequest request,
-			HttpServletResponse response, String name) throws Exception {
+			HttpServletResponse response, int id) throws Exception {
 		ModelAndView mode = new ModelAndView("driver/EditDriverDialog");
-		Driver driver = driverServer.getDriver(name);
+		Driver driver = driverServer.getDriver(id);
 		mode.addObject("driver", driver);
 		return mode;
 	}
@@ -152,7 +152,7 @@ public class DriverController {
 	public @ResponseBody
 	JSONResult addDriverAction(Driver driver) {
 		JSONResult result = new JSONResult();
-		Driver driverExist = driverServer.getDriver(driver.getName());
+		Driver driverExist = driverServer.getDriver(driver.getId());
 		if (driverExist != null) {
 			result.setSuccess(false);
 			result.setMsg("程序名已存在，请使用其他程序名！");
@@ -167,7 +167,7 @@ public class DriverController {
 	public @ResponseBody
 	JSONResult editDriverAction(Driver driver) {
 		JSONResult result = new JSONResult();
-		Driver editUser = driverServer.getDriver(driver.getName());
+		Driver editUser = driverServer.getDriver(driver.getId());
 		if (editUser == null) {
 			result.setSuccess(false);
 			result.setMsg("该程序不存在，请重试查找！");

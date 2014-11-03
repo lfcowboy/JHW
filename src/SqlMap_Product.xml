@@ -3,8 +3,7 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.ProductDao">
-	<select id="getProduct" parameterType="string" resultType="Product">select *
-		from product where CODE=#{productCode}</select>
+	<select id="getProduct" parameterType="string" resultType="Product">select product.id,product.code,product.customer_id as customerId from product where CODE=#{productCode}</select>
 	<select id="getProducts" resultType="Product">select
 		product.id,product.code
 		from product</select>

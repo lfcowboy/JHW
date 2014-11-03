@@ -87,8 +87,8 @@
                 }else if (items.length > 1) {
 					alert("只能选择一个程序。");
 				}else{
-					var name = items[0].name;
-					dijit.byId("editDriverDialog").href="LoadEditDriverDialog.do?name=" + name;
+					var id = items[0].id;
+					dijit.byId("editDriverDialog").href="LoadEditDriverDialog.do?id=" + id;
     				if(dijit.byId("editDriverDialog").isLoaded){
     					dijit.byId("editDriverDialog").show();
     					dijit.byId("editDriverDialog").refresh();
@@ -98,7 +98,7 @@
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton">
+	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton" style="display:none;">
 			<span>删除</span>
 			<script type="dojo/on" data-dojo-event="click">
                 var items = driverGrid.selection.getSelected();

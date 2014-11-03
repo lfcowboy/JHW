@@ -36,7 +36,7 @@
 	                <label for="account">用户名:</label>
 	            </td>
 	            <td>
-	                <input type="text" id="account" name="account" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+	                <input type="text" id="account" name="account" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
 	            </td>
 	        </tr>
 	        <tr>
@@ -44,7 +44,7 @@
 	                <label for="dob">密码:</label>
 	            </td>
 	            <td>
-	                <input type="password" id="password" name="password" data-dojo-type="dijit/form/ValidationTextBox"/>
+	                <input type="password" id="password" name="password" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
 	            </td>
 	        </tr>
 	    </table>

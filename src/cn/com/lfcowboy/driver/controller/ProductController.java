@@ -46,7 +46,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "LoadEditProductDialog", method = RequestMethod.GET)
-	public ModelAndView LoadEditUserDialog(HttpServletRequest request,
+	public ModelAndView LoadEditProductDialog(HttpServletRequest request,
 			HttpServletResponse response, String code) throws Exception {
 		ModelAndView mode = new ModelAndView("product/EditProductDialog");
 		Product product = productServer.getProduct(code);
@@ -127,8 +127,8 @@ public class ProductController {
 	public @ResponseBody
 	JSONResult editProductAction(Product product) {
 		JSONResult result = new JSONResult();
-		Product editUser = productServer.getProduct(product.getCode());
-		if (editUser == null) {
+		Product editProduct = productServer.getProduct(product.getCode());
+		if (editProduct == null) {
 			result.setSuccess(false);
 			result.setMsg("该产品不存在，请重试查找！");
 		} else {

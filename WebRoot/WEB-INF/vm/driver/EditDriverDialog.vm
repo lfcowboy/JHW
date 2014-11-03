@@ -1,4 +1,5 @@
 <form data-dojo-type="dijit/form/Form" id="editDriverForm">
+	<input type="hidden" id="editDriverForm.id" value="$!driver.id" name="id"/>
 	<script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
         dojo.stopEvent(e); // prevent the default submit
         if(!this.isValid()){ window.alert('Please fix fields'); return; }								
@@ -9,7 +10,7 @@
            	load: function(data){
         		if(data["success"]){
 					dijit.byId('editDriverDialog').hide();
-					grid.setQuery();
+					driverGrid.setQuery();
         		}else{
         			alert(data["msg"]);
         		}							            		

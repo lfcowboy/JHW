@@ -8,7 +8,7 @@ import cn.com.lfcowboy.driver.domain.Driver;
 import cn.com.lfcowboy.driver.domain.Page;
 
 public interface DriverDao {
-	public Driver getDriver(String driverName);
+	public Driver getDriver(int id);
 
 	public List<Driver> getDrivers(@Param("driver") Driver driver,
 			@Param("page") Page page);

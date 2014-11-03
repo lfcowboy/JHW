@@ -1,7 +1,7 @@
 <form data-dojo-type="dijit/form/Form" id="addDriverForm">
     <script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
         dojo.stopEvent(e); // prevent the default submit
-        if(!this.isValid()){ window.alert('输入不正确,请确认.'); return; }								
+        if(!this.isValid()){ window.alert('输入不正确，请确认。'); return; }								
 		dojo.xhrPost({
             url: "addDriverAction.do",
 			handleAs : "json",

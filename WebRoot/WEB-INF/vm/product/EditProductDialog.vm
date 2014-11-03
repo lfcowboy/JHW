@@ -9,7 +9,7 @@
            	load: function(data){
         		if(data["success"]){
 					dijit.byId('editProductDialog').hide();
-					grid.setQuery();
+					productGrid.setQuery();
         		}else{
         			alert(data["msg"]);
         		}							            		

@@ -56,7 +56,7 @@
 			}
 			var form = dijit.byId("addVersionForm");
 			if(!form.isValid()){ 
-				window.alert('Please fix fields'); 
+				window.alert("输入不正确，请确认。"); 
 				return false; 
 			}			
     	</script>
@@ -64,7 +64,6 @@
 	<button data-dojo-type="dijit/form/Button" type="button" id="addVersionForm.cancelBtn">返回
         <script type="dojo/on" data-dojo-event="click">
 			var form = dijit.byId("addVersionForm");
-			alert(form.isValid());
             dijit.byId('addVersionDialog').hide();
     	</script>
 	</button>

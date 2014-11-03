@@ -6,7 +6,7 @@ import cn.com.lfcowboy.driver.domain.Driver;
 import cn.com.lfcowboy.driver.domain.Page;
 
 public interface DriverServer {
-	public Driver getDriver(String driverCode);
+	public Driver getDriver(int driverId);
 
 	public List<Driver> getDrivers(Driver driver, Page page);
 

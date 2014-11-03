@@ -41,7 +41,7 @@
                 <label for="account">用户名:</label>
             </td>
             <td>
-                <input type="text" value="$!user.account" id="editUserForm.account" name="account" required="true" data-dojo-type="dijit/form/TextBox" readOnly/>
+                <input type="text" value="$!user.account" id="editUserForm.account" name="account" required="true" data-dojo-type="dijit/form/TextBox" readOnly data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
             </td>
         </tr>
         <tr>
@@ -49,7 +49,7 @@
                 <label for="name">名字:</label>
             </td>
             <td>
-                <input type="text" value="$!user.name" id="editUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+                <input type="text" value="$!user.name" id="editUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, regExp:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'"/>
             </td>
         </tr>
         <tr>

@@ -3,9 +3,9 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.DriverDao">
-	<select id="getDriver" parameterType="string" resultType="Driver">select
+	<select id="getDriver" parameterType="int" resultType="Driver">select
 		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, user.name as engineerName
-		from driver,user where driver.name=#{name} and driver.engineer_id = user.id</select>
+		from driver,user where driver.id=#{id} and driver.engineer_id = user.id</select>
 	<select id="getDrivers" resultType="Driver">select
 		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, 
 		engineer.name as engineerName, product.customer_id as customerId, customer.name as customerName,newVersion.lastVersion

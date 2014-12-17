@@ -70,4 +70,15 @@ require([
 		}
 		tabContainer.selectChild(tab);
 	});
+	
+	lang.setObject("jhw.closeAllTab", function(tabContainer){
+		if (typeof tabContainer === "string"){
+			tabContainer = registry.byId(tabContainer);
+		}
+		var childTab = tabContainer.getChildren();
+		for (var tabIndex in childTab){
+			tabContainer.removeChild(childTab[tabIndex]);
+			childTab[tabIndex].destroyRecursive();
+		}
+	});
 });

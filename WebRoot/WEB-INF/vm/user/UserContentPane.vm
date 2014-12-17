@@ -1,5 +1,6 @@
-<div data-dojo-type="dijit/Dialog" id="loginDialog" title="用户登录" href="LoadLoginDialog.do">
+<div dojoType="dijit/layout/ContentPane" id="userInfoDialog" title="登录用户" href="LoadUserInfoDialog.do" class="info">
 </div>
+#if (!$loginUser)
 <button data-dojo-type="dijit/form/Button" id="loginBtn">
 	<span>用户登录</span>
 	<script type="dojo/on" data-dojo-event="click">
@@ -7,24 +8,35 @@
 	</script>
 </button>
 <br/>
+#end
+#if ($loginUser)
 <button data-dojo-type="dijit/form/Button" id="accountManagementBtn" type="button">
 	<span>用户管理</span>
 	<script type="dojo/on" data-dojo-event="click">
 		jhw.addTab("myTabContainer", "userManagement.do", "用户管理", true);
 	</script>
 </button>
-<!--
-<div dojoType="dijit/layout/StackContainer" id="stackContainer">
-	<div dojoType="dijit.layout.ContentPane" title="用户管理">
-        This is the content in stack 1.
-    </div>					            
-    <div dojoType="dijit/layout/ContentPane" title="用户管理">
-        This is the content in stack 2.
-    </div>
-    <div dojoType="dijit/layout/ContentPane" title="新增用户">
-        This is the content in stack 3.
-    </div>
-</div>
--->
-<div dojoType="dijit/layout/StackController" containerId="stackContainer">
-</div>
+<br/>
+<button data-dojo-type="dijit/form/Button" id="logoutBtn" type="button">
+	<span>退出登录</span>
+	<script type="dojo/on" data-dojo-event="click">							
+        dojo.xhrPost( {
+        	url: 'logout.do',
+        	handleAs: 'json',
+        	load: function(data){
+        		if(data["success"]){
+					jhw.closeAllTab("myTabContainer");
+					dijit.byId('userContentPane').refresh();
+					dijit.byId('productContentPane').refresh();
+					dijit.byId('driverContentPane').refresh();
+					alert("您已成功退出登录。");
+        		}else{
+        			alert(data["msg"]);
+        		}            		
+        	},
+        	error: function(data){					            		
+			}
+        });
+	</script>
+</button>
+#end

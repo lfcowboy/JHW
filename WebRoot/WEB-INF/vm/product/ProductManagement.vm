@@ -21,9 +21,9 @@
           		var cells = [[
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
-                    }),
-    				{name:"产品型号", field:"code", width: "41%"},
-					{name:"所属客户", field:"customerName", width: "41%"}
+                    }),    				
+					{name:"所属客户", field:"customerName", width: "41%"},
+					{name:"产品型号", field:"code", width: "41%"}
     			]];
     			var gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"

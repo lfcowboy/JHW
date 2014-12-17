@@ -86,6 +86,19 @@ public class UserController {
 		return mode;
 	}
 	
+	@RequestMapping(value = "LoadUserInfoDialog", method = RequestMethod.GET)
+	public ModelAndView LoadUserInfoDialog(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		User loginUser = (User) request.getSession().getAttribute(
+				"loginUser");
+		if (null == loginUser) {
+
+		}
+		ModelAndView mode = new ModelAndView("user/UserInfoDialog");
+		mode.addObject("loginUser", loginUser);
+		return mode;
+	}
+
 	@RequestMapping(value = "LoadAddUserDialog", method = RequestMethod.GET)
 	public ModelAndView LoadAddUserDialog(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -119,6 +132,16 @@ public class UserController {
 		return result;
 	}
 	
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONResult logout(User user, HttpServletRequest req,
+			HttpServletResponse resp) {
+		JSONResult result = new JSONResult();
+		req.getSession().removeAttribute("loginUser");
+		result.setSuccess(true);
+		return result;
+	}
+
 	@RequestMapping(value = "getUsersPagedAction", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<User> getUsersPagedAction(HttpServletRequest request,

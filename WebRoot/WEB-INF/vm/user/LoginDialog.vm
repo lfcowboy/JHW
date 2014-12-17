@@ -8,14 +8,14 @@
         	handleAs: 'json',
         	load: function(data){
         		if(data["success"]){
-			        require(["dojo/dom-style", "dijit/registry"], function(domStyle, registry){
-			        	domStyle.set(registry.byId("loginBtn").domNode, "display", "none");
-				        domStyle.set(registry.byId("accountManagementBtn").domNode, "display", "");
-				        dijit.byId('loginDialog').hide();
-					});
+					alert("登录成功！");
+					dijit.byId('loginDialog').hide();
+					dijit.byId('productContentPane').refresh();
+					dijit.byId('driverContentPane').refresh();	
+					dijit.byId('userContentPane').refresh();
         		}else{
         			alert(data["msg"]);
-        		}							            		
+        		}            		
         	},
         	error: function(data){					            		
 			}

@@ -24,11 +24,11 @@
                     }),
 					{name:"程序名ID", field:"id", width: "13%"},
     				{name:"程序名", field:"name", width: "13%"},
+					{name:"最新版本", field:"lastVersion", width: "13%"},
 					{name:"产品型号", field:"productCode", width: "13%"},
 					{name:"芯片型号", field:"chipCode", width: "13%"},
 					{name:"负责工程师", field:"engineerName", width: "14%"},
-					{name:"所属客户", field:"customerName", width: "13%"},
-					{name:"最新版本", field:"lastVersion", width: "13%"}
+					{name:"所属客户", field:"customerName", width: "13%"}					
     			]];
     			var gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"

@@ -7,12 +7,15 @@
 			handleAs : "json",
 			form : "editUserForm",
            	load: function(data){
-        		if(data["success"]){
+        		if(data["success"]){			
 					dijit.byId('editUserDialog').hide();
-					grid.setQuery(userMgSearchForm.get("value"));
+					var tab = jhw.getTab("userManagement.do");
+					if (typeof tab !== "undefined"){					
+						grid.setQuery(userMgSearchForm.get("value"));
+					}
         		}else{
         			alert(data["msg"]);
-        		}							            		
+        		}						            		
         	},
         	error: function(data){					            		
 			}
@@ -57,7 +60,7 @@
                 <label for="password">密码:</label>
             </td>
             <td>
-                <input type="password" value="$!user.password" id="editUserForm.password" name="password" data-dojo-type="dijit/form/ValidationTextBox" disabled/>
+                <input type="password" value="$!user.password" id="editUserForm.password" name="password" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
             </td>
         </tr>
     </table>

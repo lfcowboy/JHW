@@ -71,6 +71,12 @@ require([
 		tabContainer.selectChild(tab);
 	});
 	
+	lang.setObject("jhw.getTab", function(href){
+		var tabName = "tab" + jhw.basename(href,".do"),
+			tab = registry.byId(tabName);
+		return tab;
+	});
+	
 	lang.setObject("jhw.closeAllTab", function(tabContainer){
 		if (typeof tabContainer === "string"){
 			tabContainer = registry.byId(tabContainer);

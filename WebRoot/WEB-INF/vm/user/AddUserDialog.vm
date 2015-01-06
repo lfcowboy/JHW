@@ -57,7 +57,7 @@
                 <label for="password">密码:</label>
             </td>
             <td>
-                <input type="password" id="addUserForm.password" name="password" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
+                <input type="password" id="addUserForm.password" name="password" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
             </td>
         </tr>
     </table>

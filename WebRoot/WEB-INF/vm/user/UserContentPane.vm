@@ -1,5 +1,7 @@
 <div dojoType="dijit/layout/ContentPane" id="userInfoDialog" title="登录用户" href="LoadUserInfoDialog.do" class="info">
 </div>
+<div data-dojo-type="dijit/Dialog" id="editUserDialog" title="编辑用户" href="">
+</div>
 #if (!$loginUser)
 <button data-dojo-type="dijit/form/Button" id="loginBtn">
 	<span>用户登录</span>
@@ -10,6 +12,19 @@
 <br/>
 #end
 #if ($loginUser)
+<button data-dojo-type="dijit/form/Button" id="editLoginUserBtn" type="button">
+	<span>编辑登录帐号</span>
+	<script type="dojo/on" data-dojo-event="click">
+		dijit.byId("editUserDialog").href="LoadEditUserDialog.do?account=$loginUser.account";
+		if(dijit.byId("editUserDialog").isLoaded){
+			dijit.byId("editUserDialog").show();
+			dijit.byId("editUserDialog").refresh();
+		}else{
+			dijit.byId("editUserDialog").show();
+		}
+	</script>
+</button>
+<br/>
 <button data-dojo-type="dijit/form/Button" id="accountManagementBtn" type="button">
 	<span>用户管理</span>
 	<script type="dojo/on" data-dojo-event="click">

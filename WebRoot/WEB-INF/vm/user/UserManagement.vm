@@ -98,8 +98,6 @@
 				}
         	</script>
         </button>
-        <div data-dojo-type="dijit/Dialog" id="editUserDialog" title="编辑用户" href="">
-        </div>
 	    <button data-dojo-type="dijit/form/Button" id="editButton" type="button">编辑
 			<script type="dojo/on" data-dojo-event="click">
 				var items = grid.selection.getSelected();

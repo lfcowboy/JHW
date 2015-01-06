@@ -30,7 +30,7 @@
 			<if test="#{user.name}!=null">and user.name like '%${user.name}%'</if>
 		</where>
 	</select>
-	<update id="updateUser" parameterType="User">update user set name = #{name} where account=#{account};</update>
+	<update id="updateUser" parameterType="User">update user set name = #{name}, password=#{password} where account=#{account};</update>
 	<insert id="addUser" parameterType="User">INSERT INTO
 		user ( name,
 		type,

@@ -222,6 +222,21 @@ public class DriverController {
 		return result;
 	}
 
+	@RequestMapping(value = "editVersionAction", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONResult editVersionAction(Version version) {
+		JSONResult result = new JSONResult();
+		Version editVersion = versionServer.getVersion(version.getId());
+		if (editVersion == null) {
+			result.setSuccess(false);
+			result.setMsg("该版本不存在，请重试查找！");
+		} else {
+			versionServer.updateVersion(version);
+			result.setSuccess(true);
+		}
+		return result;
+	}
+
 	@RequestMapping(value = "downloadFile", method = RequestMethod.POST)
 	@ResponseBody
 	public ModelAndView downloadFile(int versionId, HttpServletRequest request,

@@ -1,19 +1,31 @@
-<form data-dojo-type="dijit/form/Form" id="editVersionForm" enctype="multipart/form-data">
-	<script type="dojo/on" data-dojo-event="show">
-        dojo.connect(dijit.byId("editVersionForm.myfile"), "onComplete", function(dataArray){			
-            dojo.forEach(dojo.isArray(dataArray) ? dataArray : [dataArray], function(resp){
-				dijit.byId('editVersionDialog').hide();
-				grid.setQuery({driverId:"$!driverId"});
-            });
+<form data-dojo-type="dijit/form/Form" id="editVersionForm">
+	<input type="hidden" id="editVersionForm.id" value="$!version.id" name="id"/>
+	<script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
+        dojo.stopEvent(e); // prevent the default submit
+        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+		dojo.xhrPost({
+            url: "editVersionAction.do",
+			handleAs : "json",
+			form : "editVersionForm",
+           	load: function(data){
+        		if(data["success"]){
+					dijit.byId('editVersionDialog').hide();
+					versionGrid.setQuery({driverId:"$!version.driverId"});
+        		}else{
+        			alert(data["msg"]);
+        		}							            		
+        	},
+        	error: function(data){					            		
+			}
         });
-	</script>
+    </script>
     <table style="border: 1px solid #9f9f9f;" cellspacing="10">
 		<tr>
             <td>
                 <label for="type">程序版本:</label>
             </td>
             <td>
-				<input type="text" id="editVersionForm.version" value="$!version.version" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="editVersionForm.version" value="$!version.version" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
 		<tr>
@@ -21,9 +33,18 @@
                 <label for="type">校验码:</label>
             </td>
             <td>
-				<input type="text" id="editVersionForm.sequence" value="$!version.sequence" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox"/>
+				<input type="text" id="editVersionForm.sequence" value="$!version.sequence" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:5, regExp:'[A-Za-z0-9]*', invalidMessage:'支持:英文,数字'"/>
             </td>
         </tr>
+		<tr>
+            <td>
+                <label for="type">可烧录次数:</label>
+            </td>
+            <td>
+				<input type="text" id="editVersionForm.burnSum" name="burnSum" value="$!version.burnSum" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'"/>
+            </td>
+        </tr>
+		<!-- 
         <tr>
             <td>
                 <label for="account">程序文件:</label>
@@ -32,6 +53,7 @@
 				<input name="myfile" multiple="false" type="file" dojoType="dojox/form/Uploader" label="选择" id="editVersionForm.myfile" uploadOnSelect="false" url="addVersionAction.do?driverId=$!driverId"/>
             </td>
         </tr>
+		-->
 		<tr>
             <td>
                 <label for="type">备注:</label>
@@ -41,22 +63,14 @@
 			</td>
         </tr>
     </table>
+	<!--
 	<div id="editVersionForm.files" dojoType="dojox/form/uploader/FileList" uploaderId="editVersionForm.myfile">
 	</div>
-    <button data-dojo-type="dijit/form/Button" type="submit" id="editVersionForm.saveUserBtn">保存
-        <script type="dojo/on" data-dojo-event="click">
-			var form = dijit.byId("editVersionForm");
-			if(!form.isValid()){ 
-				window.alert('Please fix fields'); 
-				return false; 
-			}
-    	</script>
-	</button>
+	-->
+    <button data-dojo-type="dijit/form/Button" type="submit" id="editVersionForm.saveUserBtn">保存</button>
 	<button data-dojo-type="dijit/form/Button" type="button" id="editVersionForm.cancelBtn">返回
         <script type="dojo/on" data-dojo-event="click">
-			var form = dijit.byId("editVersionForm");
-			alert(form.isValid());
-            dijit.byId('addVersionDialog').hide();
+            dijit.byId('editVersionDialog').hide();
     	</script>
 	</button>
 </form>

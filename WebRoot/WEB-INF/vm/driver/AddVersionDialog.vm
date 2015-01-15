@@ -24,6 +24,14 @@
 				<input type="text" id="addVersionForm.sequence" value="" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:5, regExp:'[A-Za-z0-9]*', invalidMessage:'支持:英文,数字'"/>
             </td>
         </tr>
+		<tr>
+            <td>
+                <label for="type">可烧录次数:</label>
+            </td>
+            <td>
+				<input type="text" id="addVersionForm.burnSum" name="burnSum" value="500" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'"/>
+            </td>
+        </tr>
         <tr>
             <td>
                 <label for="account">程序文件:</label>

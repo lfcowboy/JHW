@@ -33,11 +33,12 @@
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
                     }),
-    				{name:"程序版本", field:"version", width: "18%"},
-					{name:"上传时间", field:"addTime", width: "18%"},
-					{name:"校验码", field:"sequence", width: "18%"},
+    				{name:"程序版本", field:"version", width: "16%"},
+					{name:"上传时间", field:"addTime", width: "16%"},
+					{name:"校验码", field:"sequence", width: "16%"},
 					{name:"文件路径", field:"fileName", width: "20%", formatter:"formatLink"},
-					{name:"备注", field:"remark", width: "18%"}
+					{name:"可烧录次数", field:"burnSum", width: "16%"},
+					{name:"备注", field:"remark", width: "16%"}
     			]];
     			gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"
@@ -74,7 +75,6 @@
 				}
         	</script>
         </button>
-		<!--
         <div data-dojo-type="dijit/Dialog" id="editVersionDialog" title="编辑产品" href="">
         </div>
 	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.editButton">
@@ -97,7 +97,6 @@
 				}
         	</script>
 		</button>
-		-->
 	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.downloadButton">
 			<span>下载</span>
 			<script type="dojo/on" data-dojo-event="click">

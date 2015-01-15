@@ -14,6 +14,7 @@ public class Version {
 	String fileName;
 	String remark;
 	Date addTime;
+	int burnSum;
 	
 	public MultipartFile getDriverFile() {
 		return driverFile;
@@ -68,5 +69,14 @@ public class Version {
 	}
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
-	}	
+	}
+
+	public int getBurnSum() {
+		return burnSum;
+	}
+
+	public void setBurnSum(int burnSum) {
+		this.burnSum = burnSum;
+	}
+
 }

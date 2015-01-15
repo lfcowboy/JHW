@@ -31,7 +31,7 @@
 						{name:"芯片型号", field:"chipCode", width: "7%"},
 						{name:"负责工程师", field:"engineerName", width: "9%"},
 						{name:"客户确认", field:"account", width: "7%"},
-						{name:"可烧录次数", field:"account", width: "9%"},
+						{name:"可烧录次数", field:"burnSum", width: "9%"},
                         {name:"备注", field:"remark", width: "4%"}
         			]];
         			gridLayout = [{

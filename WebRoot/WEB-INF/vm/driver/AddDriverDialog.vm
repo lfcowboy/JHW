@@ -24,7 +24,7 @@
         ], function(ObjectStore){
     		var engineers = dijit.byId("addDriverForm.engineerId");
     		engineers.set("store",ObjectStore({objectStore: engineerStore}));
-    		var products = dijit.byId("addDriverForm.productCode");
+    		var products = dijit.byId("addDriverForm.productId");
     		products.set("store",ObjectStore({objectStore: productStore}));
         });
 	</script>
@@ -42,7 +42,7 @@
                 <label for="type">产品型号:</label>
             </td>
             <td>
-				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'code',valueAttr:'code'" name="productCode" id="addDriverForm.productCode" required="true"/>
+				<input data-dojo-type="dijit/form/Select" value="" data-dojo-props="labelAttr:'code',valueAttr:'code'" name="productId" id="addDriverForm.productId" required="true"/>
             </td>
         </tr>
         <tr>
@@ -62,8 +62,8 @@
             </td>
         </tr>
     </table>
-    <button data-dojo-type="dijit/form/Button" type="submit" id="addUserForm.saveUserBtn">保存</button>
-	<button data-dojo-type="dijit/form/Button" type="button" id="addUserForm.cancelBtn">返回
+    <button data-dojo-type="dijit/form/Button" type="submit" id="addDriverForm.saveUserBtn">保存</button>
+	<button data-dojo-type="dijit/form/Button" type="button" id="addDriverForm.cancelBtn">返回
         <script type="dojo/on" data-dojo-event="click">
             dijit.byId('addDriverDialog').hide();
     	</script>

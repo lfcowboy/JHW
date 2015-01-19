@@ -36,7 +36,7 @@
     				cells
     			];
                 driverGrid = new DataGrid({
-                	store: dataStore = ObjectStore({objectStore: myStore}),
+                	store: driverDataStore = ObjectStore({objectStore: myStore}),
                 	query: "",
                     structure: gridLayout,
     				selectionMode: 'multiple',
@@ -98,14 +98,14 @@
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton" style="display:none;">
+	    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.removeButton">
 			<span>删除</span>
 			<script type="dojo/on" data-dojo-event="click">
                 var items = driverGrid.selection.getSelected();
                 if (items.length) {
                     dojo.forEach(items, function (selectedItem) {
                         if (selectedItem !== null) {
-                            dataStore.deleteItem(selectedItem);
+                            driverDataStore.deleteItem(selectedItem);
                         }
                     });
 					saveTable();
@@ -122,8 +122,8 @@
                     if (driverGrid.edit.isEditing()) {
                     	driverGrid.edit.apply();
                     }
-                    if (dataStore.isDirty()) {
-                    	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
+                    if (driverDataStore.isDirty()) {
+                    	var result = driverDataStore.save({onComplete: onSave, onError: onSaveError});
                     }
                 }
         	</script>

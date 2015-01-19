@@ -20,6 +20,6 @@
 	<insert id="addVersion" parameterType="Version">INSERT INTO
 		version ( version,sequence,file_name,remark,add_time,driver_id,burn_sum) VALUES (
 		#{version},#{sequence},#{fileName},#{remark},NOW(),#{driverId},#{burnSum})</insert>
-	<delete id="deleteVersion" parameterType="int">DELETE FROM driver WHERE
-		id=#{id}</delete>
-</mapper> 
+	<delete id="deleteVersion" parameterType="int">DELETE FROM version WHERE id=#{id}</delete>
+	<delete id="deleteVersionByDriverId" parameterType="int">DELETE FROM version WHERE driver_id=#{driverId}</delete>
+</mapper>

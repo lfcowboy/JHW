@@ -38,7 +38,7 @@ require([
  	    	productStore = new JsonRest({
      			target: "getProductsAction.do",
      			headers: {"Content-Type": "application/json"}, 
-     			idProperty: "code"
+     			idProperty: "id"
      		});
 		});
 	});

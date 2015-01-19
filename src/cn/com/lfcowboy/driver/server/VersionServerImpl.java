@@ -59,4 +59,8 @@ public class VersionServerImpl implements VersionServer {
 	public String getMaxVersion(int driverId) {
 		return versionDao.getMaxVersion(driverId);
 	}
+
+	public boolean deleteVersionByDriverId(int driverId) {
+		return versionDao.deleteVersionByDriverId(driverId);
+	}
 }

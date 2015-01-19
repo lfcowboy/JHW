@@ -209,7 +209,7 @@ public class UserController {
 		return userServer.updateUser(user);
 	}
 
-	@RequestMapping(value = "getUsers/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value = "getUsersPagedAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
 	boolean deleteUser(@PathVariable int id) {
 		return userServer.deleteUser(id);

@@ -117,7 +117,7 @@
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="removeButton" type="button" style="display:none;">删除
+	    <button data-dojo-type="dijit/form/Button" id="removeButton" type="button">删除
 			<script type="dojo/on" data-dojo-event="click">
                 var items = grid.selection.getSelected();
                 if (items.length) {

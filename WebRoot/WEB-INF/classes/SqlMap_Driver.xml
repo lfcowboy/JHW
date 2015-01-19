@@ -4,19 +4,18 @@
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.DriverDao">
 	<select id="getDriver" parameterType="int" resultType="Driver">select
-		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, user.name as engineerName
-		from driver,user where driver.id=#{id} and driver.engineer_id = user.id</select>
-	<select id="getDrivers" resultType="Driver">select
-		driver.id,driver.name,driver.product_code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, 
+		driver.id,driver.name, driver.chip_code as chipCode, driver.engineer_id as engineerId 
+		from driver where driver.id=#{id} </select>
+	<select id="getDrivers" resultType="Driver">select driver.id,driver.name,product.code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, 
 		engineer.name as engineerName, product.customer_id as customerId, customer.name as customerName,newVersion.lastVersion
-		from driver left join (select DRIVER_ID,max(version) as lastVersion from version group by DRIVER_ID) as newVersion on driver.ID = newVersion.DRIVER_ID,user as engineer,product,user as customer
-		where driver.product_code=product.code and driver.engineer_id = engineer.id and product.customer_id = customer.id
-		limit #{page.limit} offset #{page.offset}</select>
+		from driver left join ((select DRIVER_ID,max(version) as lastVersion from version group by DRIVER_ID) as newVersion,product,user as customer) 
+		on (driver.ID = newVersion.DRIVER_ID and driver.PRODUCT_ID = product.ID and product.customer_id = customer.id),user as engineer
+		where driver.engineer_id = engineer.id limit #{page.limit} offset #{page.offset}</select>
 	<select id="getTotal" resultType="int">select count(*) from driver</select>
-	<update id="updateDriver" parameterType="Driver">update driver set product_code = #{productCode},chip_code = #{chipCode},engineer_id = #{engineerId} where name=#{name};</update>
+	<update id="updateDriver" parameterType="Driver">update driver set product_id = #{productId},chip_code = #{chipCode},engineer_id = #{engineerId} where name=#{name};</update>
 	<insert id="addDriver" parameterType="Driver">INSERT INTO
-		driver ( name,product_code,chip_code,engineer_id) VALUES (
-		#{name},#{productCode},#{chipCode},#{engineerId})</insert>
+		driver ( name,product_id,chip_code,engineer_id) VALUES (
+		#{name},#{productId},#{chipCode},#{engineerId})</insert>
 	<delete id="deleteDriver" parameterType="int">DELETE FROM driver WHERE
 		id=#{id}</delete>
-</mapper> 
+</mapper>

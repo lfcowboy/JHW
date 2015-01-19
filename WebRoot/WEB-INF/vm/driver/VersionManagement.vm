@@ -1,4 +1,28 @@
 <div style="width: auto; height: auto">
+	<div data-dojo-type="dijit/form/Form" data-dojo-id="driverInfoForm" class="info">
+		<table style="width: 100%;">
+			<tr>
+	            <td align="right">
+	                <label for="type">程序名:</label>
+	            </td>
+	            <td>
+					$!driver.name
+	            </td>
+	            <td align="right">
+	                <label for="type">产品型号:</label>
+	            </td>
+	            <td>
+					$!driver.productCode
+	            </td>
+	            <td align="right">
+	                <label for="type">负责工程师:</label>
+	            </td>
+	            <td>
+					$!driver.engineerName
+	            </td>
+	        </tr>
+	    </table>
+    </div>
 	<script type="text/javascript">
         require([
          	"dojo/store/JsonRest",
@@ -46,7 +70,7 @@
     				cells
     			];
                 versionGrid = new DataGrid({
-                	store: dataStore = ObjectStore({objectStore: myStore}),
+                	store: versionDataStore = ObjectStore({objectStore: myStore}),
                 	query: {driverId:$!driverId},
                     structure: gridLayout,
     				selectionMode: 'multiple',
@@ -108,6 +132,36 @@
 				}else{
 					download(items[0].id);
 				}
+        	</script>
+		</button>
+	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.removeButton">
+			<span>删除</span>
+			<script type="dojo/on" data-dojo-event="click">
+                var items = versionGrid.selection.getSelected();
+                if (items.length) {
+                    dojo.forEach(items, function (selectedItem) {
+                        if (selectedItem !== null) {
+                            versionDataStore.deleteItem(selectedItem);
+                        }
+                    });
+					saveTable();
+                }else{
+					alert("请选择需要删除的版本。");
+				}
+                var onSave = function(){
+                	dojo.byId("message").innerHTML = ("删除成功.");
+                }
+                var onSaveError = function(error){
+                	alert("删除失败.");
+                }
+                function saveTable() {
+                    if (versionGrid.edit.isEditing()) {
+                    	versionGrid.edit.apply();
+                    }
+                    if (versionDataStore.isDirty()) {
+                    	var result = versionDataStore.save({onComplete: onSave, onError: onSaveError});
+                    }
+                }
         	</script>
 		</button>
     </div>

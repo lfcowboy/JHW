@@ -8,20 +8,22 @@ import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.Version;
 
 public interface VersionDao {
-	public Version getVersion(int id);
+	Version getVersion(int id);
 
-	public List<Version> getVersions(int driverId);
+	List<Version> getVersions(int driverId);
 
-	public List<Version> getVersionsPaged(@Param("driverId") int driverId,
+	List<Version> getVersionsPaged(@Param("driverId") int driverId,
 			@Param("page") Page page);
 
-	public boolean updateVersion(Version version);
+	boolean updateVersion(Version version);
 
-	public boolean addVersion(Version version);
+	boolean addVersion(Version version);
 
-	public boolean deleteVersion(int id);
+	boolean deleteVersion(int id);
 
 	int getTotal(@Param("driverId") int driverId);
 
 	String getMaxVersion(@Param("driverId") int driverId);
+
+	boolean deleteVersionByDriverId(int driverId);
 }

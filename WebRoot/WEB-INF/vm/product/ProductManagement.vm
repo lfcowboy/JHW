@@ -80,7 +80,7 @@
 				}
         	</script>
 		</button>
-	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.removeButton" style="display:none;">
+	    <button data-dojo-type="dijit/form/Button" id="productMgSearchForm.removeButton">
 			<span>删除</span>
 			<script type="dojo/on" data-dojo-event="click">
                 var items = productGrid.selection.getSelected();

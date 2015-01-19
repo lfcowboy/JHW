@@ -138,9 +138,9 @@ public class ProductController {
 		return result;
 	}
 
-	@RequestMapping(value = "getProductsAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	@RequestMapping(value = "getProductsPagedAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
-	boolean ProductsAction(@PathVariable int id) {
+	boolean deleteProductsAction(@PathVariable int id) {
 		return productServer.deleteProduct(id);
 	}
 }

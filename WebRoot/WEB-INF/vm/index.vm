@@ -1,10 +1,17 @@
 <html lang="en" dir="ltr">
     <head>
         <title>金华微电子芯片程序管理系统</title>
+    	<link rel="stylesheet" href="js/page/demo.css" type="text/css" />
+    	<script type="text/javascript">
+    		dojoConfig = {
+    			async: true,
+    			locale: "en-gb"
+    		};
+    	</script>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="js/dojo/dijit/themes/claro/claro.css" />
 		<link rel="stylesheet" href="js/dojo/dojox/form/resources/UploaderFileList.css" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <style type="text/css">
+		<style type="text/css">
 			@import "js/dojo/dojox/grid/resources/Grid.css";
             @import "js/dojo/dojox/grid/resources/nihiloGrid.css";
     		.dojoxGrid table {
@@ -25,7 +32,7 @@
     	</script>
         <div style="width: auto; height: auto">
             <div dojoType="dijit/layout/BorderContainer" style="width: 100%; height: 100%;text-align:center;">
-                <div dojoType="dijit.layout.ContentPane" region="top" splitter="true" href="loadHeaderContentPane.do">					
+                <div dojoType="dijit.layout.ContentPane" region="top" splitter="false" href="loadHeaderContentPane.do">					
                 </div>
                 <div dojoType="dijit.layout.ContentPane" region="left" style="width: 20%;" splitter="true">
 		            <div dojoType="dijit/layout/AccordionContainer" style="width: 100%; height: 100%;">

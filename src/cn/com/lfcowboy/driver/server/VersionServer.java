@@ -21,4 +21,6 @@ public interface VersionServer {
 	public int getTotal(int driverId);
 
 	public String getMaxVersion(int driverId);
+
+	public boolean deleteVersionByDriverId(int driverId);
 }

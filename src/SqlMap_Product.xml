@@ -19,8 +19,7 @@
 		customer_id) VALUES (
 		#{code},
 		#{customerId})</insert>
-	<delete id="deleteProduct" parameterType="int">DELETE FROM product WHERE
-		id=#{id}</delete>
+	<delete id="deleteProduct" parameterType="int">DELETE FROM product WHERE id=#{id}</delete>
 	<select id="getProductDriverPaged" resultType="Product">select
 		product.id,
 		product.code,

@@ -23,9 +23,9 @@
         require([
          	"dojo/data/ObjectStore"
         ], function(ObjectStore){
-    		var products = dijit.byId("editDriverForm.productCode");
+    		var products = dijit.byId("editDriverForm.productId");
     		products.set("store",ObjectStore({objectStore: productStore}));
-			products.set("value", "$!driver.productCode");
+			products.set("value", "$!driver.productId");
     		var engineers = dijit.byId("editDriverForm.engineerId");
     		engineers.set("store",ObjectStore({objectStore: engineerStore}));
 			engineers.set("value", "$!driver.engineerId");
@@ -45,7 +45,7 @@
                 <label for="type">产品型号:</label>
             </td>
             <td>
-				<input data-dojo-type="dijit/form/Select" value="$!driver.productCode" data-dojo-props="labelAttr:'code',valueAttr:'code'" name="productCode" id="editDriverForm.productCode" required="true"/>
+				<input data-dojo-type="dijit/form/Select" value="$!driver.productId" data-dojo-props="labelAttr:'code',valueAttr:'code'" name="productId" id="editDriverForm.productId" required="true"/>
             </td>
         </tr>
         <tr>

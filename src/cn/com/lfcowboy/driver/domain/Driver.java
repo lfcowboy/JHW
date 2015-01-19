@@ -3,6 +3,7 @@ package cn.com.lfcowboy.driver.domain;
 public class Driver {
 	int id;
 	String name;
+	int productId;
 	String productCode;
 	int engineerId;
 	String engineerName;
@@ -65,5 +66,13 @@ public class Driver {
 	}
 	public void setChipCode(String chipCode) {
 		this.chipCode = chipCode;
+	}
+
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}	
 }

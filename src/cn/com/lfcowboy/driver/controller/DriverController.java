@@ -76,6 +76,8 @@ public class DriverController {
 	public ModelAndView loadVersionManagement(HttpServletRequest request,
 			HttpServletResponse response, String driverId) throws Exception {
 		ModelAndView mode = new ModelAndView("driver/versionManagement");
+		Driver driver = driverServer.getDriver(Integer.valueOf(driverId));
+		mode.addObject("driver", driver);
 		mode.addObject("driverId", driverId);
 		return mode;
 	}
@@ -181,7 +183,8 @@ public class DriverController {
 	@RequestMapping(value = "getDriversAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
 	boolean ProductsAction(@PathVariable int id) {
-		return driverServer.deleteDriver(id);
+		driverServer.deleteDriver(id);
+		return versionServer.deleteVersionByDriverId(id);
 	}
 
 	@RequestMapping(value = "addVersionAction", method = RequestMethod.POST)
@@ -273,5 +276,11 @@ public class DriverController {
 		bis.close();
 		bos.close();
 		return null;
+	}
+
+	@RequestMapping(value = "getVersionsAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
+	public @ResponseBody
+	boolean deleteVersionAction(@PathVariable int id) {
+		return versionServer.deleteVersion(id);
 	}
 }

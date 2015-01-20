@@ -40,8 +40,8 @@ public class UserServerImpl implements UserServer {
 	}
 	
 	@Override
-	public List<UserType> getUserTypes() {
-		List<UserType> userTypes = userTypeDao.getUserTypes();
+	public List<UserType> getUserTypes(String operator) {
+		List<UserType> userTypes = userTypeDao.getUserTypes(operator);
 		return userTypes;
 	}
 

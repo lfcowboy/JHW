@@ -3,6 +3,6 @@
 <!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.UserTypeDao">
-	<select id="getUserTypes" resultType="UserType"> select id,name from user_type order by id
+	<select id="getUserTypes" parameterType="string" resultType="UserType"> select id,name from user_type where operator like "%"#{operator}"%" order by id
 	</select>
 </mapper> 

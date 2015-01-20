@@ -31,6 +31,7 @@
         });
 	</script>
 	<table style="border: 1px solid #9f9f9f;" cellspacing="10">
+		<!-- 
 		<tr>
             <td>
                 <label for="type">用户类型:</label>
@@ -39,6 +40,7 @@
 				<input data-dojo-type="dijit/form/Select" labelAttr="name" name="type" id="editUserForm.type" disabled/>
             </td>
         </tr>
+		-->
         <tr>
             <td>
                 <label for="account">用户名:</label>

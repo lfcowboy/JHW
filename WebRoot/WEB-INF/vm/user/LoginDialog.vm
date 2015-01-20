@@ -1,4 +1,4 @@
-<form data-dojo-type="dijit/form/Form" id="loginForm" onShow='var userTypes = dijit.byId("type");userTypes.set("store",userTypesStore);'>
+<form data-dojo-type="dijit/form/Form" id="loginForm">
     <script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
         dojo.stopEvent(e); // prevent the default submit
         if(!this.isValid()){ window.alert('Please fix fields'); return; }								
@@ -21,6 +21,15 @@
 			}
         });
     </script>
+	<script type="dojo/on" data-dojo-event="show">
+        require([
+         	"dojo/data/ObjectStore"
+        ], function(ObjectStore){
+    		var userTypes = dijit.byId("type");
+    		userTypes.set("store",ObjectStore({objectStore: userTypesStore}));
+			userTypes.set("value", "UserType_1");
+        });
+	</script>
     <div class="dijitDialogPaneContentArea">								
 	    <table style="border: 1px solid #9f9f9f;" cellspacing="10">
 			<tr>

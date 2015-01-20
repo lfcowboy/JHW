@@ -37,7 +37,7 @@
 		password,
 		account) VALUES (
 		#{name},
-		#{type}, '1',
+		#{type}, #{password},
 		#{account})</insert>
 	<delete id="deleteUser" parameterType="int">DELETE FROM user WHERE
 		id=#{id}</delete>

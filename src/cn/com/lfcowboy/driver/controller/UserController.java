@@ -122,7 +122,8 @@ public class UserController {
 		JSONResult result = new JSONResult();
 		User loginUser = userServer.getUser(user.getAccount());
 		if (loginUser != null
-				&& loginUser.getPassword().equals(user.getPassword())) {
+				&& loginUser.getPassword().equals(user.getPassword())
+				&& loginUser.getType().equals(user.getType())) {
 			req.getSession().setAttribute("loginUser", loginUser);
 			result.setSuccess(true);
 		} else {
@@ -217,9 +218,16 @@ public class UserController {
 
 	@RequestMapping(value = "getUserTypes", method = RequestMethod.GET)
 	public @ResponseBody
-	List<UserType> getUserTypes() {
-		List<UserType> userTypes = userServer.getUserTypes();
-		return userTypes;
+	List<UserType> getUserTypes(HttpServletRequest req, HttpServletResponse resp) {
+		User loginUser = (User) req.getSession().getAttribute("loginUser");
+		if (null != loginUser) {
+			List<UserType> userTypes = userServer.getUserTypes(loginUser
+					.getType());
+			return userTypes;
+		} else {
+			List<UserType> userTypes = userServer.getUserTypes("");
+			return userTypes;
+		}
 	}
 
 	@RequestMapping("index")

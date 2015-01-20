@@ -1,7 +1,10 @@
 <form data-dojo-type="dijit/form/Form" id="addUserForm">
     <script type="dojo/event" data-dojo-event="onSubmit" data-dojo-args="e">
         dojo.stopEvent(e); // prevent the default submit
-        if(!this.isValid()){ window.alert('Please fix fields'); return; }								
+		if(dijit.byId("addUserForm.type").get("value") ==""){
+			window.alert('请选择用户类型!'); return;
+		}
+        if(!this.isValid()){ window.alert('输入不正确，请重新输入!'); return; }
 		dojo.xhrPost({
             url: "addUsersAction.do",
 			handleAs : "json",

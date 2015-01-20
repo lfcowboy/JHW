@@ -5,5 +5,5 @@ import java.util.List;
 import cn.com.lfcowboy.driver.domain.UserType;
 
 public interface UserTypeDao {
-	List<UserType> getUserTypes();
+	List<UserType> getUserTypes(String operator);
 }

@@ -1,5 +1,5 @@
 <div style="width: auto; height: auto">
-	<div data-dojo-type="dijit/form/Form" data-dojo-id="userMgSearchForm" encType="multipart/form-data" style="width: 100%; height: 30%;">
+	<div data-dojo-type="dijit/form/Form" data-dojo-id="userMgSearchForm" encType="multipart/form-data" class="info">
 		<script type="dojo/on" data-dojo-event="show">
             require([
              	"dojo/data/ObjectStore"
@@ -47,28 +47,26 @@
         				rowSelector: '2%',
         				selectionMode: 'multiple',
         				rowsPerPage: 100,
-        				autoHeight: "5"
+        				autoHeight: "10"
                     }, "gridDiv");
         			grid.startup();
                 });
             });
     	</script>
-		<table style="width: 100%; height: 100%;">
+		<table style="width: 100%;">
 			<tr>
-	            <td>
+	            <td align="right">
 	                <label for="type">用户类型:</label>
 	            </td>
 	            <td>
 					<input data-dojo-type="dijit/form/Select" labelAttr="name" name="type" id="userMgSearchForm_type"/>
 	            </td>
-	            <td>
+	            <td align="right">
 	                <label for="name">名字:</label>
 	            </td>
 	            <td>
 	                <input type="text" id="userMgSearchForm_name" name="name" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, regExp:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'"/>
 	            </td>
-	        </tr>
-	        <tr>
 	        	<td>
 				    <button data-dojo-type="dijit/form/Button" id="searchBtn" type="button">查询
 						<script type="dojo/on" data-dojo-event="click">
@@ -76,13 +74,10 @@
                     	</script>
 					</button>
 	        	</td>
-	        	<td></td>
-	        	<td></td>
-	        	<td></td>
 	        </tr>
 	    </table>
     </div>
-    <div id="gridDiv" style="width: 100%; height: 50%;">
+    <div id="gridDiv" style="width: 100%;">
 	</div>
     <div id="editMode">
         <div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">

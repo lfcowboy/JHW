@@ -1,4 +1,4 @@
-#if ($loginUser)
+#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_3')
 <!-- 
 <button data-dojo-type="dijit/form/Button" id="productDriverManagementBtn" type="button">
 	<span>产品程序管理</span>

@@ -13,7 +13,7 @@ public interface UserServer {
 	
 	public List<User> getUsersPaged(User user, Page page);
 
-	public List<UserType> getUserTypes();
+	public List<UserType> getUserTypes(String operator);
 
 	public boolean updateUser(User user);
 

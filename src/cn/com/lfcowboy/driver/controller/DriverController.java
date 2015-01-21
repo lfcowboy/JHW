@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.com.lfcowboy.driver.domain.Driver;
 import cn.com.lfcowboy.driver.domain.JSONResult;
 import cn.com.lfcowboy.driver.domain.Page;
+import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.Version;
 import cn.com.lfcowboy.driver.server.DriverServer;
 import cn.com.lfcowboy.driver.server.VersionServer;
@@ -124,6 +125,10 @@ public class DriverController {
 			page.setOffset(Integer.valueOf(resultRange[0]));
 			page.setLimit(Integer.valueOf(resultRange[1]) - page.getOffset()
 					+ 1);
+		}
+		User loginUser = (User) request.getSession().getAttribute("loginUser");
+		if ("UserType_6".equals(loginUser.getType())) {
+			driver.setCustomerId(loginUser.getId());
 		}
 		List<Driver> drivers = driverServer.getDrivers(driver, page);
 		int total = driverServer.getTotal(driver);

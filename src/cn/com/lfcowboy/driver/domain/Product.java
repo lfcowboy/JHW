@@ -5,7 +5,7 @@ import java.util.Date;
 public class Product {
 	private int id;
 	private String code;
-	private int customerId;
+	private Integer customerId;
 	private String customerName;
 	private String driverName;
 	private String chipCode;
@@ -87,11 +87,11 @@ public class Product {
 		this.code = code;
 	}
 
-	public int getCustomerId() {
+	public Integer getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 

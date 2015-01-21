@@ -8,7 +8,7 @@ public class Driver {
 	int engineerId;
 	String engineerName;
 	String chipCode;
-	int customerId;	
+	Integer customerId;
 	String customerName;
 	String lastVersion;
 	
@@ -19,10 +19,12 @@ public class Driver {
 	public void setLastVersion(String lastVersion) {
 		this.lastVersion = lastVersion;
 	}
-	public int getCustomerId() {
+
+	public Integer getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(int customerId) {
+
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 	public String getCustomerName() {

@@ -10,7 +10,13 @@ import cn.com.lfcowboy.driver.domain.Version;
 public interface VersionDao {
 	Version getVersion(int id);
 
+	Version getVersionByCustomer(@Param("versionId") int versionId,
+			@Param("customerId") int customerId);
+
 	List<Version> getVersions(int driverId);
+
+	void deleteTestVersions(@Param("driverId") int driverId,
+			@Param("officialVersion") String officialVersion);
 
 	List<Version> getVersionsPaged(@Param("driverId") int driverId,
 			@Param("page") Page page);
@@ -26,4 +32,5 @@ public interface VersionDao {
 	String getMaxVersion(@Param("driverId") int driverId);
 
 	boolean deleteVersionByDriverId(int driverId);
+
 }

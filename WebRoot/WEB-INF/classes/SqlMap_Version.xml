@@ -6,6 +6,9 @@
 	<select id="getVersion" parameterType="int" resultType="Version">select
 		version.id,version.version,version.sequence,version.file_name as fileName, version.remark, version.add_time as addTime, version.driver_id as driverId, version.burn_sum as burnSum
 		from version where version.id=#{id}</select>
+	<select id="getVersionByCustomer" resultType="Version">select
+		version.id,version.version,version.sequence,version.file_name as fileName, version.remark, version.add_time as addTime, version.driver_id as driverId, version.burn_sum as burnSum
+		from version,driver,product where version.id=#{versionId} and version.DRIVER_ID = driver.ID and driver.PRODUCT_ID = product.ID and product.CUSTOMER_ID = #{customerId}</select>
 	<select id="getVersions" parameterType="int" resultType="Version">select
 		version.id,version.version,version.sequence,version.file_name as fileName, version.remark, version.add_time as addTime, version.driver_id as driverId, version.burn_sum as burnSum
 		from version where version.driver_id=#{driverId}</select>
@@ -16,10 +19,11 @@
 		limit #{page.limit} offset #{page.offset}</select>
 	<select id="getTotal" parameterType="int" resultType="int">select count(*) from version where version.driver_id=#{driverId}</select>
 	<select id="getMaxVersion" parameterType="int" resultType="String">select max(version.version) from version where version.DRIVER_ID=#{driverId}</select>
-	<update id="updateVersion" parameterType="Version">update version set sequence = #{sequence},remark = #{remark},burn_sum = #{burnSum} where id=#{id}</update>
+	<update id="updateVersion" parameterType="Version">update version set version = #{version},sequence = #{sequence},remark = #{remark},burn_sum = #{burnSum} where id=#{id}</update>
 	<insert id="addVersion" parameterType="Version">INSERT INTO
 		version ( version,sequence,file_name,remark,add_time,driver_id,burn_sum) VALUES (
 		#{version},#{sequence},#{fileName},#{remark},NOW(),#{driverId},#{burnSum})</insert>
 	<delete id="deleteVersion" parameterType="int">DELETE FROM version WHERE id=#{id}</delete>
 	<delete id="deleteVersionByDriverId" parameterType="int">DELETE FROM version WHERE driver_id=#{driverId}</delete>
+	<select id="deleteTestVersions">DELETE FROM version where version.driver_id=#{driverId} and version.version like '%${officialVersion}%'</select>
 </mapper>

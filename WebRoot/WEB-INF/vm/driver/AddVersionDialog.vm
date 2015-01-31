@@ -2,8 +2,12 @@
 	<script type="dojo/on" data-dojo-event="show">
         dojo.connect(dijit.byId("addVersionForm.driverFile"), "onComplete", function(dataArray){			
             dojo.forEach(dojo.isArray(dataArray) ? dataArray : [dataArray], function(resp){
-				dijit.byId('addVersionDialog').hide();
-				versionGrid.setQuery({driverId:"$!driverId"});
+				if(!resp.success){
+					alert(resp.msg);
+				}else{
+    				dijit.byId('addVersionDialog').hide();
+    				versionGrid.setQuery({driverId:"$!driverId"});
+				}
             });
         });
 	</script>
@@ -29,7 +33,7 @@
                 <label for="type">可烧录次数:</label>
             </td>
             <td>
-				<input type="text" id="addVersionForm.burnSum" name="burnSum" value="500" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'"/>
+				<input type="text" id="addVersionForm.burnSum" name="burnSum" value="50" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'" readOnly/>
             </td>
         </tr>
         <tr>
@@ -37,7 +41,7 @@
                 <label for="account">程序文件:</label>
             </td>
             <td>
-				<input name="driverFile" multiple="false" type="file" dojoType="dojox/form/Uploader" label="选择" id="addVersionForm.driverFile" uploadOnSelect="false" url="addVersionAction.do?driverId=$!driverId"/>
+				<input name="driverFile" multiple="false" type="file" accept="image/gif, image/jpeg" dojoType="dojox/form/Uploader" label="选择" id="addVersionForm.driverFile" uploadOnSelect="false" url="addVersionAction.do?driverId=$!driverId"/>
             </td>
         </tr>
 		<tr>
@@ -58,15 +62,17 @@
 				window.alert('请选择程序文件.'); 
 				return false; 
 			}
-			if(file[0].type != "text/plain"){
-				window.alert('请选择txt文件.'); 
+	
+			var endStringreg=new RegExp(".hex$");
+			if(!endStringreg.test(file[0].name)){
+				window.alert('请选择.hex文件.'); 
 				return false; 
 			}
 			var form = dijit.byId("addVersionForm");
 			if(!form.isValid()){ 
 				window.alert("输入不正确，请确认。"); 
 				return false; 
-			}			
+			}
     	</script>
 	</button>
 	<button data-dojo-type="dijit/form/Button" type="button" id="addVersionForm.cancelBtn">返回

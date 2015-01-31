@@ -28,6 +28,7 @@
 				<input type="text" id="editVersionForm.version" value="$!version.version" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
+		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2' || $loginUser.type == 'UserType_4')
 		<tr>
             <td>
                 <label for="type">校验码:</label>
@@ -36,6 +37,17 @@
 				<input type="text" id="editVersionForm.sequence" value="$!version.sequence" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:5, regExp:'[A-Za-z0-9]*', invalidMessage:'支持:英文,数字'"/>
             </td>
         </tr>
+		#else
+		<tr>
+            <td>
+                <label for="type">校验码:</label>
+            </td>
+            <td>
+				<input type="text" id="editVersionForm.sequence" value="$!version.sequence" name="sequence" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:5, regExp:'[A-Za-z0-9]*', invalidMessage:'支持:英文,数字'" readOnly/>
+            </td>
+        </tr>
+		#end
+		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_3')
 		<tr>
             <td>
                 <label for="type">可烧录次数:</label>
@@ -44,6 +56,16 @@
 				<input type="text" id="editVersionForm.burnSum" name="burnSum" value="$!version.burnSum" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'"/>
             </td>
         </tr>
+		#else
+		<tr>
+            <td>
+                <label for="type">可烧录次数:</label>
+            </td>
+            <td>
+				<input type="text" id="editVersionForm.burnSum" name="burnSum" value="$!version.burnSum" required="true" data-dojo-type="dijit/form/NumberTextBox" data-dojo-props="constraints:{min:0,max:100000,places:0}, invalidMessage:'请输入有效数字.', rangeMessage:'0-100000.'" readOnly/>
+            </td>
+        </tr>
+		#end
 		<!-- 
         <tr>
             <td>
@@ -54,6 +76,7 @@
             </td>
         </tr>
 		-->
+		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2' || $loginUser.type == 'UserType_4')
 		<tr>
             <td>
                 <label for="type">备注:</label>
@@ -62,6 +85,16 @@
 				<textarea id="editVersionForm.remark" name="remark" cols="50" data-dojo-type="dijit/form/Textarea">$!version.remark</textarea>
 			</td>
         </tr>
+		#else
+		<tr>
+            <td>
+                <label for="type">备注:</label>
+            </td>
+			<td>
+				<textarea id="editVersionForm.remark" name="remark" cols="50" data-dojo-type="dijit/form/Textarea" readOnly>$!version.remark</textarea>
+			</td>
+        </tr>
+		#end
     </table>
 	<!--
 	<div id="editVersionForm.files" dojoType="dojox/form/uploader/FileList" uploaderId="editVersionForm.myfile">

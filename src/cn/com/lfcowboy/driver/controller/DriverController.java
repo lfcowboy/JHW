@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.lfcowboy.driver.domain.Driver;
@@ -25,12 +26,24 @@ import cn.com.lfcowboy.driver.domain.Page;
 import cn.com.lfcowboy.driver.domain.User;
 import cn.com.lfcowboy.driver.domain.Version;
 import cn.com.lfcowboy.driver.server.DriverServer;
+import cn.com.lfcowboy.driver.server.UserServer;
 import cn.com.lfcowboy.driver.server.VersionServer;
 
 @Controller
 public class DriverController {
+	public static final String FILF_NAME_SUFFIX = ".hex";
 	private DriverServer driverServer;
 	private VersionServer versionServer;
+	private UserServer userServer;
+
+	public UserServer getUserServer() {
+		return userServer;
+	}
+
+	@Autowired
+	public void setUserServer(UserServer userServer) {
+		this.userServer = userServer;
+	}
 
 	public VersionServer getVersionServer() {
 		return versionServer;
@@ -197,23 +210,33 @@ public class DriverController {
 	JSONResult addVersionAction(Version version, HttpServletRequest request)
 			throws IOException {
 		JSONResult result = new JSONResult();
+		result.setSuccess(true);
+		MultipartFile driverFile = version.getDriverFile();
 		// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
-		if (version.getDriverFile() == null) {
+		if (driverFile == null) {
 			System.out.println("文件未上传");
 		} else {
-			System.out.println("文件长度: " + version.getDriverFile().getSize());
-			System.out.println("文件类型: "
-					+ version.getDriverFile().getContentType());
+			System.out.println("文件长度: " + driverFile.getSize());
+			System.out.println("文件类型: " + driverFile.getContentType());
 			System.out.println("文件名称: " + version.getDriverFile().getName());
 			System.out.println("文件原名: "
 					+ version.getDriverFile().getOriginalFilename());
 			System.out.println("========================================");
+
+			if (!driverFile.getOriginalFilename().endsWith(FILF_NAME_SUFFIX)
+					|| !"application/octet-stream".equals(driverFile
+							.getContentType())) {
+				result.setMsg("请选择正确的文件类型.hex!");
+				result.setSuccess(false);
+				return result;
+			}
 			// 这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
-			String realPath = request.getSession().getServletContext()
-					.getRealPath("/upload");
+//			String realPath = request.getSession().getServletContext()
+//					.getRealPath("/upload");
+			String realPath = "D:/upload";
 			String filePath = "/" + version.getDriverId();
 			String fileName = "D" + version.getDriverId() + "V"
-					+ version.getVersion() + ".txt";
+					+ version.getVersion() + FILF_NAME_SUFFIX;
 			FileUtils.copyInputStreamToFile(version.getDriverFile()
 					.getInputStream(), new File(realPath + filePath, fileName));
 			version.setFilePath(fileName);
@@ -224,6 +247,8 @@ public class DriverController {
 		// result.setSuccess(false);
 		// result.setMsg("版本已存在，请使用其他程序名！");
 		// } else {
+		versionServer.deleteTestVersions(version.getDriverId(), version
+				.getVersion().substring(0, 3));
 		versionServer.addVersion(version);
 		// result.setSuccess(true);
 		// }
@@ -283,9 +308,95 @@ public class DriverController {
 		return null;
 	}
 
+	@RequestMapping(value = "burnFile", method = RequestMethod.GET)
+	@ResponseBody
+	public JSONResult burnFile(String userAccount, String password,
+			int versionId, int burnSum, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		JSONResult result = new JSONResult();
+		User loginUser = userServer.getUser(userAccount);
+		if (loginUser == null || !loginUser.getPassword().equals(password)) {
+			result.setSuccess(false);
+			result.setMsg("用户名密码不正确，请确认后重新输入！");
+			return result;
+		}
+
+		Version version = versionServer.getVersionByCustomer(versionId,
+				loginUser.getId());
+		if (version == null ) {
+			result.setSuccess(false);
+			result.setMsg("版本信息错误！");
+			return result;
+		} else if (version.getBurnSum() < burnSum) {
+			result.setSuccess(false);
+			result.setMsg("烧录次数超过上限！");
+			return result;
+		}
+
+		version.setBurnSum(version.getBurnSum() - burnSum);
+		versionServer.updateVersion(version);
+
+		String fileName = version.getFileName();
+		String contentType = "text/html;charset=UTF-8";
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+
+		String downLoadPath = request
+				.getSession()
+				.getServletContext()
+				.getRealPath(
+						"/upload" + "/" + version.getDriverId() + "/"
+								+ fileName);
+		File dirverFile = new File(downLoadPath);
+		if (!dirverFile.exists()) {
+			result.setSuccess(false);
+			result.setMsg("文件不存在！");
+			return result;
+		}
+		long fileLength = dirverFile.length();
+
+		response.setContentType(contentType);
+		response.setHeader("Content-disposition", "attachment; filename="
+				+ new String(fileName.getBytes("UTF-8"), "UTF-8"));
+		response.setHeader("Content-Length", String.valueOf(fileLength));
+
+		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
+		bos = new BufferedOutputStream(response.getOutputStream());
+		byte[] buff = new byte[2048];
+		int bytesRead;
+		while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+			bos.write(buff, 0, bytesRead);
+		}
+		bis.close();
+		bos.close();
+		return result;
+	}
+
 	@RequestMapping(value = "getVersionsAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
 	boolean deleteVersionAction(@PathVariable int id) {
 		return versionServer.deleteVersion(id);
 	}
+	
+	@RequestMapping(value = "userConfirmAction", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONResult userConfirmAction(int versionId) {
+		JSONResult result = new JSONResult();
+		Version version = versionServer.getVersion(versionId);
+		String testVersion = version.getVersion();
+		if (testVersion.length() == 5) {
+			version.setVersion(testVersion.substring(0, 3));
+			version.setBurnSum(0);
+			versionServer.updateVersion(version);
+			result.setSuccess(true);
+			result.setMsg("版本已确认！");
+		} else {
+			result.setSuccess(false);
+			result.setMsg("只有测试版本才能确认！");
+		}
+		return result;
+	}
+
 }

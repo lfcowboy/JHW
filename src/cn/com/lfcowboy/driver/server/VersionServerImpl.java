@@ -2,6 +2,7 @@ package cn.com.lfcowboy.driver.server;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.com.lfcowboy.driver.dao.VersionDao;
@@ -26,8 +27,19 @@ public class VersionServerImpl implements VersionServer {
 	}
 
 	@Override
+	public Version getVersionByCustomer(@Param("versionId") int versionId,
+			@Param("customerId") int customerId){
+		return versionDao.getVersionByCustomer(versionId, customerId);
+	}
+
+	@Override
 	public List<Version> getVersions(int driverId) {
 		return versionDao.getVersions(driverId);
+	}
+
+	@Override
+	public void deleteTestVersions(int driverId, String officialVersion) {
+		versionDao.deleteTestVersions(driverId, officialVersion);
 	}
 
 	@Override

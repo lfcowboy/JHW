@@ -57,13 +57,13 @@
                     new Cells.RowIndex({
                         name:"No.", width : "4%"
                     }),
-					{name:"版本ID", field:"id", width: "16%"},
-    				{name:"程序版本", field:"version", width: "16%"},
-					{name:"上传时间", field:"addTime", width: "16%"},
-					{name:"校验码", field:"sequence", width: "16%"},
-					{name:"文件路径", field:"fileName", width: "20%", formatter:"formatLink"},
-					{name:"可烧录次数", field:"burnSum", width: "16%"},
-					{name:"备注", field:"remark", width: "16%"}
+					{name:"版本ID", field:"id", width: "10%"},
+    				{name:"程序版本", field:"version", width: "10%"},
+					{name:"上传时间", field:"addTime", width: "19%"},
+					{name:"校验码", field:"sequence", width: "13%"},
+					{name:"文件路径", field:"fileName", width: "18%", formatter:"formatLink"},
+					{name:"可烧录次数", field:"burnSum", width: "13%"},
+					{name:"备注", field:"remark", width: "13%"}
     			]];
     			gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"

@@ -32,6 +32,7 @@ import cn.com.lfcowboy.driver.server.VersionServer;
 @Controller
 public class DriverController {
 	public static final String FILF_NAME_SUFFIX = ".hex";
+	public static final String UPLOAD_FILE_PATH = "D:/upload";
 	private DriverServer driverServer;
 	private VersionServer versionServer;
 	private UserServer userServer;
@@ -233,7 +234,7 @@ public class DriverController {
 			// 这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
 //			String realPath = request.getSession().getServletContext()
 //					.getRealPath("/upload");
-			String realPath = "D:/upload";
+			String realPath = UPLOAD_FILE_PATH;
 			String filePath = "/" + version.getDriverId();
 			String fileName = "D" + version.getDriverId() + "V"
 					+ version.getVersion() + FILF_NAME_SUFFIX;
@@ -282,13 +283,16 @@ public class DriverController {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 
-		String downLoadPath = request
-				.getSession()
-				.getServletContext()
-				.getRealPath(
-						"/upload" + "/" + version.getDriverId() + "/"
-								+ fileName);
+		// String downLoadPath = request
+		// .getSession()
+		// .getServletContext()
+		// .getRealPath(
+		// "/upload" + "/" + version.getDriverId() + "/"
+		// + fileName);
 
+		String downLoadPath = UPLOAD_FILE_PATH + "/" + version.getDriverId()
+				+ "/" + fileName;
+		
 		long fileLength = new File(downLoadPath).length();
 
 		response.setContentType(contentType);

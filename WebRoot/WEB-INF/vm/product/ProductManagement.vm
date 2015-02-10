@@ -31,7 +31,7 @@
     				cells
     			];
                 productGrid = new DataGrid({
-                	store: dataStore = ObjectStore({objectStore: myStore}),
+                	store: productDataStore = ObjectStore({objectStore: myStore}),
                 	query: "",
                     structure: gridLayout,
     				selectionMode: 'multiple',
@@ -90,7 +90,7 @@
                     }
                     dojo.forEach(items, function (selectedItem) {
                         if (selectedItem !== null) {
-                            dataStore.deleteItem(selectedItem);
+                            productDataStore.deleteItem(selectedItem);
                         }
                     });
 					saveTable();
@@ -107,8 +107,8 @@
                     if (productGrid.edit.isEditing()) {
                     	productGrid.edit.apply();
                     }
-                    if (dataStore.isDirty()) {
-                    	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
+                    if (productDataStore.isDirty()) {
+                    	var result = productDataStore.save({onComplete: onSave, onError: onSaveError});
                     }
                 }
         	</script>

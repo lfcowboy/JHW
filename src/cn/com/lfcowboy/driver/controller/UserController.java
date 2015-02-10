@@ -110,7 +110,7 @@ public class UserController {
 	public ModelAndView LoadEditUserDialog(HttpServletRequest request,
 			HttpServletResponse response,String account) throws Exception {
 		ModelAndView mode = new ModelAndView("user/EditUserDialog");
-		account = new String(account.getBytes("ISO-8859-1"), "UTF-8");
+		// account = new String(account.getBytes("ISO-8859-1"), "UTF-8");
 		User user = userServer.getUser(account);  
 		mode.addObject("user", user);
 		return mode;
@@ -147,7 +147,6 @@ public class UserController {
 	public @ResponseBody
 	List<User> getUsersPagedAction(HttpServletRequest request,
 			HttpServletResponse response, User user) throws Exception{
-		User loginUser = (User) request.getSession().getAttribute("loginUser");
 		Page page = new Page();
 		String rangeHeader = request.getHeader("Range");
 		if (rangeHeader != null && rangeHeader.matches("^items=[0-9]+-[0-9]+")) {

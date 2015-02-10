@@ -144,6 +144,9 @@ public class DriverController {
 		if ("UserType_6".equals(loginUser.getType())) {
 			driver.setCustomerId(loginUser.getId());
 		}
+		if ("UserType_4".equals(loginUser.getType())) {
+			driver.setEngineerId(loginUser.getId());
+		}
 		List<Driver> drivers = driverServer.getDrivers(driver, page);
 		int total = driverServer.getTotal(driver);
 		response.setHeader("Content-Range", rangeHeader + "/" + total);
@@ -347,12 +350,8 @@ public class DriverController {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 
-		String downLoadPath = request
-				.getSession()
-				.getServletContext()
-				.getRealPath(
-						"/upload" + "/" + version.getDriverId() + "/"
-								+ fileName);
+		String downLoadPath = UPLOAD_FILE_PATH + "/" + version.getDriverId()
+				+ "/" + fileName;
 		File dirverFile = new File(downLoadPath);
 		if (!dirverFile.exists()) {
 			result.setSuccess(false);

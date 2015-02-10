@@ -4,23 +4,28 @@
 
 <mapper namespace="cn.com.lfcowboy.driver.dao.DriverDao">
 	<select id="getDriver" parameterType="int" resultType="Driver">select
-		driver.id, driver.name, driver.chip_code as chipCode, driver.engineer_id as engineerId, engineer.name as engineerName, product.code as productCode 
-		from driver left join (user as engineer, product) on (driver.engineer_id = engineer.id and driver.product_id = product.id)where driver.id=#{id} </select>
-	<select id="getDrivers" resultType="Driver">select driver.id,driver.name,product.code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId, 
+		driver.id, driver.name, driver.chip_code as chipCode, driver.engineer_id as engineerId, engineer.name as engineerName, product.code as productCode
+		from driver left join (user as engineer, product) on (driver.engineer_id = engineer.id and driver.product_id = product.id)where driver.id=#{id}</select>
+	<select id="getDrivers" resultType="Driver">
+		select driver.id,driver.name,product.code as productCode,driver.chip_code as chipCode, driver.engineer_id as engineerId,
 		engineer.name as engineerName, product.customer_id as customerId, customer.name as customerName,newVersion.lastVersion
-		from driver left join ((select DRIVER_ID,max(version) as lastVersion from version group by DRIVER_ID) as newVersion,product,user as customer) 
-		on (driver.ID = newVersion.DRIVER_ID and driver.PRODUCT_ID = product.ID and product.customer_id = customer.id),user as engineer
+		from driver 
+		left join product ON driver.PRODUCT_ID = product.ID
+		left join user as customer ON product.customer_id = customer.id
+		left join user as engineer ON driver.engineer_id = engineer.id
+		left join (select DRIVER_ID, max(version) as lastVersion from version group by DRIVER_ID) as newVersion ON driver.ID = newVersion.DRIVER_ID
 		<where>
 			<if test="#{driver.name}!=null">driver.name like '%${driver.name}%'</if>
-			<if test="driver.customerId!=null"> and product.customer_id = #{driver.customerId}</if>
-			and driver.engineer_id = engineer.id
+			<if test="driver.customerId!=null">and product.customer_id = #{driver.customerId}</if>
+			<if test="driver.engineerId!=null">and driver.engineer_id = #{driver.engineerId}</if>
 		</where>
-		limit #{page.limit} offset #{page.offset}</select>
+		limit #{page.limit} offset #{page.offset}
+	</select>
 	<select id="getTotal" resultType="int">
 		select count(*) from driver left join product on driver.PRODUCT_ID = product.ID
 		<where>
 			<if test="#{driver.name}!=null">driver.name like '%${driver.name}%'</if>
-			<if test="driver.customerId!= null"> and product.customer_id = #{driver.customerId} </if>
+			<if test="driver.customerId!= null">and product.customer_id = #{driver.customerId}</if>
 		</where>
 	</select>
 	<update id="updateDriver" parameterType="Driver">update driver set product_id = #{productId},chip_code = #{chipCode},engineer_id = #{engineerId} where name=#{name};</update>

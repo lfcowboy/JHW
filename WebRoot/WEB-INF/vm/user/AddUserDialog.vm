@@ -12,7 +12,7 @@
            	load: function(data){
         		if(data["success"]){
 					dijit.byId('addUserDialog').hide();
-					grid.setQuery(userMgSearchForm.get("value"));
+					userGrid.setQuery(userMgSearchForm.get("value"));
         		}else{
         			alert(data["msg"]);
         		}							            		

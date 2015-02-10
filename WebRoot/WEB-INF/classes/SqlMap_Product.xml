@@ -9,8 +9,7 @@
 		from product</select>
 	<select id="getProductsPaged" resultType="Product">select
 		product.id,product.code,product.customer_id as customerId,user.name as customerName
-		from product,user
-		where product.customer_id = user.id
+		from product left join user on product.customer_id = user.id
 		limit #{page.limit} offset #{page.offset}</select>
 	<select id="getTotal" resultType="int">select count(*) from product</select>
 	<update id="updateProduct" parameterType="Product">update product set customer_id = #{customerId} where code=#{code};</update>

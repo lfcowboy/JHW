@@ -1,6 +1,8 @@
 <div dojoType="dijit/layout/ContentPane" id="userInfoDialog" title="登录用户" href="LoadUserInfoDialog.do" class="info">
 </div>
-<div data-dojo-type="dijit/Dialog" id="editUserDialog" title="编辑用户" href="">
+<div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">
+</div>
+<div data-dojo-type="dijit/Dialog" id="editUserDialog" title="编辑用户" href="LoadEditUserDialog.do">
 </div>
 #if (!$loginUser)
 <button data-dojo-type="dijit/form/Button" id="loginBtn">

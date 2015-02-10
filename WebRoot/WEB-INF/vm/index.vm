@@ -1,6 +1,6 @@
 <html lang="en" dir="ltr">
     <head>
-        <title>金华微电子芯片程序管理系统</title>
+        <title>晶华微电子芯片程序管理系统</title>
     	<link rel="stylesheet" href="js/page/demo.css" type="text/css" />
     	<script type="text/javascript">
     		dojoConfig = {

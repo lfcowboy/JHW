@@ -11,7 +11,7 @@
 					dijit.byId('editUserDialog').hide();
 					var tab = jhw.getTab("userManagement.do");
 					if (typeof tab !== "undefined"){					
-						grid.setQuery(userMgSearchForm.get("value"));
+						userGrid.setQuery(userMgSearchForm.get("value"));
 					}
         		}else{
         			alert(data["msg"]);
@@ -21,40 +21,34 @@
 			}
         });
     </script>
-	<script type="dojo/on" data-dojo-event="show">
-        require([
-         	"dojo/data/ObjectStore"
-        ], function(ObjectStore){
-    		var userTypes = dijit.byId("editUserForm.type");
-    		userTypes.set("store",ObjectStore({objectStore: userTypesStore}));
-			userTypes.set("value", "$!user.type");
-        });
-	</script>
 	<table style="border: 1px solid #9f9f9f;" cellspacing="10">
-		<!-- 
 		<tr>
             <td>
                 <label for="type">用户类型:</label>
             </td>
             <td>
-				<input data-dojo-type="dijit/form/Select" labelAttr="name" name="type" id="editUserForm.type" disabled/>
+				<input type="text" value="$!user.typeName" id="editUserForm.typeName" name="typeName" required="true" data-dojo-type="dijit/form/TextBox" readOnly/>
             </td>
         </tr>
-		-->
         <tr>
             <td>
                 <label for="account">用户名:</label>
             </td>
             <td>
-                <input type="text" value="$!user.account" id="editUserForm.account" name="account" required="true" data-dojo-type="dijit/form/TextBox" readOnly data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
-            </td>
+				<input type="text" value="$!user.account" id="editUserForm.account" name="account" required="true" data-dojo-type="dijit/form/TextBox" readOnly data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9\-]*', invalidMessage:'支持:英文,数字,-'"/>
+			</td>
         </tr>
         <tr>
             <td>
                 <label for="name">名字:</label>
             </td>
             <td>
-                <input type="text" value="$!user.name" id="editUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, regExp:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'"/>
+				#if ($loginUser.type == 'UserType_1')
+					<input type="text" value="$!user.name" id="editUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, pattern:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'"/>
+				#else
+					<input type="text" value="$!user.name" id="editUserForm.name" name="name" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:60, pattern:'[A-Za-z0-9\-\u4e00-\u9fa5]*', invalidMessage:'支持:中文,英文,数字,-'" readOnly/>
+				#end
+                
             </td>
         </tr>
         <tr>
@@ -62,7 +56,7 @@
                 <label for="password">密码:</label>
             </td>
             <td>
-                <input type="password" value="$!user.password" id="editUserForm.password" name="password" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, regExp:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
+                <input type="password" value="$!user.password" id="editUserForm.password" name="password" required="true" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="maxLength:20, pattern:'[A-Za-z0-9_\-]*', invalidMessage:'支持:英文,数字,-,_'"/>
             </td>
         </tr>
     </table>

@@ -40,8 +40,8 @@
         				}, 
         				cells
         			];
-                    grid = new DataGrid({
-                    	store: dataStore = ObjectStore({objectStore: myStore}),
+                    userGrid = new DataGrid({
+                    	store: userDataStore = ObjectStore({objectStore: myStore}),
                     	query: "",
                         structure: gridLayout,
         				rowSelector: '2%',
@@ -49,7 +49,7 @@
         				rowsPerPage: 100,
         				autoHeight: "10"
                     }, "gridDiv");
-        			grid.startup();
+        			userGrid.startup();
                 });
             });
     	</script>
@@ -70,7 +70,8 @@
 	        	<td>
 				    <button data-dojo-type="dijit/form/Button" id="searchBtn" type="button">查询
 						<script type="dojo/on" data-dojo-event="click">
-							grid.setQuery(userMgSearchForm.get("value"));
+							userGrid.selection.clear();
+							userGrid.setQuery(userMgSearchForm.get("value"));
                     	</script>
 					</button>
 	        	</td>
@@ -80,8 +81,6 @@
     <div id="gridDiv" style="width: 100%;">
 	</div>
     <div id="editMode">
-        <div data-dojo-type="dijit/Dialog" id="addUserDialog" title="添加用户" href="LoadAddUserDialog.do">
-        </div>
         <button data-dojo-type="dijit/form/Button" id="addButton">
         	<span>添加</span>
         	<script type="dojo/on" data-dojo-event="click">                
@@ -93,9 +92,10 @@
 				}
         	</script>
         </button>
-	    <button data-dojo-type="dijit/form/Button" id="editButton" type="button">编辑
+	    <button data-dojo-type="dijit/form/Button" id="editButton">
+			<span>编辑</span>
 			<script type="dojo/on" data-dojo-event="click">
-				var items = grid.selection.getSelected();
+				var items = userGrid.selection.getSelected();
                 if (items.length == 0) {
                     alert("请选择需要编辑的用户。");
                 }else if (items.length > 1) {
@@ -114,14 +114,14 @@
 		</button>
 	    <button data-dojo-type="dijit/form/Button" id="removeButton" type="button">删除
 			<script type="dojo/on" data-dojo-event="click">
-                var items = grid.selection.getSelected();
+                var items = userGrid.selection.getSelected();
                 if (items.length) {
                     if(!confirm('确认删除？')){  
                         return false;
                     }
                     dojo.forEach(items, function (selectedItem) {
                         if (selectedItem !== null) {
-                            dataStore.deleteItem(selectedItem);
+                            userDataStore.deleteItem(selectedItem);
                         }
                     });
 					saveTable();
@@ -135,11 +135,11 @@
                 	alert("Error occurred.");
                 }
                 function saveTable() {
-                    if (grid.edit.isEditing()) {
-                    	grid.edit.apply();
+                    if (userGrid.edit.isEditing()) {
+                    	userGrid.edit.apply();
                     }
-                    if (dataStore.isDirty()) {
-                    	var result = dataStore.save({onComplete: onSave, onError: onSaveError});
+                    if (userDataStore.isDirty()) {
+                    	var result = userDataStore.save({onComplete: onSave, onError: onSaveError});
                     }
                 }
         	</script>

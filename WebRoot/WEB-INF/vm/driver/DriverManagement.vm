@@ -11,7 +11,8 @@
 	        	<td>
 				    <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.searchBtn" type="button">查询
 						<script type="dojo/on" data-dojo-event="click">
-							driverGrid.setQuery(driverMgSearchForm.get("value"));
+							driverGrid.selection.clear();
+							driverGrid.setQuery(driverMgSearchForm.get("value"));							
                     	</script>
 					</button>
 	        	</td>
@@ -82,7 +83,7 @@
 				}				
         	</script>
         </button>
-		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2' || $loginUser.type == 'UserType_4')
+		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2')
         <div data-dojo-type="dijit/Dialog" id="addDriverDialog" title="添加产品" href="LoadAddDriverDialog.do">
         </div>		
         <button data-dojo-type="dijit/form/Button" id="driverMgSearchForm.addButton">

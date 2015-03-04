@@ -26,6 +26,7 @@
 		<where>
 			<if test="#{driver.name}!=null">driver.name like '%${driver.name}%'</if>
 			<if test="driver.customerId!= null">and product.customer_id = #{driver.customerId}</if>
+			<if test="driver.engineerId!=null">and driver.engineer_id = #{driver.engineerId}</if>
 		</where>
 	</select>
 	<update id="updateDriver" parameterType="Driver">update driver set product_id = #{productId},chip_code = #{chipCode},engineer_id = #{engineerId} where name=#{name};</update>

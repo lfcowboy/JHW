@@ -53,9 +53,10 @@ public class Version {
 		return fileName;
 	}
 
-	public void setFilePath(String fileName) {
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+
 	public String getRemark() {
 		return remark;
 	}

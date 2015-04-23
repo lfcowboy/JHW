@@ -28,6 +28,14 @@
 				<input type="text" id="editVersionForm.version" value="$!version.version" name="version" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
             </td>
         </tr>
+		<tr>
+            <td>
+                <label for="type">文件名:</label>
+            </td>
+            <td>
+				<input type="text" id="editVersionForm.fileName" value="$!version.fileName" name="fileName" required="true" data-dojo-type="dijit/form/ValidationTextBox" readOnly/>
+            </td>
+        </tr>
 		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2' || $loginUser.type == 'UserType_4')
 		<tr>
             <td>

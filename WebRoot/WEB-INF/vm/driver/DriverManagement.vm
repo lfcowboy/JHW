@@ -40,7 +40,7 @@
             dojo.ready(function(){
           		var cells = [[
                     new Cells.RowIndex({
-                        name:"No.", width : "4%"
+                        name:"序号", width : "4%"
                     }),
 					{name:"程序名ID", field:"id", width: "13%"},
     				{name:"程序名", field:"name", width: "13%"},

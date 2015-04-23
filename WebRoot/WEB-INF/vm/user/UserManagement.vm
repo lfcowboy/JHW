@@ -29,7 +29,7 @@
                 dojo.ready(function(){
               		var cells = [[
                         new Cells.RowIndex({
-                            width : "4%"
+                            name : "序号", width : "4%"
                         }),
         				{name:"用户名", field:"account", width: "30%"},
                         {name:"名字", field:"name", editable: true, width: "30%"},

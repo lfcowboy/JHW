@@ -55,15 +55,15 @@
                 };
           		var cells = [[
                     new Cells.RowIndex({
-                        name:"No.", width : "4%"
+                        name:"序号", width : "4%"
                     }),
 					{name:"版本ID", field:"id", width: "7%"},
-    				{name:"程序版本", field:"version", width: "8%"},
+    				{name:"程序版本", field:"version", width: "11%"},
 					{name:"上传时间", field:"addTime", width: "15%"},
-					{name:"校验码", field:"sequence", width: "5%"},
+					{name:"校验码", field:"sequence", width: "8%"},
 					{name:"文件名", field:"fileName", width: "13%", formatter:"formatLink"},
-					{name:"可烧录次数", field:"burnSum", width: "8%"},
-					{name:"备注", field:"remark", width: "40%"}
+					{name:"可烧录次数", field:"burnSum", width: "14%"},
+					{name:"备注", field:"remark", width: "24%"}
     			]];
     			gridLayout = [{
     					type: "dojox.grid._CheckBoxSelector", width: "4%"
@@ -194,7 +194,7 @@
         	</script>
 		</button>
 		#end
-		#if ($loginUser.type == 'UserType_5')
+		#if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_5')
 	    <button data-dojo-type="dijit/form/Button" id="versionMgSearchForm.userConfirmButton">
 			<span>客户确认</span>
 			<script type="dojo/on" data-dojo-event="click">

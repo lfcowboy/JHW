@@ -38,6 +38,12 @@ public class VersionServerImpl implements VersionServer {
 	}
 
 	@Override
+	public List<Version> getTestVersions(
+			@Param("officialVersion") String officialVersion) {
+		return versionDao.getTestVersions(officialVersion);
+	}
+
+	@Override
 	public void deleteTestVersions(int driverId, String officialVersion) {
 		versionDao.deleteTestVersions(driverId, officialVersion);
 	}

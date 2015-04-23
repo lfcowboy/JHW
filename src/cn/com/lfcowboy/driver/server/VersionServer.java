@@ -15,6 +15,9 @@ public interface VersionServer {
 
 	public List<Version> getVersions(int driverId);
 
+	List<Version> getTestVersions(
+			@Param("officialVersion") String officialVersion);
+
 	public void deleteTestVersions(@Param("driverId") int driverId,
 			@Param("officialVersion") String officialVersion);
 

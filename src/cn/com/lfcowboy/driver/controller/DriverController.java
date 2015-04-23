@@ -216,17 +216,11 @@ public class DriverController {
 		JSONResult result = new JSONResult();
 		result.setSuccess(true);
 		MultipartFile driverFile = version.getDriverFile();
-		// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
 		if (driverFile == null) {
-			System.out.println("文件未上传");
+			result.setMsg("文件上传失败!");
+			result.setSuccess(false);
+			return result;
 		} else {
-			System.out.println("文件长度: " + driverFile.getSize());
-			System.out.println("文件类型: " + driverFile.getContentType());
-			System.out.println("文件名称: " + version.getDriverFile().getName());
-			System.out.println("文件原名: "
-					+ version.getDriverFile().getOriginalFilename());
-			System.out.println("========================================");
-
 			if (!driverFile.getOriginalFilename().endsWith(FILF_NAME_SUFFIX)
 					|| !"application/octet-stream".equals(driverFile
 							.getContentType())) {
@@ -234,29 +228,51 @@ public class DriverController {
 				result.setSuccess(false);
 				return result;
 			}
-			// 这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
-//			String realPath = request.getSession().getServletContext()
-//					.getRealPath("/upload");
-			String realPath = UPLOAD_FILE_PATH;
-			String filePath = "/" + version.getDriverId();
-			String fileName = "D" + version.getDriverId() + "V"
-					+ version.getVersion() + FILF_NAME_SUFFIX;
+			version.setFileName(getVersionFileName(version));
 			FileUtils.copyInputStreamToFile(version.getDriverFile()
-					.getInputStream(), new File(realPath + filePath, fileName));
-			version.setFilePath(fileName);
+					.getInputStream(), new File(getVersionFilePath(version)));
+
 		}
-		// Version versionExist =
-		// versionServer.getVersions(version.getDriverId());
-		// if (versionExist != null) {
-		// result.setSuccess(false);
-		// result.setMsg("版本已存在，请使用其他程序名！");
-		// } else {
-		versionServer.deleteTestVersions(version.getDriverId(), version
-				.getVersion().substring(0, 3));
+		String officialVersion = getOfficialVersion(version.getVersion());
+		List<Version> testVersions = versionServer.getTestVersions(officialVersion);
+		for (Version testVersion : testVersions) {
+			File testVersionFile = getVersionFile(testVersion);
+			if (testVersionFile.exists()) {
+				testVersionFile.delete();
+			}
+		}
+		versionServer.deleteTestVersions(version.getDriverId(),
+				getOfficialVersion(version.getVersion()));
 		versionServer.addVersion(version);
-		// result.setSuccess(true);
-		// }
 		return result;
+	}
+
+	private String getOfficialVersion(String testVersion) {
+		return testVersion.substring(0, 3);
+	}
+
+	private File getVersionFile(Version version) {
+		return new File(getVersionFilePath(version));
+	}
+
+	private String getVersionFilePath(Version version) {
+		String fileNameString = getVersionFileName(version);
+		if (fileNameString != null) {
+			return UPLOAD_FILE_PATH + "/" + version.getDriverId() + "/"
+					+ getVersionFileName(version);
+		}
+		return null;
+	}
+
+	private String getVersionFileName(Version version) {
+		if (version.getFileName() != null) {
+			return version.getFileName();
+		}
+		if (version.getVersion() != null) {
+			return "D" + version.getDriverId() + "V" + version.getVersion()
+				+ FILF_NAME_SUFFIX;
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "editVersionAction", method = RequestMethod.POST)
@@ -279,28 +295,17 @@ public class DriverController {
 	public ModelAndView downloadFile(int versionId, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Version version = versionServer.getVersion(versionId);
-		String fileName = version.getFileName();
 		String contentType = "text/html;charset=UTF-8";
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
-
-		// String downLoadPath = request
-		// .getSession()
-		// .getServletContext()
-		// .getRealPath(
-		// "/upload" + "/" + version.getDriverId() + "/"
-		// + fileName);
-
-		String downLoadPath = UPLOAD_FILE_PATH + "/" + version.getDriverId()
-				+ "/" + fileName;
-		
+		String downLoadPath = getVersionFilePath(version);
 		long fileLength = new File(downLoadPath).length();
-
 		response.setContentType(contentType);
 		response.setHeader("Content-disposition", "attachment; filename="
-				+ new String(fileName.getBytes("UTF-8"), "UTF-8"));
+				+ new String(getVersionFileName(version).getBytes("UTF-8"),
+						"UTF-8"));
 		response.setHeader("Content-Length", String.valueOf(fileLength));
 
 		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
@@ -330,7 +335,7 @@ public class DriverController {
 
 		Version version = versionServer.getVersionByCustomer(versionId,
 				loginUser.getId());
-		if (version == null ) {
+		if (version == null) {
 			result.setSuccess(false);
 			result.setMsg("版本信息错误！");
 			return result;
@@ -343,15 +348,13 @@ public class DriverController {
 		version.setBurnSum(version.getBurnSum() - burnSum);
 		versionServer.updateVersion(version);
 
-		String fileName = version.getFileName();
 		String contentType = "text/html;charset=UTF-8";
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 
-		String downLoadPath = UPLOAD_FILE_PATH + "/" + version.getDriverId()
-				+ "/" + fileName;
+		String downLoadPath = getVersionFilePath(version);
 		File dirverFile = new File(downLoadPath);
 		if (!dirverFile.exists()) {
 			result.setSuccess(false);
@@ -362,7 +365,8 @@ public class DriverController {
 
 		response.setContentType(contentType);
 		response.setHeader("Content-disposition", "attachment; filename="
-				+ new String(fileName.getBytes("UTF-8"), "UTF-8"));
+				+ new String(getVersionFileName(version).getBytes("UTF-8"),
+						"UTF-8"));
 		response.setHeader("Content-Length", String.valueOf(fileLength));
 
 		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
@@ -380,21 +384,42 @@ public class DriverController {
 	@RequestMapping(value = "getVersionsAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
 	boolean deleteVersionAction(@PathVariable int id) {
+		Version version = versionServer.getVersion(id);
+		String filePath = getVersionFilePath(version);
+		File dirverFile = new File(filePath);
+		if (dirverFile.exists()) {
+			dirverFile.delete();
+		}
 		return versionServer.deleteVersion(id);
 	}
-	
+
 	@RequestMapping(value = "userConfirmAction", method = RequestMethod.POST)
 	public @ResponseBody
-	JSONResult userConfirmAction(int versionId) {
+	JSONResult userConfirmAction(int versionId) throws IOException {
 		JSONResult result = new JSONResult();
 		Version version = versionServer.getVersion(versionId);
 		String testVersion = version.getVersion();
 		if (testVersion.length() == 5) {
-			version.setVersion(testVersion.substring(0, 3));
+			String oldFilePath = getVersionFilePath(version);
+			File oldFile = new File(oldFilePath);
+			version.setVersion(getOfficialVersion(testVersion));
+			version.setFileName(null);
+			String newFileName = getVersionFileName(version);
+			version.setFileName(newFileName);
 			version.setBurnSum(0);
-			versionServer.updateVersion(version);
-			result.setSuccess(true);
-			result.setMsg("版本已确认！");
+
+			File newFile = new File(getVersionFilePath(version));
+			if (newFile.exists()) {
+				newFile.delete();
+			}
+			if (oldFile.renameTo(newFile)) {
+				versionServer.updateVersion(version);
+				result.setSuccess(true);
+				result.setMsg("版本已确认！");
+			} else {
+				result.setSuccess(false);
+				result.setMsg("客户确认失败！");
+			}
 		} else {
 			result.setSuccess(false);
 			result.setMsg("只有测试版本才能确认！");

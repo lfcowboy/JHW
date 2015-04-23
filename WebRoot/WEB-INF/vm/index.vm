@@ -38,7 +38,7 @@
 		            <div dojoType="dijit/layout/AccordionContainer" style="width: 100%; height: 100%;">
 		                 <div dojoType="dijit/layout/ContentPane" id="userContentPane" title="用户" href="loadUserContentPane.do">		                 	
 		                 </div>
-		                 <div dojoType="dijit/layout/ContentPane" id="productContentPane" title="产品" href="loadProductContentPane.do">
+		                 <div dojoType="dijit/layout/ContentPane" id="productContentPane" title="客户产品" href="loadProductContentPane.do">
 		                 </div>
 						 <div dojoType="dijit/layout/ContentPane" id="driverContentPane" title="程序" href="loadDriverContentPane.do">
 						 </div>

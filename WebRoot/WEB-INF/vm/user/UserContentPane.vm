@@ -15,7 +15,7 @@
 #end
 #if ($loginUser)
 <button data-dojo-type="dijit/form/Button" id="editLoginUserBtn" type="button">
-	<span>编辑登录帐号</span>
+	<span>修改密码</span>
 	<script type="dojo/on" data-dojo-event="click">
 		dijit.byId("editUserDialog").href="LoadEditUserDialog.do?account=$loginUser.account";
 		if(dijit.byId("editUserDialog").isLoaded){
@@ -29,7 +29,7 @@
 <br/>
 #if ($loginUser.type == 'UserType_1' || $loginUser.type == 'UserType_2' || $loginUser.type == 'UserType_3')
 <button data-dojo-type="dijit/form/Button" id="accountManagementBtn" type="button">
-	<span>用户管理</span>
+	<span>所属用户管理</span>
 	<script type="dojo/on" data-dojo-event="click">
 		jhw.addTab("myTabContainer", "userManagement.do", "用户管理", true);
 	</script>

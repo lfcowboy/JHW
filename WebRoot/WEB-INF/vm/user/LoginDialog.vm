@@ -9,6 +9,7 @@
         	load: function(data){
         		if(data["success"]){
 					alert("登录成功！");
+					window.location.reload();
 					dijit.byId('loginDialog').hide();
 					dijit.byId('productContentPane').refresh();
 					dijit.byId('driverContentPane').refresh();	

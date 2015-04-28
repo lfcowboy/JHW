@@ -204,9 +204,19 @@ public class DriverController {
 
 	@RequestMapping(value = "getDriversAction/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public @ResponseBody
-	boolean ProductsAction(@PathVariable int id) {
-		driverServer.deleteDriver(id);
-		return versionServer.deleteVersionByDriverId(id);
+	boolean deleteDriverAction(@PathVariable int id) {
+		if (driverServer.deleteDriver(id)) {
+			List<Version> versions = versionServer.getVersions(id);
+			for (Version version : versions) {
+				String filePath = getVersionFilePath(version);
+				File dirverFile = new File(filePath);
+				if (dirverFile.exists()) {
+					dirverFile.delete();
+				}
+				versionServer.deleteVersionByDriverId(id);
+			}
+		}
+		return true;
 	}
 
 	@RequestMapping(value = "addVersionAction", method = RequestMethod.POST)

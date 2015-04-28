@@ -34,9 +34,9 @@
             <div dojoType="dijit/layout/BorderContainer" style="width: 100%; height: 100%;text-align:center;">
                 <div dojoType="dijit.layout.ContentPane" region="top" splitter="false" href="loadHeaderContentPane.do">					
                 </div>
-                <div dojoType="dijit.layout.ContentPane" region="left" style="width: 20%;" splitter="true">
+                <div dojoType="dijit.layout.ContentPane" region="left" style="width: 15%;" splitter="true">
 		            <div dojoType="dijit/layout/AccordionContainer" style="width: 100%; height: 100%;">
-		                 <div dojoType="dijit/layout/ContentPane" id="userContentPane" title="用户" href="loadUserContentPane.do">		                 	
+		                 <div dojoType="dijit/layout/ContentPane" id="userContentPane" title="用户 #if ($loginUser) - '$!loginUser.name'#end" href="loadUserContentPane.do">		                 	
 		                 </div>
 		                 <div dojoType="dijit/layout/ContentPane" id="productContentPane" title="客户产品" href="loadProductContentPane.do">
 		                 </div>

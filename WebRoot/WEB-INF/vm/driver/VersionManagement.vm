@@ -140,10 +140,7 @@
                 }else{
 					alert("请选择需要删除的版本。");
 				}
-                var onSave = function(){
-                	dojo.byId("message").innerHTML = ("删除成功.");
-                }
-                var onSaveError = function(error){
+                function onSaveError(error){
                 	alert("删除失败.");
                 }
                 function saveTable() {
@@ -151,7 +148,17 @@
                     	versionGrid.edit.apply();
                     }
                     if (versionDataStore.isDirty()) {
-                    	var result = versionDataStore.save({onComplete: onSave, onError: onSaveError});
+                    	var result = versionDataStore.save({
+							onComplete: function(data){
+								var tab = jhw.getTab("loadDriverManagement.do");
+            					if (typeof tab !== "undefined"){					
+            						driverGrid.setQuery(driverMgSearchForm.get("value"));
+            					}
+    	            			alert("删除成功！");
+                        	}, onError:  function(data){
+    	            			alert("删除失败！");
+                        	}
+						});
                     }
                 }
         	</script>
@@ -213,9 +220,13 @@
             			handleAs : "json",
                        	load: function(data){
 							alert(data["msg"]);
-                    		if(data["success"]){								
+                    		if(data["success"]){							
             					versionGrid.setQuery({driverId:"$!driverId"});
-                    		}						            		
+								var tab = jhw.getTab("loadDriverManagement.do");
+            					if (typeof tab !== "undefined"){					
+            						driverGrid.setQuery(driverMgSearchForm.get("value"));
+            					}
+                    		}			            		
                     	},
                     	error: function(data){					            		
             			}

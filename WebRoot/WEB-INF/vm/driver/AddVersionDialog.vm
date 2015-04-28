@@ -7,6 +7,10 @@
 				}else{
     				dijit.byId('addVersionDialog').hide();
     				versionGrid.setQuery({driverId:"$!driverId"});
+					var tab = jhw.getTab("loadDriverManagement.do");
+					if (typeof tab !== "undefined"){					
+						driverGrid.setQuery(driverMgSearchForm.get("value"));
+					}
 				}
             });
         });

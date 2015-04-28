@@ -49,6 +49,7 @@
 					dijit.byId('productContentPane').refresh();
 					dijit.byId('driverContentPane').refresh();
 					alert("您已成功退出登录。");
+					window.location.reload();
         		}else{
         			alert(data["msg"]);
         		}            		

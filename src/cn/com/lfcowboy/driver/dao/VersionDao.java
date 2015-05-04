@@ -15,7 +15,7 @@ public interface VersionDao {
 
 	List<Version> getVersions(int driverId);
 
-	List<Version> getTestVersions(
+	List<Version> getTestVersions(@Param("driverId") int driverId,
 			@Param("officialVersion") String officialVersion);
 
 	void deleteTestVersions(@Param("driverId") int driverId,

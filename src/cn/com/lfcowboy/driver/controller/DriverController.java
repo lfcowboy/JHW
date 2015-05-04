@@ -244,7 +244,8 @@ public class DriverController {
 
 		}
 		String officialVersion = getOfficialVersion(version.getVersion());
-		List<Version> testVersions = versionServer.getTestVersions(officialVersion);
+		List<Version> testVersions = versionServer.getTestVersions(
+				version.getDriverId(), officialVersion);
 		for (Version testVersion : testVersions) {
 			File testVersionFile = getVersionFile(testVersion);
 			if (testVersionFile.exists()) {
@@ -302,8 +303,9 @@ public class DriverController {
 
 	@RequestMapping(value = "downloadFile", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView downloadFile(int versionId, HttpServletRequest request,
+	public JSONResult downloadFile(int versionId, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		JSONResult result = new JSONResult();
 		Version version = versionServer.getVersion(versionId);
 		String contentType = "text/html;charset=UTF-8";
 		response.setContentType("text/html;charset=UTF-8");
@@ -317,7 +319,12 @@ public class DriverController {
 				+ new String(getVersionFileName(version).getBytes("UTF-8"),
 						"UTF-8"));
 		response.setHeader("Content-Length", String.valueOf(fileLength));
-
+		File dirverFile = new File(downLoadPath);
+		if (!dirverFile.exists()) {
+			result.setSuccess(false);
+			result.setMsg("程序文件不存在，请联系系统管理员！");
+			return result;
+		}
 		bis = new BufferedInputStream(new FileInputStream(downLoadPath));
 		bos = new BufferedOutputStream(response.getOutputStream());
 		byte[] buff = new byte[2048];
@@ -327,7 +334,7 @@ public class DriverController {
 		}
 		bis.close();
 		bos.close();
-		return null;
+		return result;
 	}
 
 	@RequestMapping(value = "burnFile", method = RequestMethod.GET)

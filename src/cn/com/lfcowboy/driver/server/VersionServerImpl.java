@@ -38,9 +38,9 @@ public class VersionServerImpl implements VersionServer {
 	}
 
 	@Override
-	public List<Version> getTestVersions(
+	public List<Version> getTestVersions(@Param("driverId") int driverId,
 			@Param("officialVersion") String officialVersion) {
-		return versionDao.getTestVersions(officialVersion);
+		return versionDao.getTestVersions(driverId, officialVersion);
 	}
 
 	@Override
